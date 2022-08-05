@@ -1,0 +1,35 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/",
+      "icon": "home",
+      "slug": "dashboard-ecommerce"
+    },
+
+    {
+      "navheader": "Goverment",
+      "slug": ""
+    },
+    {
+      "url": "notice-table",
+      "name": "Notice",
+      "icon": "hexagon",
+      "slug": "notice-table"
+    },
+    {
+      "url": "tender-table",
+      "name": "Tender",
+      "icon": "square",
+      "slug": "tender-table"
+    },
+    {
+      "url": "latest-update-table",
+      "name": "Event",
+      "icon": "box",
+      "slug": "latest-update-table"
+    }
+
+    
+  ]
+}

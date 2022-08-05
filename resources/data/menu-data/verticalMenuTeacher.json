@@ -1,0 +1,17 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/teacherDashboard",
+      "icon": "home",
+      "slug": "teacherDashboard"
+    },
+    {
+      "url": "editTeacher",
+      "name": "Edit Profile",
+      "icon": "hexagon",
+      "slug": "editTeacher"
+    }
+    
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/headTeacherDashboard",
+      "icon": "home",
+      "slug": "headTeacherDashboard"
+    },
+    {
+      "url": "allTeacherList",
+      "name": "All Teacher List",
+      "icon": "hexagon",
+      "slug": "allTeacherList"
+    },
+    {
+      "url": "editHeadTeacher",
+      "name": "Edit profile",
+      "icon": "square",
+      "slug": "editHeadTeacher"
+    }
+
+    
+  ]
+}

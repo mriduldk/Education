@@ -1,0 +1,24 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/districtAdminDashboard",
+      "icon": "home",
+      "slug": "districtAdminDashboard"
+    },
+    {
+      "url": "schoolList",
+      "name": "School List",
+      "icon": "hexagon",
+      "slug": "schoolList"
+    },
+    {
+      "url": "schoolInsert",
+      "name": "School Insert",
+      "icon": "square",
+      "slug": "schoolInsert"
+    }
+
+    
+  ]
+}
