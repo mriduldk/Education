@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('school_facilities', function (Blueprint $table) {
             $table->id();
             $table->string('school_f_id')->unique();
-            $table->string('fk_school_id')->unique();
+            $table->string('fk_school_id');
             $table->string('building_status')->nullable();
             $table->string('coundary_wall')->nullable();
             $table->integer('no_of_boys_toilets')->nullable();

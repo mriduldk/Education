@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('teacher_service_details', function (Blueprint $table) {
             $table->id();
             $table->string('teacehr_s_d_id')->unique();
-            $table->string('fk_teacher_id')->unique();
+            $table->string('fk_teacher_id');
             $table->string('post_name')->nullable();
             $table->string('medium_of_school')->nullable();
             $table->string('subjects')->nullable();
+            $table->string('category_of_post')->nullable();
             $table->string('pay_scale')->nullable();
+            $table->string('grade_pay')->nullable();
             $table->string('appointment_latter_no')->nullable();
             $table->string('appointment_date')->nullable();
             $table->string('post_creation_no')->nullable();

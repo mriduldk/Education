@@ -1,6 +1,6 @@
-@extends('layouts/fullLayoutMaster')
+@extends('layouts/contentLayoutMaster')
 
-@section('title', 'Login Page')
+@section('title', 'School Details')
 
 @section('vendor-style')
 {{-- vendor css files --}}
@@ -9,15 +9,99 @@
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/pickers/flatpickr/flatpickr.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/charts/apexcharts.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/swiper.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/maps/leaflet.min.css')) }}">
+
+<!-- JQUery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+<!-- Font Aswome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 @endsection
+
+@section('page-style')
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-swiper.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/maps/map-leaflet.css')) }}">
+
+@endsection
+
 
 @section('content')
 
 
 <section id="basic-datatable">
 
+    <div id="divSchoolProfile">
 
-    <div id="divSchoolProfile" class="m-4">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header flex-column align-items-start pb-0">
+                        <div class="avatar bg-light-primary p-50 m-0">
+                            <div class="avatar-content">
+                                <i class="fa-person-simple"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-bolder mt-1">@php echo
+                            $school->schoolEnreolmentOfStudent->class_1_12_with_pre_primary; @endphp</h2>
+                        <p class="card-text">Total Students</p>
+                    </div>
+                    <div id="line-area-chart-1"></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header flex-column align-items-start pb-0">
+                        <div class="avatar bg-light-success p-50 m-0">
+                            <div class="avatar-content">
+                                <i data-feather="credit-card" class="font-medium-5"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-bolder mt-1">@php echo $school->schoolEnreolmentOfStudent->total_male_students;
+                            @endphp</h2>
+                        <p class="card-text">Total Male students</p>
+                    </div>
+                    <div id="line-area-chart-2"></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header flex-column align-items-start pb-0">
+                        <div class="avatar bg-light-danger p-50 m-0">
+                            <div class="avatar-content">
+
+                                <i class="fa-solid fa-person-dress-simple"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-bolder mt-1">@php echo $school->schoolEnreolmentOfStudent->total_female_students;
+                            @endphp</h2>
+                        <p class="card-text">Total Female Students</p>
+                    </div>
+                    <div id="line-area-chart-3"></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header flex-column align-items-start pb-0">
+                        <div class="avatar bg-light-warning p-50 m-0">
+                            <div class="avatar-content">
+                                <i data-feather="package" class="font-medium-5"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-bolder mt-1">@php echo $school->schoolEnreolmentOfStudent->total_teachers; @endphp
+                        </h2>
+                        <p class="card-text">Total Teachers</p>
+                    </div>
+                    <div id="line-area-chart-4"></div>
+                </div>
+            </div>
+        </div>
 
         <div class="card">
             <h4 class="card-header">School Details</h4>
@@ -392,17 +476,72 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Gallery</h4>
+            </div>
+            <div class="card-body">
+                <div class="swiper-gallery swiper-container gallery-top">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-11.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-12.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-13.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-14.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-15.jpg')}}" alt="banner" />
+                        </div>
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div class="swiper-container gallery-thumbs">
+                    <div class="swiper-wrapper mt-25">
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-11.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-12.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-13.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-14.jpg')}}" alt="banner" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-fluid" src="{{asset('images/banner/banner-15.jpg')}}" alt="banner" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="card-title">School Location (MAP)</h4>
+                </div>
+                <div class="card-body">
+                    <div class="leaflet-map" id="drag-map"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
 
 </section>
 
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 
 <script>
 //$('#myTable').DataTable();
@@ -427,8 +566,16 @@ var dt_basic = dt_basic_table.DataTable();
 <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/pickers/flatpickr/flatpickr.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/charts/apexcharts.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/extensions/swiper.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/maps/leaflet.min.js'))}}"></script>
+
 @endsection
 @section('page-script')
 {{-- Page js files --}}
 <script src="{{asset(mix('js/scripts/components/components-accordion.js'))}}"></script>
+<script src="{{ asset(mix('js/scripts/cards/card-statistics.js')) }}"></script>
+<script src="{{ asset(mix('js/scripts/extensions/ext-component-swiper.js')) }}"></script>
+<script src="{{ asset(mix('js/scripts/maps/map-leaflet.js'))}}"></script>
+
 @endsection

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('teacher_academic_qualifications', function (Blueprint $table) {
             $table->id();
             $table->string('teacehr_a_q_id')->unique();
-            $table->string('fk_teacher_id')->unique();
+            $table->string('fk_teacher_id');
             $table->string('qualification')->nullable();
             $table->string('stream_displine')->nullable();
             $table->string('subjects_studied')->nullable();

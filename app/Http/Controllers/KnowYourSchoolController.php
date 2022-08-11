@@ -17,6 +17,11 @@ class KnowYourSchoolController extends Controller
         return view('/knowYourSchool');
     }
 
+    public function kharithiHome()
+    {
+        return view('/kharithiHome');
+    }
+
     public function searchSchoolDetails(string $school_id)
     {
         $school = School::where('is_deleted', 0)->where('school_id', $school_id)->first();
@@ -50,6 +55,42 @@ class KnowYourSchoolController extends Controller
 
         }
         return view('/searchSchoolTable')->with('schools', $schools);
+    }
+
+    public function show2()
+    {   
+        //$schools = School::all();
+
+        // foreach($schools as $school){
+
+        //     $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->get();
+        //     $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->get();
+        //     $teachers = Teacher::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->get();
+
+        //     $school['schoolFacility'] = $schoolFacility;
+        //     $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;
+        //     $school['teachers'] = $teachers;
+
+        // }
+        return view('/searchSchoolTableList');
+    }
+
+    public function allSchoolData()
+    {   
+        $schools = School::all();
+
+        foreach($schools as $school){
+
+            $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->get();
+            $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->get();
+            $teachers = Teacher::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->get();
+
+            $school['schoolFacility'] = $schoolFacility;
+            $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;
+            $school['teachers'] = $teachers;
+
+        }
+        return $schools;
     }
 
 

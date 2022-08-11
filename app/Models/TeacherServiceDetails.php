@@ -9,12 +9,14 @@ class TeacherServiceDetails extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'teacehr_service_details_id',
+        'teacehr_s_d_id',
         'fk_teacher_id',
         'post_name',
         'medium_of_school',
         'subjects',
+        'category_of_post',
         'pay_scale',
+        'grade_pay',
         'appointment_latter_no',
         'appointment_date',
         'post_creation_no',

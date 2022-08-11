@@ -31,7 +31,7 @@ class AdminController extends Controller
         //     'password' => Hash::make($request->password),
         //     'type' => 1
         // ]);
-
+        
 
         $user = User::where('email', $request->email)->first();
         if ($user && Hash::check($request->password, $user->password)) {

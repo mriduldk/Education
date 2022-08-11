@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Edit Teacher')
+@section('title', 'Add Data Entry Operator')
 
 @section('vendor-style')
 <!-- vendor css files -->
@@ -36,41 +36,39 @@
             <form class="form form-vertical">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Basic Information</h4>
+                        <h4 class="card-title">Add Data Entry Operator</h4>
                     </div>
                     <div class="card-body">
 
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Name</label>
+                                    <label class="form-label" for="first-name-vertical">Enter Name</label>
                                     <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Name" />
+                                        placeholder="Enter Name" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="email-id-vertical">Employee Code</label>
+                                    <label class="form-label" for="email-id-vertical">Enter contact number</label>
                                     <input type="number" id="email-id-vertical" class="form-control" name="email-id"
-                                        placeholder="Employee Code" />
+                                        placeholder="Enter number" />                                    
                                 </div>
-                            </div>
+                            </div>     
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="password-vertical">Phone Number</label>
-                                    <input type="number" id="password-vertical" class="form-control" name="contact"
-                                        placeholder="Phone Number" />
+                                    <label class="form-label" for="email-id-vertical">Enter email</label>
+                                    <input type="number" id="email-id-vertical" class="form-control" name="email-id"
+                                        placeholder="Enter email" />                                    
                                 </div>
-                            </div>
+                            </div>   
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Email</label>
-                                    <input type="email" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Email" />
+                                    <label class="form-label" for="email-id-vertical">Role</label>
+                                    <input type="text" id="email-id-vertical" class="form-control" name="email-id"
+                                         value="Data Entry Operator" disabled />                                    
                                 </div>
-                            </div>
-
-
+                            </div>                                             
                         </div>
                     </div>
                     <div class="card-footer">

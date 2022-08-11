@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('class_to')->nullable();
             $table->string('school_type')->nullable();
             $table->string('school_category')->nullable();
+            $table->string('school_medium')->nullable();
             $table->string('state_management')->nullable();
             $table->string('national_management')->nullable();
             $table->string('status')->nullable();

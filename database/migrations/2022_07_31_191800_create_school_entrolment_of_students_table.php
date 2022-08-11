@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('school_entrolment_of_students', function (Blueprint $table) {
             $table->id();
             $table->string('school_e_o_s_id')->unique();
-            $table->string('fk_school_id')->unique();
+            $table->string('fk_school_id');
             $table->integer('pre_primary')->nullable();
             $table->integer('class_1')->nullable();
             $table->integer('class_2')->nullable();
@@ -32,6 +32,8 @@ return new class extends Migration
             $table->integer('class_12')->nullable();
             $table->integer('class_1_12')->nullable();
             $table->integer('class_1_12_with_pre_primary')->nullable();
+            $table->integer('total_male_students')->nullable();
+            $table->integer('total_female_students')->nullable();
             $table->integer('total_teachers')->nullable();
             $table->timestamp('created_on');
             $table->string('created_by');

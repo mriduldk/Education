@@ -10,7 +10,7 @@ class TeacherAcademicQualification extends Model
     use HasFactory;
 
     protected $fillable = [
-        'teacehr_academic_qualification_id',
+        'teacehr_a_q_id',
         'fk_teacher_id',
         'qualification',
         'stream_displine',

@@ -15,9 +15,9 @@ class UserAccess
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $userType, $guard)
+    public function handle(Request $request, Closure $next, $userType)
     {
-        if(Auth::guard($guard)->check()){
+        if(Auth::check()){
             return $next($request);
         }
 

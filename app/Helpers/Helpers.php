@@ -16,13 +16,13 @@ class Helpers
         // default data array
         $DefaultData = [
             'mainLayoutType' => 'vertical',
-            'theme' => 'light',
+            'theme' => 'dark',
             'sidebarCollapsed' => false,
             'navbarColor' => '',
             'horizontalMenuType' => 'floating',
             'verticalMenuNavbarType' => 'floating',
             'footerType' => 'static', //footer
-            'layoutWidth' => 'boxed',
+            'layoutWidth' => 'full',
             'showMenu' => true,
             'bodyClass' => '',
             'pageClass' => '',

@@ -23,6 +23,11 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\KnowYourSchoolController;
 use App\Http\Controllers\SchoolDetailsController;
 use App\Http\Middleware\UserAccess;
+use App\Http\Controllers\exampleController;
+use App\Http\Controllers\HeadTeacherController;
+use App\Http\Controllers\leaveApplication;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherLeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +53,16 @@ use App\Http\Middleware\UserAccess;
 
 Route::get('knowYourSchool', [KnowYourSchoolController::class, 'knowYourSchool']);
 Route::get('searchSchoolTable', [KnowYourSchoolController::class, 'show']);
+Route::get('searchSchoolTableList', [KnowYourSchoolController::class, 'show2']);
 Route::get('searchSchoolDetails/{id}', [KnowYourSchoolController::class, 'searchSchoolDetails'])->name('searchSchoolDetails');
+Route::get('allSchoolData', [KnowYourSchoolController::class, 'allSchoolData'])->name('allSchoolData');
+
+Route::get('kharithiHome', [KnowYourSchoolController::class, 'kharithiHome'])->name('kharithiHome');
+
+Route::get('example', [exampleController::class, 'example']);
+
+Route::get('leaveApplication', [TeacherLeaveController::class, 'index']);
+Route::post('leave-insert', [TeacherLeaveController::class, 'store']);
 
 
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
@@ -98,18 +112,65 @@ Route::middleware(['auth', 'user-access:districtAdmin'])->group(function () {
 
 Route::middleware(['auth', 'user-access:headTeacher'])->group(function () {
 
-    Route::get('/headTeacherDashboard', [DashboardController::class, 'headTeacherDashboard'])->name('headTeacherDashboard');
-    Route::get('/allTeacherList', [SchoolDetailsController::class, 'allTeacherList'])->name('allTeacherList');
-    Route::get('/schoolInsertHeadTeacher', [SchoolDetailsController::class, 'schoolInsertHeadTeacher'])->name('schoolInsertHeadTeacher');
-    Route::get('/editHeadTeacher', [SchoolDetailsController::class, 'editHeadTeacher'])->name('editHeadTeacher');
+    //Route::get('/headTeacherDashboard', [DashboardController::class, 'headTeacherDashboard'])->name('headTeacherDashboard');
+    //Route::get('/allTeacherList', [SchoolDetailsController::class, 'allTeacherList'])->name('allTeacherList');
+    //Route::get('/schoolInsertHeadTeacher', [SchoolDetailsController::class, 'schoolInsertHeadTeacher'])->name('schoolInsertHeadTeacher');
+    //Route::get('/editHeadTeacher', [SchoolDetailsController::class, 'editHeadTeacher'])->name('editHeadTeacher');
 });
+Route::get('headTeacherDashboard', [HeadTeacherController::class, 'headTeacherDashboard'])->name('headTeacherDashboard');
+Route::get('allTeacherList', [HeadTeacherController::class, 'allTeacherList'])->name('allTeacherList');
+
+Route::get('editSchoolDetails', [HeadTeacherController::class, 'EditSchoolDetails'])->name('EditSchoolDetails');
+Route::post('edit-school-details', [HeadTeacherController::class, 'UpdateSchoolDetails']);
+
+Route::get('editHeadTeacher', [HeadTeacherController::class, 'editHeadTeacher'])->name('editHeadTeacher');
+Route::get('addTeacher', [HeadTeacherController::class, 'addTeacher']);
+Route::get('teacherDatas', [HeadTeacherController::class, 'teacherDatas']);
+Route::get('bmcDashboard', [HeadTeacherController::class, 'bmcDashboard']);
+Route::get('AccessRoles', [HeadTeacherController::class, 'AccessRoles']);
+Route::get('dataEntry', [HeadTeacherController::class, 'dataEntryOperator']);
+Route::get('addSchool', [HeadTeacherController::class, 'addSchool']);
+
+
+
+
+Route::get('teacherLogin', [TeacherController::class, 'TeacherLoginPage'])->name('TeacherLoginPage');
+Route::post('teacherLogin-check', [TeacherController::class, 'TeacherLoginCheck']);
+Route::post('teacher-logout', [TeacherController::class, 'TeacherLogout']);
+
+Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
+
+Route::get('editEmployeementDetails', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
+Route::post('update-employeement-details', [TeacherController::class, 'UpdateEmployeementDetails']);
+Route::get('insertEmployeementDetails', [TeacherController::class, 'InsertEmployeementDetails'])->name('InsertEmployeementDetails');;
+Route::post('insert-employeement-details', [TeacherController::class, 'StoreEmployeementDetails']);
+    
+Route::get('editSalaryAccount', [TeacherController::class, 'EditSalaryAccount']);
+Route::post('update-salary-account', [TeacherController::class, 'UpdateTeacherSalaryAccount']);
+Route::get('insertSalaryAccount', [TeacherController::class, 'InsertSalaryAccount'])->name('InsertSalaryAccount');
+Route::post('insert-salary-account', [TeacherController::class, 'StoreSalaryAccount']);
+
+Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
+Route::get('insertTeacherQualification', [TeacherController::class, 'InsertTeacherQualification']);
+Route::post('insert-teacher-qualification', [TeacherController::class, 'StoreTeacherQualification']);
+
+Route::get('reviewTeacherDetails', [TeacherController::class, 'ReviewTeacherDetails']);
+Route::post('store-teacher-details', [TeacherController::class, 'StoreTeacherDetails']);
 
 
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 
-    Route::get('/teacherDashboard', [DashboardController::class, 'teacherDashboard'])->name('teacherDashboard');
-    Route::get('/editTeacher', [SchoolDetailsController::class, 'editTeacher'])->name('editTeacher');
+    //Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
+    
+    // Route::get('editEmployeementDetails\{id}', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
+    
+    // Route::get('editSalaryAccount', [TeacherController::class, 'EditSalaryAccount']);
+    // Route::post('update-salary-account', [TeacherController::class, 'UpdateTeacherSalaryAccount']);
+    
+    // Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
+
 });
+
 
 
 
@@ -126,9 +187,9 @@ Route::get('headTeacherLogin', [AdminController::class, 'index'])->name('headTea
 Route::post('headTeacher-login-check', [AdminController::class, 'authenticate']);
 Route::post('headTeacher-logout', [AdminController::class, 'logout'])->name('headTeacher-logout');
 
-Route::get('teacherLogin', [AdminController::class, 'index'])->name('teacher');
-Route::post('teacher-login-check', [AdminController::class, 'authenticate']);
-Route::post('teacher-logout', [AdminController::class, 'logout'])->name('teacher-logout');
+//Route::get('teacherLogin', [AdminController::class, 'index'])->name('teacher');
+//Route::post('teacher-login-check', [AdminController::class, 'authenticate']);
+//Route::post('teacher-logout', [AdminController::class, 'logout'])->name('teacher-logout');
 
 
 

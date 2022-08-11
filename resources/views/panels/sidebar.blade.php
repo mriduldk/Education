@@ -30,8 +30,8 @@ $configData = Helper::applClasses();
 
             @if (isset($menuData[0]))
 
-            @if (Auth::check() && Auth::user()->type == 'admin')
-                @foreach ($menuData[0]->menu as $menu)
+            @if (Auth::guard('teacher')->check())
+                @foreach ($menuData[4]->menu as $menu)
                 @if (isset($menu->navheader))
                 <li class="navigation-header">
                     <span>{{ __($menu->navheader) }}</span>

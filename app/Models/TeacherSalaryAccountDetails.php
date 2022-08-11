@@ -10,7 +10,7 @@ class TeacherSalaryAccountDetails extends Model
     use HasFactory;
 
     protected $fillable = [
-        'teacehr_service_details_id',
+        'teacehr_s_d_id',
         'fk_teacher_id',
         'pan_no',
         'account_no',

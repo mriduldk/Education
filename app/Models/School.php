@@ -23,6 +23,7 @@ class School extends Model
         'class_to', 
         'school_type', 
         'school_category', 
+        'school_medium',
         'state_management', 
         'national_management', 
         'status', 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('teacher_salary_account_details', function (Blueprint $table) {
             $table->id();
             $table->string('teacehr_s_d_id')->unique();
-            $table->string('fk_teacher_id')->unique();
+            $table->string('fk_teacher_id');
             $table->string('pan_no')->nullable();
             $table->string('account_no')->nullable();
             $table->string('account_name')->nullable();

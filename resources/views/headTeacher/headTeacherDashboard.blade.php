@@ -26,50 +26,49 @@
 <section class="app-user-view-account">
     <div class="row">
 
-        <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+        <div class="col-xl-4 col-lg-5 col-md-12 order-1 order-md-0">
             <!-- User Card -->
             <div class="card">
                 <div class="card-body">
                     <div class="user-avatar-section">
                         <div class="d-flex align-items-center flex-column">
-                            <img class="img-fluid rounded mb-2"
-                                src="{{asset('images/school/school.jpg')}}" height="100" width="300"
-                                alt="User avatar" />
+                            <img class="img-fluid rounded mb-2" src="{{asset('images/school/school.jpg')}}" height="100"
+                                width="300" alt="User avatar" />
                             <div class="user-info text-center">
-                                <h4>NO.319 KUMGURI LPS</h4>
+                                <h4>{{ $school->school_name; }}</h4>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around my-2 pt-75">
-                        
+
                     </div>
                     <h4 class="fw-bolder border-bottom pb-50 mb-1">Details</h4>
                     <div class="info-container">
                         <ul class="list-unstyled">
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">School Name:</span>
-                                <span>NO.319 KUMGURI LPS</span>
+                                <span>{{ $school->school_name; }}</span>
                             </li>
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">UDICE Code:</span>
-                                <span>18010102404</span>
+                                <span>{{ $school->udice_code; }}</span>
                             </li>
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">Head Teacher:</span>
-                                <span>Dipankar Rabha </span><span class="badge bg-light-danger">Not Registered</span>
+                                <span>{{ $school->headTeacher->teacher_first_name; }} {{ $school->headTeacher->teacher_last_name; }}</span>
                             </li>
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">Head Teacher Number:</span>
-                                <span>9876543210 </span>
+                                <span>{{ $school->headTeacher->teacher_mobile; }} </span>
                             </li>
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">Head Teacher Email:</span>
-                                <span>dipankarrabha@gmail.com </span>
+                                <span>{{ $school->headTeacher->teacher_email; }}</span>
                             </li>
                         </ul>
                         <div class="d-flex justify-content-center pt-2">
-                            <a href="{{url ('schoolInsertHeadTeacher')}}" class="btn btn-primary me-1" >
-                                Edit School Details
+                            <a href="{{url ('editSchoolDetails')}}" class="btn btn-primary me-1">
+                                <i data-feather='settings'></i> Edit School Details
                             </a>
                         </div>
                     </div>
@@ -85,21 +84,26 @@
             <ul class="nav nav-pills mb-2">
                 <li class="nav-item">
                     <a class="nav-link active" id="btnSchoolProfile">
-                        <span class="fw-bold">School Profile</span></a>
+                        <span class="fw-bold"><i data-feather='book'></i> School Profile</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="btnFacilities">
-                        <span class="fw-bold">Facilities</span>
+                        <span class="fw-bold"><i data-feather='command'></i> Facilities</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="btnRoomDetails">
-                        <span class="fw-bold">Room Details</span>
+                        <span class="fw-bold"><i data-feather='home'></i> Room Details</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="btnEnrolmentOfStudent" onclick="clicked()">
-                        <span class="fw-bold">Enrolment of The Students</span>
+                        <span class="fw-bold"><i data-feather='user-check'></i> Enrolment of The Students</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="btnLeaveApplication" onclick="clicked()">
+                        <span class="fw-bold"><i data-feather='user-check'></i> Leave Applications</span>
                     </a>
                 </li>
             </ul>
@@ -110,24 +114,24 @@
                     <h4 class="card-header">School Address</h4>
                     <div class="table-responsive">
                         <table class="table table-bordered">
-                            <tbody>
+                            <tbody class="text-black">
                                 <tr>
                                     <th>Village </th>
-                                    <td>KUMGURI</td>
+                                    <td>@php echo $school->village; @endphp</td>
                                     <th>Cluster</th>
-                                    <td>CHANDRAPARA</td>
+                                    <td>@php echo $school->cluster; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Block </th>
-                                    <td>DOTMA</td>
+                                    <td>@php echo $school->block; @endphp</td>
                                     <th>District </th>
-                                    <td>KOKRAJHAR</td>
+                                    <td>@php echo $school->district; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>State </th>
-                                    <td>Assam</td>
+                                    <td>@php echo $school->state; @endphp</td>
                                     <th>PinCode </th>
-                                    <td>783370</td>
+                                    <td>@php echo $school->pin; @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -138,42 +142,48 @@
                     <h4 class="card-header">School Details</h4>
                     <div class="table-responsive">
                         <table class="table table-bordered">
-                            <tbody>
+                            <tbody class="text-black">
+                                <tr>
+                                    <th>School Name </th>
+                                    <td>@php echo $school->school_name; @endphp</td>
+                                    <th>UDISE CODE</th>
+                                    <td>@php echo $school->udice_code; @endphp</td>
+                                </tr>
                                 <tr>
                                     <th>School Category </th>
-                                    <td>1-Primary</td>
+                                    <td>@php echo $school->school_category; @endphp</td>
                                     <th>School Type</th>
-                                    <td>3-Co-educational</td>
+                                    <td>@php echo $school->school_type; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Class From </th>
-                                    <td>1</td>
+                                    <td>@php echo $school->class_from; @endphp</td>
                                     <th>Class To </th>
-                                    <td>5</td>
+                                    <td>@php echo $school->class_to; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>State Management </th>
-                                    <td>Dept. Of education</td>
+                                    <td>@php echo $school->state_management; @endphp</td>
                                     <th>National Management </th>
-                                    <td>Department of Education</td>
+                                    <td>@php echo $school->national_management; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Status </th>
-                                    <td>Operational</td>
+                                    <td>@php echo $school->status; @endphp</td>
                                     <th>Location </th>
-                                    <td>Rural</td>
+                                    <td>@php echo $school->location; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Aff Board Sec </th>
-                                    <td></td>
+                                    <td>@php echo $school->aff_board_sec; @endphp</td>
                                     <th>Aff Board H.Sec </th>
-                                    <td></td>
+                                    <td>@php echo $school->add_board_h_sec; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Year of Establishment </th>
-                                    <td>1949</td>
+                                    <td>@php echo $school->year_of_establishment; @endphp</td>
                                     <th>Pre-Primary </th>
-                                    <td>No</td>
+                                    <td>@php echo $school->pre_primary; @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -190,67 +200,87 @@
                             <tbody>
                                 <tr>
                                     <th>Building Status </th>
-                                    <td>Government</td>
+                                    <td>@php echo $school->schoolFacility->building_status;
+                                        @endphp</td>
                                     <th>Boundary Wall</th>
-                                    <td>No boundary walls</td>
+                                    <td>@php echo $school->schoolFacility->coundary_wall;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>No. of Boys Toilets </th>
-                                    <td>1</td>
+                                    <td>@php echo $school->schoolFacility->no_of_boys_toilets;
+                                        @endphp</td>
                                     <th>No. of Girls Toilets </th>
-                                    <td>1</td>
+                                    <td>@php echo $school->schoolFacility->no_of_girls_toilets;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>No. of CWSN Toilets </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->no_of_cwsn_toilets;
+                                        @endphp</td>
                                     <th>Drinking Water Availability </th>
-                                    <td>Yes</td>
+                                    <td>@php echo
+                                        $school->schoolFacility->drinking_water_availability;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Hand Wash Facility </th>
-                                    <td>Yes</td>
+                                    <td>@php echo $school->schoolFacility->hand_wash_facility;
+                                        @endphp</td>
                                     <th>Functional Generator </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_generator;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Library </th>
-                                    <td>Yes</td>
+                                    <td>@php echo $school->schoolFacility->library; @endphp</td>
                                     <th>Reading Corner </th>
-                                    <td>Yes</td>
+                                    <td>@php echo $school->schoolFacility->reading_corner;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Book Bank </th>
-                                    <td>Yes</td>
+                                    <td>@php echo $school->schoolFacility->book_bank; @endphp
+                                    </td>
                                     <th>Functional Laptop </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_laptop;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Functional Desktop </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_desktop;
+                                        @endphp</td>
                                     <th>Functional Tablet </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_tablet;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Functional Scanner </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_scanner;
+                                        @endphp</td>
                                     <th>Functional Printer </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_printer;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Functional LED </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_led;
+                                        @endphp</td>
                                     <th>Functional DigiBoard </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_digiboard;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Internet </th>
-                                    <td>No</td>
+                                    <td>@php echo $school->schoolFacility->internet; @endphp
+                                    </td>
                                     <th>DTH </th>
-                                    <td>No</td>
+                                    <td>@php echo $school->schoolFacility->dth; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Functional Web Cam </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolFacility->functional_web_cam;
+                                        @endphp</td>
                                     <th> </th>
                                     <td></td>
                                 </tr>
@@ -269,9 +299,9 @@
                             <tbody>
                                 <tr>
                                     <th>Class Rooms </th>
-                                    <td>5</td>
+                                    <td>@php echo $school->class_rooms; @endphp</td>
                                     <th>Other Rooms</th>
-                                    <td>1</td>
+                                    <td>@php echo $school->other_rooms; @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -288,51 +318,79 @@
                             <tbody>
                                 <tr>
                                     <th>Pre-Primary </th>
-                                    <td>12</td>
+                                    <td>@php echo
+                                        $school->schoolEnreolmentOfStudent->pre_primary; @endphp
+                                    </td>
                                     <th>I</th>
-                                    <td>7</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_1;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>II </th>
-                                    <td>9</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_2;
+                                        @endphp</td>
                                     <th>III </th>
-                                    <td>10</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_3;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>IV </th>
-                                    <td>15</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_4;
+                                        @endphp</td>
                                     <th>V </th>
-                                    <td>16</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_5;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>VI </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_6;
+                                        @endphp</td>
                                     <th>VII </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_7;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>VIII </th>
-                                    <td>0</td>
-                                    <th>V </th>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_8;
+                                        @endphp</td>
                                     <th>IX </th>
-                                    <td>0</td>
-                                    <th>X </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_9;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
+                                    <th>X </th>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_10;
+                                        @endphp</td>
                                     <th>XI </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_11;
+                                        @endphp</td>
+                                </tr>
+                                <tr>
                                     <th>XII </th>
-                                    <td>0</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->class_12;
+                                        @endphp</td>
+                                    <th> </th>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th>Class(1-12) </th>
-                                    <td>57</td>
+                                    <td>@php echo
+                                        $school->schoolEnreolmentOfStudent->class_1_12; @endphp
+                                    </td>
                                     <th>Class(1-12) With Pre-Primary </th>
-                                    <td>69</td>
+                                    <td>@php echo
+                                        $school->schoolEnreolmentOfStudent->class_1_12_with_pre_primary;
+                                        @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Male Student </th>
+                                    <td>@php echo
+                                        $school->schoolEnreolmentOfStudent->total_male_students; @endphp
+                                    </td>
+                                    <th>Total Female Student </th>
+                                    <td>@php echo
+                                        $school->schoolEnreolmentOfStudent->total_female_students;
+                                        @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -346,7 +404,8 @@
                             <tbody>
                                 <tr>
                                     <th>Total Teachers </th>
-                                    <td>3</td>
+                                    <td>@php echo $school->schoolEnreolmentOfStudent->total_teachers;
+                                        @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -355,28 +414,79 @@
 
             </div>
 
-        </div>
 
-    </div>
+            <div id="divLeaveApplication">
+                <div class="card">
+                    <h4 class="card-header">Leave Applications</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <th>Application Id</th>
+                                    <th>Name</th>
+                                    <th>Employment Id</th>
+                                    <th>View Application</th>
+                                    <th>View Application</th>
+                                    <th width="25%">Action</th>
+
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>101524</td>
+                                    <td>Dipankar Rabha</td>
+                                    <td>6542954264</td>
+                                    <td>View Application</td>
+                                    <td>Download</td>
+                                    <td>
+
+                                        <button class="btn btn-gradient-success btn-sm"><i data-feather='check'></i>
+                                            Accept</button>
+                                        <button class="btn btn-gradient-danger btn-sm"><i data-feather='x-square'></i>
+                                            Reject</button>
+
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 </section>
+
+
+
+<!-- Floating Button-->
+<div class="buy-now">
+    <a href="#" target="_blank" class="btn btn-danger"><i data-feather='plus-circle'></i> Add Teacher</a>
+</div>
+
 
 <script>
 $("#divSchoolProfile").show();
 $("#divFacilities").hide();
 $("#divRoomDetails").hide();
 $("#divEnrolmentOfStudent").hide();
+$("#divLeaveApplication").hide();
+
 
 $("#btnSchoolProfile").click(function() {
 
     $("#divFacilities").hide();
     $("#divRoomDetails").hide();
     $("#divEnrolmentOfStudent").hide();
+    $("#divLeaveApplication").hide();
+
 
     $("#divSchoolProfile").show();
 
     $('#btnFacilities').removeClass('active');
     $('#btnRoomDetails').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
+    $('#btnLeaveApplication').removeClass('active');
 
     $(this).addClass('active');
 });
@@ -387,12 +497,15 @@ $("#btnFacilities").click(function() {
     $("#divSchoolProfile").hide();
     $("#divRoomDetails").hide();
     $("#divEnrolmentOfStudent").hide();
+    $("#divLeaveApplication").hide();
 
     $("#divFacilities").show();
 
     $('#btnRoomDetails').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $('#btnSchoolProfile').removeClass('active');
+    $('#btnLeaveApplication').removeClass('active');
 
     $(this).addClass('active');
 
@@ -402,12 +515,16 @@ $("#btnRoomDetails").click(function() {
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
     $("#divEnrolmentOfStudent").hide();
+    $("#divLeaveApplication").hide();
+
 
     $("#divRoomDetails").show();
 
     $('#btnFacilities').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $("#btnLeaveApplication").removeClass('active');
+
 
     $(this).addClass('active');
 });
@@ -416,12 +533,31 @@ $("#btnEnrolmentOfStudent").click(function() {
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
     $("#divRoomDetails").hide();
+    $("#divLeaveApplication").hide();
+
 
     $("#divEnrolmentOfStudent").show();
 
     $('#btnFacilities').removeClass('active');
     $('#btnRoomDetails').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $('#btnLeaveApplication').removeClass('active');
+
+    $(this).addClass('active');
+
+});
+
+$("#btnLeaveApplication").click(function() {
+    $("#divSchoolProfile").hide();
+    $("#divFacilities").hide();
+    $("#divRoomDetails").hide();
+    $("#divEnrolmentOfStudent").hide();
+    $("#divLeaveApplication").show();
+
+    $('#btnFacilities').removeClass('active');
+    $('#btnRoomDetails').removeClass('active');
+    $('#btnSchoolProfile').removeClass('active');
+    $('#btnEnrolmentOfStudent').removeClass('active');
 
     $(this).addClass('active');
 

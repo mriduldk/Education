@@ -10,7 +10,7 @@ class SchoolEntrolmentOfStudent extends Model
     use HasFactory;
 
     protected $fillable = [
-        'school_entrolment_of_student_id', 
+        'school_e_o_s_id', 
         'fk_school_id', 
         'pre_primary', 
         'class_1', 
@@ -27,6 +27,8 @@ class SchoolEntrolmentOfStudent extends Model
         'class_12', 
         'class_1_12', 
         'class_1_12_with_pre_primary', 
+        'total_male_students', 
+        'total_female_students', 
         'total_teachers', 
         'created_on', 
         'created_by', 
