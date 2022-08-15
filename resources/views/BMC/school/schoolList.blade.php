@@ -89,13 +89,7 @@ function GetSchoolData(schoolName, udice_code, pin) {
         searchDelay: 500,
         destroy: true,
         ajax: {
-            url: "{{url('searchedSchoolData')}}",
-            data: {
-                'district': 'Kokrajhar',
-                'school_name': schoolName,
-                'udice_code': udice_code,
-                'pin': pin
-            },
+            url: "{{url('bmc/schoolData')}}",
             type: 'GET',
             dataSrc: ''
         },
@@ -111,8 +105,8 @@ function GetSchoolData(schoolName, udice_code, pin) {
                 title: 'id',
             },
             {
-                data: null,
-                responsivePriority: -1
+                data: 'school_name',
+                title: 'School Name',
             },
             {
                 data: 'udice_code',
@@ -120,76 +114,43 @@ function GetSchoolData(schoolName, udice_code, pin) {
             },
             {
                 data: null,
-                title: 'School Address',
+                title: 'Head Teacher Name',
             },
             {
                 data: null,
-                title: 'Basic Details',
+                title: 'Head Teacher Number',
             },
             {
                 data: null,
-                title: 'School status',
+                title: 'Head Teacher Email',
             }
         ],
         columnDefs: [{
-                targets: 1,
-                title: 'School Name',
-                orderable: false,
-                render: function(data, type, full, meta) {
-
-                    var url = '{{ route("searchSchoolDetails", ":id") }}';
-                    url = url.replace(':id', data.school_id);
-
-                    return (
-                        "<a href='" + url + "' class=''>" + data.school_name + " " +
-                        feather.icons['external-link'].toSvg({
-                            class: 'font-small-4 me-50'
-                        }) +
-                        '</a>'
-                    );
-                }
-            },
-            {
                 targets: 3,
-                title: 'School Address',
+                title: 'Head Teacher Name',
                 orderable: false,
                 render: function(data, type, full, meta) {
 
-                    return (
-                        "<span>Village : " + data.village + "<br>" +
-                        "Cluster : " + data.cluster + "<br>" +
-                        "Block : " + data.block + "<br>" +
-                        "District : " + data.district + "<br>" +
-                        "State : " + data.state + "<br>" +
-                        "PIN : " + data.pin + "</span>"
-                    );
+                    return '<span>' + data.headTeacher.teacher_first_name + ' ' + data.headTeacher
+                        .teacher_last_name + '</span>';
                 }
             },
             {
                 targets: 4,
-                title: 'Basic Details',
+                title: 'Head Teacher Name',
                 orderable: false,
                 render: function(data, type, full, meta) {
 
-                    return (
-                        "<span>State Mgmt : " + data.state_management + "<br>" +
-                        "National Mgmt : " + data.national_management + "<br>" +
-                        "School Category : " + data.school_category + "<br>" +
-                        "School Type : " + data.school_type + "</span>"
-                    );
+                    return '<span>' + data.headTeacher.teacher_mobile + '</span>';
                 }
             },
             {
                 targets: 5,
-                title: 'School status',
+                title: 'Head Teacher Name',
                 orderable: false,
                 render: function(data, type, full, meta) {
 
-                    return (
-                        "<span class='badge rounded-pill badge-light-success p-1'>State Mgmt : " +
-                        data
-                        .status + "</span>"
-                    );
+                    return '<span>' + data.headTeacher.teacher_email + '</span>';
                 }
             }
         ],
@@ -210,13 +171,24 @@ function GetSchoolData(schoolName, udice_code, pin) {
             searchPlaceholder: 'Search..'
         },
         lengthMenu: [10, 25, 50, 75, 100],
+        buttons: [{
+            text: feather.icons['plus'].toSvg({
+                class: 'me-50 font-small-4'
+            }) + 'Add New Record',
+            className: 'create-new btn btn-primary',
+            action: function(e, dt, node, config) {
+                window.location.replace("{{url('bmc/schoolInsert')}}");
+            },
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary');
+            }
+        }],
     });
 
 
 }
 
 GetSchoolData('', '', '');
-
 </script>
 
 

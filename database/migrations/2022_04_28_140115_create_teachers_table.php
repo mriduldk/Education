@@ -43,7 +43,7 @@ return new class extends Migration
             $table->string('teacher_tet_category')->nullable();
             $table->string('teacher_category_type')->nullable();
             $table->longText('teacher_image_url')->nullable();
-            $table->boolean('is_head_teacher')->default(true);
+            $table->boolean('is_head_teacher')->default(false);
             $table->timestamp('created_on');
             $table->string('created_by')->nullable();
             $table->dateTime('modified_on')->nullable();

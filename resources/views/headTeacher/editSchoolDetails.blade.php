@@ -326,13 +326,13 @@
                                         placeholder="Library " value="{{ $school->schoolFacility->library }}" />
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="reading_corner">PinCode </label>
                                     <input type="text" id="reading_corner" class="form-control" name="reading_corner"
                                         placeholder="PinCode " value="{{ $school->schoolFacility->reading_corner }}" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="book_bank">Reading Corner </label>

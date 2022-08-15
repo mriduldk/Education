@@ -65,6 +65,16 @@ class HeadTeacherController extends Controller
         $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('headTeacher')->user()->teacher_id)->first();
 
+        if(empty($schoolFacility)){
+            $schoolFacility = new SchoolFacilities();
+        }
+        if(empty($schoolEnreolmentOfStudent)){
+            $schoolEnreolmentOfStudent = new SchoolEntrolmentOfStudent();
+        }
+        if(empty($teacher)){
+            $teacher = new Teacher();
+        }
+
         $school['schoolFacility'] = $schoolFacility;
         $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;
         $school['headTeacher'] = $teacher;
@@ -174,6 +184,16 @@ class HeadTeacherController extends Controller
         $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('headTeacher')->user()->teacher_id)->first();
+
+        if(empty($schoolFacility)){
+            $schoolFacility = new SchoolFacilities();
+        }
+        if(empty($schoolEnreolmentOfStudent)){
+            $schoolEnreolmentOfStudent = new SchoolEntrolmentOfStudent();
+        }
+        if(empty($teacher)){
+            $teacher = new Teacher();
+        }
 
         $school['schoolFacility'] = $schoolFacility;
         $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;

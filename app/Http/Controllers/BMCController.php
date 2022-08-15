@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Models\School;
 use App\Models\Teacher;
 use Carbon\Carbon;
 
@@ -165,7 +166,7 @@ class BMCController extends Controller
     }
 
     public function SchoolList(){
-        return view('BMC/schoolList');
+        return view('BMC/school/schoolList');
     }
 
     public function allTeacherList()
@@ -176,6 +177,63 @@ class BMCController extends Controller
     {
         $teachers = Teacher::where('is_deleted', 0)->get();
         return $teachers;
+    }
+
+
+    public function SchoolData(Request $request)
+    {
+         
+        $schools = School::where('is_deleted', 0)->get();
+
+        foreach($schools as $school){
+            $teacher = Teacher::where('is_deleted', 0)->where('is_head_teacher', 1)->where('fk_school_id', $school->school_id)->first();
+            $school['headTeacher'] = $teacher;
+        }
+        return $schools;
+    }
+    
+    public function schoolInsertPage()
+    {
+        return view('/BMC/school/schoolInsert');
+    }
+    public function schoolInsertProcess(Request $request)
+    {
+        
+        $request->validate([
+            'school_name' => 'required',
+            'udice_code' => 'required',
+            'head_teacher_first_name' => 'required',
+            'head_teacher_last_name' => 'required',
+            'head_teacher_number' => 'required',
+            'head_teacher_email' => 'required'
+          ]);
+
+        $teacher = new Teacher();
+        $school = new School();
+
+        $school->school_id = GenerateID::getId();
+        $school->school_name = $request->school_name;
+        $school->udice_code =$request->udice_code;
+        $school->created_by =  Auth::guard('bmc')->user()->bmc_id;
+        $school->created_on =  Carbon::now()->toDateTimeString();
+        $school ->save();
+
+        $teacher->teacher_id = GenerateID::getId();
+        $teacher->fk_school_id = $school->school_id;
+        $teacher->teacher_first_name = $request->head_teacher_first_name;
+        $teacher->teacher_last_name =$request->head_teacher_last_name;
+        $teacher->teacher_mobile =  $request->head_teacher_number;
+        $teacher->teacher_email =  $request->head_teacher_email;
+        $teacher->teacher_password =  Hash::make('123456');
+        $teacher->is_head_teacher =  1;
+        $teacher->created_by =  Auth::guard('bmc')->user()->bmc_id;
+        $teacher->created_on =  Carbon::now()->toDateTimeString();
+        $teacher ->save();
+
+
+        return response()->success('School added successfully', 'school', $school);
+
+
     }
 
 

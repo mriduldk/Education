@@ -415,6 +415,9 @@ Route::middleware('user-access:bmc')->group(function () {
         Route::get('blockSelect', [BMCController::class, 'BlockSelect']);
 
         Route::get('schoolList', [BMCController::class, 'SchoolList']);
+        Route::get('schoolData', [BMCController::class, 'SchoolData']);
+        Route::get('schoolInsert', [BMCController::class, 'schoolInsertPage']);
+        Route::post('insert-school', [BMCController::class, 'schoolInsertProcess']);
 
         Route::get('teacherList', [BMCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [BMCController::class, 'AllTeacherData']);
@@ -597,16 +600,15 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'user-access:districtAdmin'])->group(function () {
+Route::middleware('user-access:districtAdmin')->group(function () {
 
-    Route::get('/districtAdminDashboard', [DashboardController::class, 'districtAdminDashboard'])->name('districtAdminDashboard');
+    //Route::get('/districtAdminDashboard', [DashboardController::class, 'districtAdminDashboard'])->name('districtAdminDashboard');
 
-    Route::get('/schoolDetails', [SchoolDetailsController::class, 'schoolDetails'])->name('schoolDetails');
-    Route::get('/schoolInsert', [SchoolDetailsController::class, 'schoolInsert'])->name('schoolInsert');
-    Route::get('/schoolList', [SchoolDetailsController::class, 'schoolList'])->name('schoolList');
+    //Route::get('/schoolDetails', [SchoolDetailsController::class, 'schoolDetails'])->name('schoolDetails');
+    //Route::get('/schoolInsert', [SchoolDetailsController::class, 'schoolInsert'])->name('schoolInsert');
+    //Route::get('/schoolList', [SchoolDetailsController::class, 'schoolList'])->name('schoolList');
 
 });
-
 
 
 Route::get('headTeacherLogin', [HeadTeacherController::class, 'HeadTeacherLoginPage'])->name('HeadTeacherLoginPage');
