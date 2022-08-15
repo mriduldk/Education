@@ -10,6 +10,7 @@ class TeacherLeave extends Model
     use HasFactory;
 
     protected $fillable = [
+        'leave_application_no',
         'teacher_leave_id',
         'fk_teacher_id',
         'fk_school_id',

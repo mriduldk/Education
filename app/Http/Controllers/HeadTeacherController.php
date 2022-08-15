@@ -8,20 +8,62 @@ use App\Models\SchoolEntrolmentOfStudent;
 use App\Models\SchoolFacilities;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
+use App\HTTP\GenerateID;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class HeadTeacherController extends Controller
 {
+
+    /** Authentications */
+    public function HeadTeacherLoginPage()
+    {
+        return view('headTeacher/login/headTeacherLogin');
+    }
+
+    public function HeadTeacherLoginCheck(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        // $teacher = User::create([
+        //     'name' => "Admin",
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'type' => 1
+        // ]);
+
+        $teacher = Teacher::where('teacher_email', $request->email)->where('is_deleted', 0)->where('is_head_teacher', 1)->first();
+        if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
+        {
+            Auth::guard('headTeacher')->login($teacher);
+            return response()->success('Head Teacher Login Successful', 'teacher', $teacher);
+        } 
+        else
+        {
+            return response()->errorUnauthorised('Wrong Credentials of Head Teacher. Please try again.');
+        }
+    }
+
+    public function HeadTeacherLogout()
+    {
+        Auth::guard('headTeacher')->logout();
+        return view('headTeacher/login/headTeacherLogin');
+        //return redirect()->route('HeadTeacherLoginPage');
+    }
+
+
+
+    /**Dashboard */
     public function headTeacherDashboard()
     {
 
-        $school_id = Auth::guard('teacher')->user()->fk_school_id;
+        $school_id = Auth::guard('headTeacher')->user()->fk_school_id;
 
         $school = School::where('is_deleted', 0)->where('school_id', $school_id)->first();
 
         $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
-        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('headTeacher')->user()->teacher_id)->first();
 
         $school['schoolFacility'] = $schoolFacility;
         $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;
@@ -34,17 +76,104 @@ class HeadTeacherController extends Controller
     {
         return view('/headTeacher/allTeacherList');
     }
+    public function LeaveApplicationList()
+    {
+        return view('/headTeacher/leaveApplicationList');
+    }
+    public function AllTeacherOfSchool()
+    {
+        $teachers = Teacher::where('is_deleted', 0)->where('fk_school_id', Auth::guard('headTeacher')->user()->fk_school_id)->get();
+        return $teachers;
+    }
+    public function DeleteTeacher()
+    {
+        $teacher = Teacher::where('is_deleted', 0)->first();
+
+        if(empty($teacher)) {
+            return response()->errorNotFound('Teacher data not found.');
+        } else {
+            $teacher->is_deleted = 1;
+            $teacher->deleted_by = Auth::guard('headTeacher')->user()->teacher_id;
+            $teacher->deleted_on = Carbon::now()->toDateTimeString();
+    
+            $teacher->save();
+            return response()->success('Teacher deleted successfully.', 'teacher', null);
+        }
+    }
+    public function AddTeacher(Request $request)
+    {
+        $request->validate([
+            'teacher_employee_code' => 'required',
+            'teacher_first_name' => 'required',
+            'teacher_last_name' => 'required',
+            'teacher_mobile' => 'required',
+            'teacher_email' => 'required'
+          ]);
+
+        $teacher = new Teacher();
+
+        $teacher->teacher_id = GenerateID::getId();
+        $teacher->fk_school_id =  Auth::guard('headTeacher')->user()->fk_school_id;
+        $teacher->teacher_employee_code = $request->teacher_employee_code;
+        $teacher->teacher_first_name = $request->teacher_first_name;
+        $teacher->teacher_last_name =$request->teacher_last_name;
+        $teacher->teacher_mobile =  $request->teacher_mobile;
+        $teacher->teacher_email =  $request->teacher_email;
+        $teacher->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacher->created_on =  Carbon::now()->toDateTimeString();
+        $teacher ->save();
+
+        return response()->success('Teacher added successfully', 'teacher', $teacher);
+    }
+    public function EditTeacher(string $teacher_id){
+
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $teacher_id)->first();
+
+        return view ('headTeacher/editTeacher')->with('teacher', $teacher);
+    } 
+    public function UpdateTeacher(Request $request)
+    {
+        $request->validate([
+            'teacher_employee_code' => 'required',
+            'teacher_first_name' => 'required',
+            'teacher_last_name' => 'required',
+            'teacher_mobile' => 'required',
+            'teacher_email' => 'required'
+          ]);
+
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $request->teacher_id)->first();
+
+        if(empty($teacher)) {
+            return response()->errorNotFound('Teacher data not found.');
+        } else {
+
+            $teacher->teacher_employee_code =  $request->teacher_employee_code;
+            $teacher->teacher_first_name = $request->teacher_first_name;
+            $teacher->teacher_last_name = $request->teacher_last_name;
+            $teacher->teacher_mobile =  $request->teacher_mobile;
+            $teacher->teacher_email =  $request->teacher_email;
+            $teacher->modified_by =  Auth::guard('headTeacher')->user()->teacher_id;
+            $teacher->modified_on =  Carbon::now()->toDateTimeString();
+    
+            $teacher->save();
+    
+            return response()->success('Teacher updated successfully', 'teacher', $teacher);
+        }
+    }
+
+
+
 
     public function EditSchoolDetails()
     {
 
-        $school_id = Auth::guard('teacher')->user()->fk_school_id;
+        $school_id = Auth::guard('headTeacher')->user()->fk_school_id;
 
         $school = School::where('is_deleted', 0)->where('school_id', $school_id)->first();
 
         $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
-        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('headTeacher')->user()->teacher_id)->first();
 
         $school['schoolFacility'] = $schoolFacility;
         $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;
@@ -55,9 +184,9 @@ class HeadTeacherController extends Controller
     public function UpdateSchoolDetails(Request $request)
     {
 
-        $school_id = Auth::guard('teacher')->user()->fk_school_id;
+        $school_id = Auth::guard('headTeacher')->user()->fk_school_id;
 
-        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('headTeacher')->user()->teacher_id)->first();
         $school = School::where('is_deleted', 0)->where('school_id', $school_id)->first();
         $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school_id)->first();
         $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school_id)->first();
@@ -103,7 +232,7 @@ class HeadTeacherController extends Controller
             $school->pre_primary = $request->pre_primary;
             $school->class_rooms = $request->class_rooms;
             $school->other_rooms = $request->other_rooms;
-            $school->modified_by = Auth::guard('teacher')->user()->teacher_id;
+            $school->modified_by = Auth::guard('headTeacher')->user()->teacher_id;
             $school->modified_on = Carbon::now()->toDateTimeString();
             $school->save();
 
@@ -128,7 +257,7 @@ class HeadTeacherController extends Controller
             $schoolFacility->internet = $request->internet;
             $schoolFacility->dth = $request->dth;
             $schoolFacility->functional_web_cam = $request->functional_web_cam;
-            $schoolFacility->modified_by = Auth::guard('teacher')->user()->teacher_id;
+            $schoolFacility->modified_by = Auth::guard('headTeacher')->user()->teacher_id;
             $schoolFacility->modified_on = Carbon::now()->toDateTimeString();
             $schoolFacility->save();
 
@@ -150,7 +279,7 @@ class HeadTeacherController extends Controller
             $schoolEnreolmentOfStudent->total_male_students = $request->total_male_students;
             $schoolEnreolmentOfStudent->total_female_students = $request->total_female_students;
             $schoolEnreolmentOfStudent->total_teachers = $request->total_teachers;
-            $schoolEnreolmentOfStudent->modified_by = Auth::guard('teacher')->user()->teacher_id;
+            $schoolEnreolmentOfStudent->modified_by = Auth::guard('headTeacher')->user()->teacher_id;
             $schoolEnreolmentOfStudent->modified_on = Carbon::now()->toDateTimeString();
             $schoolEnreolmentOfStudent->save();
 
@@ -166,9 +295,7 @@ class HeadTeacherController extends Controller
         return view('/headTeacher/editHeadTeacher');
     }
 
-    public function addTeacher(){
-        return view ('headTeacher/addTeacher');
-    }   
+      
     public function bmcDashboard(){
         return view('bmcDashboard/bmcDashboard');
     }

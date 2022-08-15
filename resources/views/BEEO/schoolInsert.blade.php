@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Add Teacher')
+@section('title', 'Add School Details')
 
 @section('vendor-style')
 <!-- vendor css files -->
@@ -36,36 +36,109 @@
             <form class="form form-vertical">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Teacher</h4>
+                        <h4 class="card-title">Basic Information</h4>
                     </div>
                     <div class="card-body">
 
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Enter Teacher Name</label>
+                                    <label class="form-label" for="first-name-vertical">School Name</label>
                                     <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Teacher Name   " />
+                                        placeholder="School Name" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="email-id-vertical">Enter Teacher contact number</label>
+                                    <label class="form-label" for="email-id-vertical">UDISE CODE</label>
                                     <input type="number" id="email-id-vertical" class="form-control" name="email-id"
-                                        placeholder="Enter Contact number" />                                    
+                                        placeholder="UDISE CODE" />
                                 </div>
-                            </div>                                                 
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="col-12">
-                            <button type="reset" class="btn btn-primary me-1">Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="contact-info-vertical">Head Teacher</label>
+                                    <input type="text" id="contact-info-vertical" class="form-control" name="contact"
+                                        placeholder="Head Teacher" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="password-vertical">Head Teacher Number</label>
+                                    <input type="number" id="password-vertical" class="form-control" name="contact"
+                                        placeholder="Head Teacher Number" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="first-name-vertical">Head Teacher Email</label>
+                                    <input type="email" id="first-name-vertical" class="form-control" name="fname"
+                                        placeholder="Head Teacher Email" />
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">School Address</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="email-id-vertical">Village </label>
+                                    <input type="text" id="email-id-vertical" class="form-control" name="email-id"
+                                        placeholder="Village " />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="contact-info-vertical">Cluster </label>
+                                    <input type="text" id="contact-info-vertical" class="form-control" name="contact"
+                                        placeholder="Cluster " />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="password-vertical">Block </label>
+                                    <input type="text" id="password-vertical" class="form-control" name="contact"
+                                        placeholder="Block " />
+                                </div>
+                            </div>
 
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="first-name-vertical">District </label>
+                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
+                                        placeholder="District " />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="email-id-vertical">State </label>
+                                    <input type="text" id="email-id-vertical" class="form-control" name="email-id"
+                                        placeholder="State " />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
+                                    <label class="form-label" for="contact-info-vertical">PinCode </label>
+                                    <input type="number" id="contact-info-vertical" class="form-control" name="contact"
+                                        placeholder="PinCode " />
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="reset" class="btn btn-primary me-1">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </form>
         </div>
     </div>

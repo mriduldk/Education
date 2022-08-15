@@ -73,7 +73,8 @@
                                 <div class="col-3">
                                     <div class="mb-1">
                                         <label class="form-label" for="first-name-vertical">Date</label>
-                                        <input type="date" id="first-name-vertical" class="form-control" name="date" id="date" />
+                                        <input type="date" id="first-name-vertical" class="form-control" name="date"
+                                            id="date" />
                                     </div>
                                 </div>
 
@@ -149,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
 
             </form>
         </div>

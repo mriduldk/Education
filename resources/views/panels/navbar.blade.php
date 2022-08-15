@@ -35,6 +35,32 @@
                             <span class="user-name fw-bolder">
                                 @if (Auth::guard('teacher')->check())
                                 {{ Auth::guard('teacher')->user()->teacher_first_name }}
+
+                                @elseif (Auth::guard('headTeacher')->check())
+                                {{ Auth::guard('is')->user()->teacher_first_name }}
+
+                                @elseif (Auth::guard('is')->check())
+                                {{ Auth::guard('is')->user()->is_name }}
+
+                                @elseif (Auth::guard('dpc')->check())
+                                {{ Auth::guard('dpc')->user()->dpc_name }}
+
+                                @elseif (Auth::guard('dmc')->check())
+                                {{ Auth::guard('dmc')->user()->dmc_name }}
+
+                                @elseif (Auth::guard('deeo')->check())
+                                {{ Auth::guard('deeo')->user()->deeo_name }}
+
+                                @elseif (Auth::guard('di')->check())
+                                {{ Auth::guard('di')->user()->di_name }}
+
+                                @elseif (Auth::guard('beeo')->check())
+                                {{ Auth::guard('beeo')->user()->beeo_name }}
+
+                                @elseif (Auth::guard('chd')->check())
+                                {{ Auth::guard('chd')->user()->chd_name }}
+
+
                                 @else
                                 Admin
                                 @endif
@@ -53,6 +79,7 @@
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         
                         @if (Auth::guard('teacher')->check())
+
                         <a class="dropdown-item" href="{{ url('teacher-logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="me-50" data-feather="power"></i> Logout
@@ -60,7 +87,89 @@
                         <form method="POST" id="logout-form" action="{{ url('teacher-logout') }}">
                             @csrf
                         </form>
+
+                        @elseif (Auth::guard('headTeacher')->check())
+
+                        <a class="dropdown-item" href="{{ url('headTeacher-logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('headTeacher-logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('is')->check())
+
+                        <a class="dropdown-item" href="{{ url('is/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('is/logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('dpc')->check())
+
+                        <a class="dropdown-item" href="{{ url('dpc/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('dpc/logout') }}">
+                            @csrf
+                        </form>
+                        
+                        @elseif (Auth::guard('dmc')->check())
+
+                        <a class="dropdown-item" href="{{ url('dmc/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('dmc/logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('deeo')->check())
+
+                        <a class="dropdown-item" href="{{ url('deeo/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('deeo/logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('di')->check())
+
+                        <a class="dropdown-item" href="{{ url('di/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('di/logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('beeo')->check())
+
+                        <a class="dropdown-item" href="{{ url('beeo/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('beeo/logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('chd')->check())
+
+                        <a class="dropdown-item" href="{{ url('chd/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('chd/logout') }}">
+                            @csrf
+                        </form>
+
                         @else
+
                         <a class="dropdown-item"
                             href="{{ Route::has('adminLogin') ? route('adminLogin') : 'javascript:void(0)' }}">
                             <i class="me-50" data-feather="log-in"></i> Login

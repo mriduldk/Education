@@ -17,10 +17,28 @@ class UserAccess
      */
     public function handle(Request $request, Closure $next, $userType)
     {
-        if(Auth::check()){
+        if(Auth::guard($userType)->check()){
+            
             return $next($request);
-        }
 
-        return redirect('adminLogin');
+        } else if ($userType == 'teacher') {
+
+            return redirect('teacherLogin');
+        }
+        else if ($userType == 'headTeacher') {
+
+            return redirect('headTeacherLogin');
+        }
+        else if ($userType == 'is' || $userType == 'dpc' || $userType == 'deeo' || $userType == 'dmc' || $userType == 'di' || $userType == 'beeo') {
+
+            return redirect('officer/login');
+        }
+        else if ($userType == 'chd') {
+
+            return redirect('chd/login');
+        }
+        else {
+            return redirect('adminLogin');
+        }
     }
 }

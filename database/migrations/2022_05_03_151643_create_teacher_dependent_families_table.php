@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('teacher_dependent_families', function (Blueprint $table) {
             $table->id();
             $table->string('teacher_d_f_id')->unique();
-            $table->string('fk_teacher_id')->unique();
+            $table->string('fk_teacher_id');
             $table->string('name')->nullable();
             $table->date('dob')->nullable();
             $table->string('gender')->nullable();

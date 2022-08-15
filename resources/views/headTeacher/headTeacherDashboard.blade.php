@@ -101,11 +101,11 @@
                         <span class="fw-bold"><i data-feather='user-check'></i> Enrolment of The Students</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="btnLeaveApplication" onclick="clicked()">
                         <span class="fw-bold"><i data-feather='user-check'></i> Leave Applications</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
             <!--/ User Pills -->
 
@@ -415,7 +415,7 @@
             </div>
 
 
-            <div id="divLeaveApplication">
+            <!-- <div id="divLeaveApplication">
                 <div class="card">
                     <h4 class="card-header">Leave Applications</h4>
                     <div class="table-responsive">
@@ -452,7 +452,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 </section>
@@ -460,9 +460,9 @@
 
 
 <!-- Floating Button-->
-<div class="buy-now">
+<!-- <div class="buy-now">
     <a href="#" target="_blank" class="btn btn-danger"><i data-feather='plus-circle'></i> Add Teacher</a>
-</div>
+</div> -->
 
 
 <script>

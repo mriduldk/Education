@@ -1,0 +1,46 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/beeo/dashboard",
+      "icon": "home",
+      "slug": "/beeo/dashboard"
+    },
+    {
+      "url": "/beeo/schoolList",
+      "name": "School List",
+      "icon": "hexagon",
+      "slug": "/beeo/schoolList"
+    },
+    {
+      "url": "/beeo/teacherList",
+      "name": "Teacher List",
+      "icon": "hexagon",
+      "slug": "/beeo/teacherList"
+    },
+    {
+      "navheader": "Management",
+      "slug": ""
+    },
+    {
+      "url": "/beeo/approverList",
+      "name": "Approver List",
+      "icon": "hexagon",
+      "slug": "/beeo/approverList"
+    },
+    {
+      "url": "/beeo/managerList",
+      "name": "Manager List",
+      "icon": "square",
+      "slug": "/beeo/managerList"
+    },
+    {
+      "url": "/beeo/deoList",
+      "name": "DEO List",
+      "icon": "list",
+      "slug": "/beeo/deoList"
+    }
+
+    
+  ]
+}

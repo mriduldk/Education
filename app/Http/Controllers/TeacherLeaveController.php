@@ -43,6 +43,7 @@ class TeacherLeaveController extends Controller
 
 
         $teacherLeave->teacher_leave_id = GenerateID::getId();
+        $teacherLeave->leave_application_no = rand(100000,999999);
         $teacherLeave->fk_teacher_id =  $teacher->teacher_id;
         $teacherLeave->fk_school_id = $teacher->fk_school_id;
         $teacherLeave->fk_head_teacher_id = $headTeacher->teacher_id;
@@ -61,20 +62,29 @@ class TeacherLeaveController extends Controller
           
     }
 
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TeacherLeave  $teacherLeave
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TeacherLeave $teacherLeave)
+    public function showAll()
     {
-        //
+        $leaves = TeacherLeave::where('is_deleted', 0)->get();
+
+        foreach($leaves as $leave){
+            $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $leave->fk_teacher_id)->first();
+
+            $leave['teacher'] = $teacher;    
+        }
+        return $leaves;
     }
+    public function GetLeaveApplicationDetails(string $id)
+    {
+        $leave = TeacherLeave::where('is_deleted', 0)->where('id', $id)->first();
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $leave->fk_teacher_id)->first();
+
+        $leave['teacher'] = $teacher;
+        return $leave;
+    }
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -19,13 +19,31 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\TenderController;
 use App\Http\Controllers\LatestUpdateController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\BEEOAuthController;
+use App\Http\Controllers\BEEOController;
+use App\Http\Controllers\CHDAuthController;
+use App\Http\Controllers\CHDController;
+use App\Http\Controllers\DEEOAuthController;
+use App\Http\Controllers\DEEOController;
+use App\Http\Controllers\DEOAuthController;
+use App\Http\Controllers\DIAuthController;
+use App\Http\Controllers\DIController;
+use App\Http\Controllers\DMCAuthController;
+use App\Http\Controllers\DMCController;
+use App\Http\Controllers\DPCAuthController;
+use App\Http\Controllers\DPCController;
 use App\Http\Controllers\KnowYourSchoolController;
 use App\Http\Controllers\SchoolDetailsController;
 use App\Http\Middleware\UserAccess;
 use App\Http\Controllers\exampleController;
 use App\Http\Controllers\HeadTeacherController;
+use App\Http\Controllers\ISAuthController;
+use App\Http\Controllers\OfficerAuthController;
+use App\Http\Controllers\ISController;
 use App\Http\Controllers\leaveApplication;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherLeaveController;
 
@@ -40,16 +58,431 @@ use App\Http\Controllers\TeacherLeaveController;
 |
 */
 
+Route::group(['prefix' => 'officer'], function () {
+
+    Route::post('login-check', [OfficerAuthController::class, 'ProcessLogin']);
+    Route::get('login', [OfficerAuthController::class, 'LoginPage']);
+});
 
 
-// Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-// Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
-// Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::middleware('user-access:is')->group(function () {
 
-// Route::group(['middleware' => ['auth:admin']], function () {
-// });
-// Route::get('/adminDashboard', [DashboardController::class, 'adminDashboard'])->name('admin.adminDashboard');
+    Route::group(['prefix' => 'is'], function () {
 
+        Route::post('logout', [OfficerAuthController::class, 'ISLogout']);
+
+        Route::get('dashboard', [ISController::class, 'IsDashboard']);
+        Route::get('blockSelect', [ISController::class, 'IsBlockSelect']);
+
+        Route::get('schoolList', [ISController::class, 'SchoolList']);
+
+        Route::get('teacherList', [ISController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [ISController::class, 'AllTeacherData']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/IS/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/IS/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/IS/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+    });
+
+});
+
+Route::middleware('user-access:dpc')->group(function () {
+
+    Route::group(['prefix' => 'dpc'], function () {
+
+        Route::post('logout', [OfficerAuthController::class, 'DPCLogout']);
+
+        Route::get('dashboard', [DPCController::class, 'Dashboard']);
+        Route::get('blockSelect', [DPCController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [DPCController::class, 'SchoolList']);
+
+        Route::get('teacherList', [DPCController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [DPCController::class, 'AllTeacherData']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/DPC/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/DPC/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/DPC/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+    });
+
+});
+
+Route::middleware('user-access:deeo')->group(function () {
+
+    Route::group(['prefix' => 'deeo'], function () {
+
+        Route::post('logout', [OfficerAuthController::class, 'DEEOLogout']);
+
+        Route::get('dashboard', [DEEOController::class, 'Dashboard']);
+        Route::get('blockSelect', [DEEOController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [DEEOController::class, 'SchoolList']);
+
+        /** Teacher */
+        Route::get('teacherList', [DEEOController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [DEEOController::class, 'AllTeacherData']);
+
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/DEEO/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/DEEO/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/DEEO/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+        /** DI */
+        Route::get('diList', [DIAuthController::class, 'allDIList']);
+        Route::get('all-di-data', [DIAuthController::class, 'AllDIData']);
+        Route::post('insert-di', [DIAuthController::class, 'InsertDI']);
+        Route::post('update-di', [DIAuthController::class, 'UpdateDI']);
+        Route::get('di-data-for-edit', [DIAuthController::class, 'GetDIDataForEdit']);
+        Route::post('di-delete', [DIAuthController::class, 'DIDelete']);
+
+        /** BEEO */
+        Route::get('beeoList', [BEEOAuthController::class, 'allBEEOList']);
+        Route::get('all-beeo-data', [BEEOAuthController::class, 'AllBEEOData']);
+        Route::post('insert-beeo', [BEEOAuthController::class, 'InsertBEEO']);
+        Route::post('update-beeo', [BEEOAuthController::class, 'UpdateBEEO']);
+        Route::get('beeo-data-for-edit', [BEEOAuthController::class, 'GetBEEODataForEdit']);
+        Route::post('beeo-delete', [BEEOAuthController::class, 'BEEODelete']);
+
+
+    });
+
+});
+
+Route::middleware('user-access:dmc')->group(function () {
+
+    Route::group(['prefix' => 'dmc'], function () {
+
+        Route::post('logout', [OfficerAuthController::class, 'DMCLogout']);
+
+        Route::get('dashboard', [DMCController::class, 'Dashboard']);
+        Route::get('blockSelect', [DMCController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [DMCController::class, 'SchoolList']);
+
+        Route::get('teacherList', [DMCController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [DMCController::class, 'AllTeacherData']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/DMC/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/DMC/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/DMC/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+    });
+
+});
+
+Route::middleware('user-access:di')->group(function () {
+
+    Route::group(['prefix' => 'di'], function () {
+
+        Route::post('logout', [OfficerAuthController::class, 'DILogout']);
+
+        Route::get('dashboard', [DIController::class, 'Dashboard']);
+        Route::get('blockSelect', [DIController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [DIController::class, 'SchoolList']);
+
+        Route::get('teacherList', [DIController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [DIController::class, 'AllTeacherData']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/DI/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+
+         /** Manager */
+         Route::get('managerList', function () {
+            return view('/DI/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/DI/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+    });
+
+});
+
+Route::middleware('user-access:beeo')->group(function () {
+
+    Route::group(['prefix' => 'beeo'], function () {
+
+        Route::post('logout', [OfficerAuthController::class, 'BEEOLogout']);
+
+        Route::get('dashboard', [BEEOController::class, 'Dashboard']);
+        Route::get('blockSelect', [BEEOController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [BEEOController::class, 'SchoolList']);
+
+        Route::get('teacherList', [BEEOController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [BEEOController::class, 'AllTeacherData']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/BEEO/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/BEEO/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/BEEO/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+    });
+
+});
+
+
+Route::group(['prefix' => 'chd'], function () {
+
+    Route::post('login-check', [CHDAuthController::class, 'ProcessLogin']);
+    Route::get('login', [CHDAuthController::class, 'LoginPage']);
+});
+
+Route::middleware('user-access:chd')->group(function () {
+
+    Route::group(['prefix' => 'chd'], function () {
+
+        Route::post('logout', [CHDAuthController::class, 'Logout']);
+
+        Route::get('dashboard', [CHDController::class, 'Dashboard']);
+        Route::get('blockSelect', [CHDController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [CHDController::class, 'SchoolList']);
+
+        Route::get('teacherList', [CHDController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [CHDController::class, 'AllTeacherData']);
+
+        /** IS */
+        Route::get('isList', [ISAuthController::class, 'allISList']);
+        Route::get('all-is-data', [ISAuthController::class, 'AllISData']);
+        Route::post('insert-is', [ISAuthController::class, 'InsertIS']);
+        Route::post('update-is', [ISAuthController::class, 'UpdateIS']);
+        Route::get('is-data-for-edit', [ISAuthController::class, 'GetISDataForEdit']);
+        Route::post('is-delete', [ISAuthController::class, 'ISDelete']);
+
+        /** DPC */
+        Route::get('dpcList', [DPCAuthController::class, 'allDPCList']);
+        Route::get('all-dpc-data', [DPCAuthController::class, 'AllDPCData']);
+        Route::post('insert-dpc', [DPCAuthController::class, 'InsertDPC']);
+        Route::post('update-dpc', [DPCAuthController::class, 'UpdateDPC']);
+        Route::get('dpc-data-for-edit', [DPCAuthController::class, 'GetDPCDataForEdit']);
+        Route::post('dpc-delete', [DPCAuthController::class, 'DPCDelete']);
+
+        /** DMC */
+        Route::get('dmcList', [DMCAuthController::class, 'allDMCList']);
+        Route::get('all-dmc-data', [DMCAuthController::class, 'AllDMCData']);
+        Route::post('insert-dmc', [DMCAuthController::class, 'InsertDMC']);
+        Route::post('update-dmc', [DMCAuthController::class, 'UpdateDMC']);
+        Route::get('dmc-data-for-edit', [DMCAuthController::class, 'GetDMCDataForEdit']);
+        Route::post('dmc-delete', [DMCAuthController::class, 'DMCDelete']);
+
+        /** DEEO */
+        Route::get('deeoList', [DEEOAuthController::class, 'allDEEOList']);
+        Route::get('all-deeo-data', [DEEOAuthController::class, 'AllDEEOData']);
+        Route::post('insert-deeo', [DEEOAuthController::class, 'InsertDEEO']);
+        Route::post('update-deeo', [DEEOAuthController::class, 'UpdateDEEO']);
+        Route::get('deeo-data-for-edit', [DEEOAuthController::class, 'GetDEEODataForEdit']);
+        Route::post('deeo-delete', [DEEOAuthController::class, 'DEEODelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/CHD/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/CHD/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/CHD/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+
+    });
+
+});
+
+
+
+Route::get('searchedSchoolData', [KnowYourSchoolController::class, 'searchedSchoolData'])->name('searchedSchoolData');
 
 Route::get('knowYourSchool', [KnowYourSchoolController::class, 'knowYourSchool']);
 Route::get('searchSchoolTable', [KnowYourSchoolController::class, 'show']);
@@ -110,26 +543,39 @@ Route::middleware(['auth', 'user-access:districtAdmin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'user-access:headTeacher'])->group(function () {
 
-    //Route::get('/headTeacherDashboard', [DashboardController::class, 'headTeacherDashboard'])->name('headTeacherDashboard');
-    //Route::get('/allTeacherList', [SchoolDetailsController::class, 'allTeacherList'])->name('allTeacherList');
-    //Route::get('/schoolInsertHeadTeacher', [SchoolDetailsController::class, 'schoolInsertHeadTeacher'])->name('schoolInsertHeadTeacher');
-    //Route::get('/editHeadTeacher', [SchoolDetailsController::class, 'editHeadTeacher'])->name('editHeadTeacher');
+Route::get('headTeacherLogin', [HeadTeacherController::class, 'HeadTeacherLoginPage'])->name('HeadTeacherLoginPage');
+Route::post('headTeacherLogin-check', [HeadTeacherController::class, 'HeadTeacherLoginCheck']);
+Route::post('headTeacher-logout', [HeadTeacherController::class, 'HeadTeacherLogout'])->name('HeadTeacherLogout');
+
+
+Route::middleware('user-access:headTeacher')->group(function () {
+
+    Route::get('headTeacherDashboard', [HeadTeacherController::class, 'headTeacherDashboard'])->name('headTeacherDashboard');
+
+    Route::get('leaveApplicationList', [HeadTeacherController::class, 'LeaveApplicationList'])->name('LeaveApplicationList');
+    Route::get('get-all-leave-application', [TeacherLeaveController::class, 'showAll']);
+    Route::get('get-one-leave-application/{id}', [TeacherLeaveController::class, 'GetLeaveApplicationDetails'])->name('GetLeaveApplicationDetails');
+
+
+    Route::get('allTeacherList', [HeadTeacherController::class, 'allTeacherList'])->name('allTeacherList');
+    Route::get('all-teachers-of-school', [HeadTeacherController::class, 'AllTeacherOfSchool']);
+    Route::post('teacher-delete', [HeadTeacherController::class, 'DeleteTeacher']);
+    Route::post('teacher-add', [HeadTeacherController::class, 'AddTeacher']);
+    Route::get('editTeacher/{id}', [HeadTeacherController::class, 'EditTeacher'])->name('editTeacher');
+    Route::post('teacher-edit', [HeadTeacherController::class, 'UpdateTeacher']);
+
+    Route::get('editSchoolDetails', [HeadTeacherController::class, 'EditSchoolDetails'])->name('EditSchoolDetails');
+    Route::post('edit-school-details', [HeadTeacherController::class, 'UpdateSchoolDetails']);
+
+    Route::get('editHeadTeacher', [HeadTeacherController::class, 'editHeadTeacher'])->name('editHeadTeacher');
+    Route::get('teacherDatas', [HeadTeacherController::class, 'teacherDatas']);
+    Route::get('bmcDashboard', [HeadTeacherController::class, 'bmcDashboard']);
+    Route::get('AccessRoles', [HeadTeacherController::class, 'AccessRoles']);
+    Route::get('dataEntry', [HeadTeacherController::class, 'dataEntryOperator']);
+    Route::get('addSchool', [HeadTeacherController::class, 'addSchool']);
+
 });
-Route::get('headTeacherDashboard', [HeadTeacherController::class, 'headTeacherDashboard'])->name('headTeacherDashboard');
-Route::get('allTeacherList', [HeadTeacherController::class, 'allTeacherList'])->name('allTeacherList');
-
-Route::get('editSchoolDetails', [HeadTeacherController::class, 'EditSchoolDetails'])->name('EditSchoolDetails');
-Route::post('edit-school-details', [HeadTeacherController::class, 'UpdateSchoolDetails']);
-
-Route::get('editHeadTeacher', [HeadTeacherController::class, 'editHeadTeacher'])->name('editHeadTeacher');
-Route::get('addTeacher', [HeadTeacherController::class, 'addTeacher']);
-Route::get('teacherDatas', [HeadTeacherController::class, 'teacherDatas']);
-Route::get('bmcDashboard', [HeadTeacherController::class, 'bmcDashboard']);
-Route::get('AccessRoles', [HeadTeacherController::class, 'AccessRoles']);
-Route::get('dataEntry', [HeadTeacherController::class, 'dataEntryOperator']);
-Route::get('addSchool', [HeadTeacherController::class, 'addSchool']);
 
 
 
@@ -138,36 +584,26 @@ Route::get('teacherLogin', [TeacherController::class, 'TeacherLoginPage'])->name
 Route::post('teacherLogin-check', [TeacherController::class, 'TeacherLoginCheck']);
 Route::post('teacher-logout', [TeacherController::class, 'TeacherLogout']);
 
-Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
+Route::middleware('user-access:teacher')->group(function () {
 
-Route::get('editEmployeementDetails', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
-Route::post('update-employeement-details', [TeacherController::class, 'UpdateEmployeementDetails']);
-Route::get('insertEmployeementDetails', [TeacherController::class, 'InsertEmployeementDetails'])->name('InsertEmployeementDetails');;
-Route::post('insert-employeement-details', [TeacherController::class, 'StoreEmployeementDetails']);
-    
-Route::get('editSalaryAccount', [TeacherController::class, 'EditSalaryAccount']);
-Route::post('update-salary-account', [TeacherController::class, 'UpdateTeacherSalaryAccount']);
-Route::get('insertSalaryAccount', [TeacherController::class, 'InsertSalaryAccount'])->name('InsertSalaryAccount');
-Route::post('insert-salary-account', [TeacherController::class, 'StoreSalaryAccount']);
+    Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
 
-Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
-Route::get('insertTeacherQualification', [TeacherController::class, 'InsertTeacherQualification']);
-Route::post('insert-teacher-qualification', [TeacherController::class, 'StoreTeacherQualification']);
+    Route::get('editEmployeementDetails', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
+    Route::post('update-employeement-details', [TeacherController::class, 'UpdateEmployeementDetails']);
+    Route::get('insertEmployeementDetails', [TeacherController::class, 'InsertEmployeementDetails'])->name('InsertEmployeementDetails');;
+    Route::post('insert-employeement-details', [TeacherController::class, 'StoreEmployeementDetails']);
+        
+    Route::get('editSalaryAccount', [TeacherController::class, 'EditSalaryAccount']);
+    Route::post('update-salary-account', [TeacherController::class, 'UpdateTeacherSalaryAccount']);
+    Route::get('insertSalaryAccount', [TeacherController::class, 'InsertSalaryAccount'])->name('InsertSalaryAccount');
+    Route::post('insert-salary-account', [TeacherController::class, 'StoreSalaryAccount']);
 
-Route::get('reviewTeacherDetails', [TeacherController::class, 'ReviewTeacherDetails']);
-Route::post('store-teacher-details', [TeacherController::class, 'StoreTeacherDetails']);
+    Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
+    Route::get('insertTeacherQualification', [TeacherController::class, 'InsertTeacherQualification']);
+    Route::post('insert-teacher-qualification', [TeacherController::class, 'StoreTeacherQualification']);
 
-
-Route::middleware(['auth', 'user-access:teacher'])->group(function () {
-
-    //Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
-    
-    // Route::get('editEmployeementDetails\{id}', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
-    
-    // Route::get('editSalaryAccount', [TeacherController::class, 'EditSalaryAccount']);
-    // Route::post('update-salary-account', [TeacherController::class, 'UpdateTeacherSalaryAccount']);
-    
-    // Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
+    Route::get('reviewTeacherDetails', [TeacherController::class, 'ReviewTeacherDetails']);
+    Route::post('store-teacher-details', [TeacherController::class, 'StoreTeacherDetails']);
 
 });
 
@@ -183,9 +619,9 @@ Route::get('districtAdminLogin', [AdminController::class, 'index'])->name('distr
 Route::post('districtAdmin-login-check', [AdminController::class, 'authenticate']);
 Route::post('districtAdmin-logout', [AdminController::class, 'logout'])->name('districtAdmin-logout');
 
-Route::get('headTeacherLogin', [AdminController::class, 'index'])->name('headTeacherLogin');
-Route::post('headTeacher-login-check', [AdminController::class, 'authenticate']);
-Route::post('headTeacher-logout', [AdminController::class, 'logout'])->name('headTeacher-logout');
+//Route::get('headTeacherLogin', [AdminController::class, 'index'])->name('headTeacherLogin');
+//Route::post('headTeacher-login-check', [AdminController::class, 'authenticate']);
+//Route::post('headTeacher-logout', [AdminController::class, 'logout'])->name('headTeacher-logout');
 
 //Route::get('teacherLogin', [AdminController::class, 'index'])->name('teacher');
 //Route::post('teacher-login-check', [AdminController::class, 'authenticate']);

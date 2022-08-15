@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('deo_dictrict')->nullable();
             $table->string('deo_password')->nullable();
             $table->tinyInteger('deo_type')->default(0);
-            /* Users: 0=>IS, 1=>DPC, 2=>DMC, 3=>DEFO */
+            /* Users: 0=>IS, 1=>DPC, 2=>DMC, 3=>DEEO 4=>DI 5=>BEEO 6=>BMC */
             $table->timestamp('created_on');
             $table->string('created_by');
             $table->dateTime('modified_on')->nullable();

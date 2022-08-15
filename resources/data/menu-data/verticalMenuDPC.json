@@ -1,0 +1,46 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/dpc/dashboard",
+      "icon": "home",
+      "slug": "/dpc/dashboard"
+    },
+    {
+      "url": "/dpc/schoolList",
+      "name": "School List",
+      "icon": "hexagon",
+      "slug": "/dpc/schoolList"
+    },
+    {
+      "url": "/dpc/teacherList",
+      "name": "Teacher List",
+      "icon": "hexagon",
+      "slug": "/dpc/teacherList"
+    },
+    {
+      "navheader": "Management",
+      "slug": ""
+    },
+    {
+      "url": "/dpc/approverList",
+      "name": "Approver List",
+      "icon": "hexagon",
+      "slug": "/dpc/approverList"
+    },
+    {
+      "url": "/dpc/managerList",
+      "name": "Manager List",
+      "icon": "square",
+      "slug": "/dpc/managerList"
+    },
+    {
+      "url": "/dpc/deoList",
+      "name": "DEO List",
+      "icon": "list",
+      "slug": "/dpc/deoList"
+    }
+
+    
+  ]
+}

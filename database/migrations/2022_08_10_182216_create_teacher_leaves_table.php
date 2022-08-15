@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -15,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('teacher_leaves', function (Blueprint $table) {
             $table->id();
+            $table->int('leave_application_no')->unique();
             $table->string('teacher_leave_id')->unique();
             $table->string('fk_teacher_id');
             $table->string('fk_school_id');
@@ -54,6 +56,7 @@ return new class extends Migration
                 ->onDelete('restrict');
 
         });
+
     }
 
     /**

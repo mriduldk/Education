@@ -38,7 +38,7 @@ class Manager extends Authenticatable
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["IS", "DPC", "DMC", "DEEO"][$value],
+            get: fn ($value) =>  ["IS", "DPC", "DMC", "DEEO", "DI", "BEEO", "BMC", "CHD"][$value],
         );
     }
 }

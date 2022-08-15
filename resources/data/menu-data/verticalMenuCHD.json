@@ -1,0 +1,74 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/chd/dashboard",
+      "icon": "home",
+      "slug": "/chd/dashboard"
+    },
+    {
+      "url": "/chd/schoolList",
+      "name": "School List",
+      "icon": "hexagon",
+      "slug": "/chd/schoolList"
+    },
+    {
+      "url": "/chd/teacherList",
+      "name": "Teacher List",
+      "icon": "hexagon",
+      "slug": "/chd/teacherList"
+    },
+    {
+      "navheader": "Officer",
+      "slug": ""
+    },
+    {
+      "url": "/chd/isList",
+      "name": "IS List",
+      "icon": "hexagon",
+      "slug": "/chd/isList"
+    },
+    {
+      "url": "/chd/dpcList",
+      "name": "DPC List",
+      "icon": "square",
+      "slug": "/chd/dpcList"
+    },
+    {
+      "url": "/chd/dmcList",
+      "name": "DMC List",
+      "icon": "square",
+      "slug": "/chd/dmcList"
+    },
+    {
+      "url": "/chd/deeoList",
+      "name": "DEEO List",
+      "icon": "square",
+      "slug": "/chd/deeoList"
+    },
+    {
+      "navheader": "Management",
+      "slug": ""
+    },
+    {
+      "url": "/chd/approverList",
+      "name": "Approver List",
+      "icon": "hexagon",
+      "slug": "/chd/approverList"
+    },
+    {
+      "url": "/chd/managerList",
+      "name": "Manager List",
+      "icon": "square",
+      "slug": "/chd/managerList"
+    },
+    {
+      "url": "/chd/deoList",
+      "name": "DEO List",
+      "icon": "square",
+      "slug": "/chd/deoList"
+    }
+
+    
+  ]
+}

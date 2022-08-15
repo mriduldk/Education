@@ -1,0 +1,62 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "/deeo/dashboard",
+      "icon": "home",
+      "slug": "/deeo/dashboard"
+    },
+    {
+      "url": "/deeo/schoolList",
+      "name": "School List",
+      "icon": "hexagon",
+      "slug": "/deeo/schoolList"
+    },
+    {
+      "url": "/deeo/teacherList",
+      "name": "Teacher List",
+      "icon": "hexagon",
+      "slug": "/deeo/teacherList"
+    },
+    {
+      "navheader": "Officer",
+      "slug": ""
+    },
+    {
+      "url": "/deeo/diList",
+      "name": "DI List",
+      "icon": "list",
+      "slug": "/deeo/diList"
+    },
+    {
+      "url": "/deeo/beeoList",
+      "name": "BEEO List",
+      "icon": "list",
+      "slug": "/deeo/beeoList"
+    },
+    {
+      "navheader": "Management",
+      "slug": ""
+    },
+    {
+      "url": "/deeo/approverList",
+      "name": "Approver List",
+      "icon": "hexagon",
+      "slug": "/deeo/approverList"
+    },
+    {
+      "url": "/deeo/managerList",
+      "name": "Manager List",
+      "icon": "square",
+      "slug": "/deeo/managerList"
+    },
+    {
+      "url": "/deeo/deoList",
+      "name": "DEO List",
+      "icon": "list",
+      "slug": "/deeo/deoList"
+    }
+
+    
+  ]
+}

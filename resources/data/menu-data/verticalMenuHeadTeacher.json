@@ -13,10 +13,16 @@
       "slug": "allTeacherList"
     },
     {
-      "url": "editHeadTeacher",
-      "name": "Edit profile",
+      "url": "editSchoolDetails",
+      "name": "Edit School Details",
       "icon": "square",
-      "slug": "editHeadTeacher"
+      "slug": "editSchoolDetails"
+    },
+    {
+      "url": "leaveApplicationList",
+      "name": "Leave Applications",
+      "icon": "edit",
+      "slug": "leaveApplicationList"
     }
 
     

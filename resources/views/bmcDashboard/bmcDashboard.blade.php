@@ -87,28 +87,28 @@
     </div>
 
     <h3 class="mt-50">Total users with their roles</h3>
-<p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
-<!-- table -->
-<div class="card">
+    <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
+    <!-- table -->
+        <div class="card">
 
-  <div class="table-responsive">  
- 
-  <table class="user-list-table table">
-      <thead class="table-light">
-        <tr>
-          <th></th>
-          <th></th>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Plan</th>
-          <th>Billing</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
-</div>
+        <div class="table-responsive">  
+        
+        <table class="user-list-table table">
+            <thead class="table-light">
+                <tr>
+                <th></th>
+                <th></th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Plan</th>
+                <th>Billing</th>
+                <th>Status</th>
+                <th>Actions</th>
+                </tr>
+            </thead>
+            </table>
+        </div>
+        </div>
 </section>
 
   <!-- Floating Button-->

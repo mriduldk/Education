@@ -93,6 +93,40 @@ class KnowYourSchoolController extends Controller
         return $schools;
     }
 
+    public function searchedSchoolData(Request $request)
+    {
+        
+        $schools = School::where('is_deleted', 0);
+
+        if($request->district != null && $request->district != "" ) {
+
+            $schools = $schools->where('district','LIKE',"%{$request->district}%");
+        }
+
+        if($request->school_name != null && $request->school_name != "" ) {
+
+            $schools = $schools->where('school_name','LIKE',"%{$request->school_name}%");
+        }
+
+        if($request->udice_code != null && $request->udice_code != "" ) {
+
+            $schools = $schools->where('udice_code','LIKE',"%{$request->udice_code}%");
+        }
+
+        if($request->pin != null && $request->pin != "" ) {
+
+            $schools = $schools->where('pin','LIKE',"%{$request->pin}%");
+        }
+
+        if($request->school_category != null && $request->school_category != "" ) {
+
+            $schools = $schools->where('school_category','LIKE',"%{$request->school_category}%");
+        }
+
+        $schools = $schools->get();
+
+        return $schools;
+    }
 
 
 }

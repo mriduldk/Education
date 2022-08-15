@@ -63,41 +63,7 @@ $configData = Helper::applClasses();
                 @endif
                 @endforeach
 
-            @elseif (Auth::check() && Auth::user()->type == 'districtAdmin')
-
-                @foreach ($menuData[2]->menu as $menu)
-                @if (isset($menu->navheader))
-                <li class="navigation-header">
-                    <span>{{ __($menu->navheader) }}</span>
-                    <i data-feather="more-horizontal"></i>
-                </li>
-                @else
-                {{-- Add Custom Class with nav-item --}}
-                @php
-                $custom_classes = '';
-                if (isset($menu->classlist)) {
-                $custom_classes = $menu->classlist;
-                }
-                @endphp
-                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
-                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
-                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
-                        <i data-feather="{{ $menu->icon }}"></i>
-                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
-                        @if (isset($menu->badge))
-                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
-                        <span
-                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
-                        @endif
-                    </a>
-                    @if (isset($menu->submenu))
-                    @include('panels/submenu', ['menu' => $menu->submenu])
-                    @endif
-                </li>
-                @endif
-                @endforeach
-
-            @elseif (Auth::check() && Auth::user()->type == 'headTeacher')
+            @elseif (Auth::guard('headTeacher')->check())
 
                 @foreach ($menuData[3]->menu as $menu)
                 @if (isset($menu->navheader))
@@ -131,11 +97,214 @@ $configData = Helper::applClasses();
                 @endif
                 @endforeach
 
+            @elseif (Auth::guard('is')->check())
 
+                @foreach ($menuData[5]->menu as $menu)
+                @if (isset($menu->navheader))
+                <li class="navigation-header">
+                    <span>{{ __($menu->navheader) }}</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @else
+                {{-- Add Custom Class with nav-item --}}
+                @php
+                $custom_classes = '';
+                if (isset($menu->classlist)) {
+                $custom_classes = $menu->classlist;
+                }
+                @endphp
+                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
+                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
+                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
+                        <i data-feather="{{ $menu->icon }}"></i>
+                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
+                        @if (isset($menu->badge))
+                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
+                        <span
+                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
+                        @endif
+                    </a>
+                    @if (isset($menu->submenu))
+                    @include('panels/submenu', ['menu' => $menu->submenu])
+                    @endif
+                </li>
+                @endif
+                @endforeach
 
-            @elseif (Auth::check() && Auth::user()->type == 'teacher')
+            @elseif (Auth::guard('dpc')->check())
 
-                @foreach ($menuData[4]->menu as $menu)
+                @foreach ($menuData[6]->menu as $menu)
+                @if (isset($menu->navheader))
+                <li class="navigation-header">
+                    <span>{{ __($menu->navheader) }}</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @else
+                {{-- Add Custom Class with nav-item --}}
+                @php
+                $custom_classes = '';
+                if (isset($menu->classlist)) {
+                $custom_classes = $menu->classlist;
+                }
+                @endphp
+                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
+                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
+                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
+                        <i data-feather="{{ $menu->icon }}"></i>
+                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
+                        @if (isset($menu->badge))
+                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
+                        <span
+                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
+                        @endif
+                    </a>
+                    @if (isset($menu->submenu))
+                    @include('panels/submenu', ['menu' => $menu->submenu])
+                    @endif
+                </li>
+                @endif
+                @endforeach
+
+            @elseif (Auth::guard('dmc')->check())
+
+                @foreach ($menuData[7]->menu as $menu)
+                @if (isset($menu->navheader))
+                <li class="navigation-header">
+                    <span>{{ __($menu->navheader) }}</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @else
+                {{-- Add Custom Class with nav-item --}}
+                @php
+                $custom_classes = '';
+                if (isset($menu->classlist)) {
+                $custom_classes = $menu->classlist;
+                }
+                @endphp
+                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
+                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
+                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
+                        <i data-feather="{{ $menu->icon }}"></i>
+                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
+                        @if (isset($menu->badge))
+                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
+                        <span
+                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
+                        @endif
+                    </a>
+                    @if (isset($menu->submenu))
+                    @include('panels/submenu', ['menu' => $menu->submenu])
+                    @endif
+                </li>
+                @endif
+                @endforeach
+
+                
+            @elseif (Auth::guard('deeo')->check())
+
+                @foreach ($menuData[8]->menu as $menu)
+                @if (isset($menu->navheader))
+                <li class="navigation-header">
+                    <span>{{ __($menu->navheader) }}</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @else
+                {{-- Add Custom Class with nav-item --}}
+                @php
+                $custom_classes = '';
+                if (isset($menu->classlist)) {
+                $custom_classes = $menu->classlist;
+                }
+                @endphp
+                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
+                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
+                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
+                        <i data-feather="{{ $menu->icon }}"></i>
+                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
+                        @if (isset($menu->badge))
+                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
+                        <span
+                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
+                        @endif
+                    </a>
+                    @if (isset($menu->submenu))
+                    @include('panels/submenu', ['menu' => $menu->submenu])
+                    @endif
+                </li>
+                @endif
+                @endforeach
+
+            @elseif (Auth::guard('di')->check())
+
+                @foreach ($menuData[9]->menu as $menu)
+                @if (isset($menu->navheader))
+                <li class="navigation-header">
+                    <span>{{ __($menu->navheader) }}</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @else
+                {{-- Add Custom Class with nav-item --}}
+                @php
+                $custom_classes = '';
+                if (isset($menu->classlist)) {
+                $custom_classes = $menu->classlist;
+                }
+                @endphp
+                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
+                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
+                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
+                        <i data-feather="{{ $menu->icon }}"></i>
+                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
+                        @if (isset($menu->badge))
+                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
+                        <span
+                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
+                        @endif
+                    </a>
+                    @if (isset($menu->submenu))
+                    @include('panels/submenu', ['menu' => $menu->submenu])
+                    @endif
+                </li>
+                @endif
+                @endforeach
+
+            @elseif (Auth::guard('beeo')->check())
+
+                @foreach ($menuData[10]->menu as $menu)
+                @if (isset($menu->navheader))
+                <li class="navigation-header">
+                    <span>{{ __($menu->navheader) }}</span>
+                    <i data-feather="more-horizontal"></i>
+                </li>
+                @else
+                {{-- Add Custom Class with nav-item --}}
+                @php
+                $custom_classes = '';
+                if (isset($menu->classlist)) {
+                $custom_classes = $menu->classlist;
+                }
+                @endphp
+                <li class="nav-item {{ $custom_classes }} {{ Route::currentRouteName() === $menu->slug ? 'active' : '' }}">
+                    <a href="{{ isset($menu->url) ? url($menu->url) : 'javascript:void(0)' }}"
+                        class="d-flex align-items-center" target="{{ isset($menu->newTab) ? '_blank' : '_self' }}">
+                        <i data-feather="{{ $menu->icon }}"></i>
+                        <span class="menu-title text-truncate">{{ __($menu->name) }}</span>
+                        @if (isset($menu->badge))
+                        <?php $badgeClasses = 'badge rounded-pill badge-light-primary ms-auto me-1'; ?>
+                        <span
+                            class="{{ isset($menu->badgeClass) ? $menu->badgeClass : $badgeClasses }}">{{ $menu->badge }}</span>
+                        @endif
+                    </a>
+                    @if (isset($menu->submenu))
+                    @include('panels/submenu', ['menu' => $menu->submenu])
+                    @endif
+                </li>
+                @endif
+                @endforeach
+
+            @elseif (Auth::guard('chd')->check())
+
+                @foreach ($menuData[11]->menu as $menu)
                 @if (isset($menu->navheader))
                 <li class="navigation-header">
                     <span>{{ __($menu->navheader) }}</span>
