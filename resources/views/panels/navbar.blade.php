@@ -37,7 +37,7 @@
                                 {{ Auth::guard('teacher')->user()->teacher_first_name }}
 
                                 @elseif (Auth::guard('headTeacher')->check())
-                                {{ Auth::guard('is')->user()->teacher_first_name }}
+                                {{ Auth::guard('headTeacher')->user()->teacher_first_name }}
 
                                 @elseif (Auth::guard('is')->check())
                                 {{ Auth::guard('is')->user()->is_name }}
@@ -59,7 +59,9 @@
 
                                 @elseif (Auth::guard('chd')->check())
                                 {{ Auth::guard('chd')->user()->chd_name }}
-
+                                
+                                @elseif (Auth::guard('bmc')->check())
+                                {{ Auth::guard('bmc')->user()->bmc_name }}
 
                                 @else
                                 Admin
@@ -165,6 +167,16 @@
                             <i class="me-50" data-feather="power"></i> Logout
                         </a>
                         <form method="POST" id="logout-form" action="{{ url('chd/logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('bmc')->check())
+
+                        <a class="dropdown-item" href="{{ url('bmc/logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('bmc/logout') }}">
                             @csrf
                         </form>
 

@@ -19,6 +19,16 @@
       "slug": "/dmc/teacherList"
     },
     {
+      "navheader": "Officer",
+      "slug": ""
+    },
+    {
+      "url": "/dmc/bmcList",
+      "name": "BMC List",
+      "icon": "hexagon",
+      "slug": "/dmc/bmcList"
+    },
+    {
       "navheader": "Management",
       "slug": ""
     },

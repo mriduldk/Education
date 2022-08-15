@@ -102,13 +102,13 @@ $configData = Helper::applClasses();
                         <label class="form-label" for="officer_type">Officer Type</label>
                         <select class="form-control" name="officer_type" id="officer_type">
                             <option value="">Select Option</option>
-
                             <option value="IS">IS</option>
                             <option value="DPC">DPC</option>
                             <option value="DMC">DMC</option>
                             <option value="DEEO">DEEO</option>
                             <option value="DI">DI</option>
                             <option value="BEEO">BEEO</option>
+                            <option value="BMC">BMC</option>
                         </select>
                     </div>
                     <div class="mb-1">
@@ -188,6 +188,10 @@ $("#btnSignin").click(function() {
                 } else if(officer_type == 'BEEO') {
 
                     window.location.replace("{{ url('beeo/dashboard') }}");
+
+                } else if(officer_type == 'BMC') {
+
+                    window.location.replace("{{ url('bmc/dashboard') }}");
 
                 }
 

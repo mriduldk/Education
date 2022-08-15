@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'DPC Dashboard')
+@section('title', 'BMC Dashboard')
 
 @section('vendor-style')
 {{-- vendor css files --}}

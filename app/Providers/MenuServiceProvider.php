@@ -59,9 +59,12 @@ class MenuServiceProvider extends ServiceProvider
         $verticalMenuCHDJson = file_get_contents(base_path('resources/data/menu-data/verticalMenuCHD.json'));
         $verticalMenuCHDData = json_decode($verticalMenuCHDJson);
 
+        $verticalMenuBMCJson = file_get_contents(base_path('resources/data/menu-data/verticalMenuBMC.json'));
+        $verticalMenuBMCData = json_decode($verticalMenuBMCJson);
+
 
          // Share all menuData to all the views
-        \View::share('menuData',[$verticalMenuData, $horizontalMenuData, $verticalMenuDistrictAdminData, $verticalMenuHeadTeacherData, $verticalMenuTeacherData, $verticalMenuISData, $verticalMenuDPCData, $verticalMenuDMCData, $verticalMenuDEEOData, $verticalMenuDIData, $verticalMenuBEEOData, $verticalMenuCHDData]);
+        \View::share('menuData',[$verticalMenuData, $horizontalMenuData, $verticalMenuDistrictAdminData, $verticalMenuHeadTeacherData, $verticalMenuTeacherData, $verticalMenuISData, $verticalMenuDPCData, $verticalMenuDMCData, $verticalMenuDEEOData, $verticalMenuDIData, $verticalMenuBEEOData, $verticalMenuCHDData, $verticalMenuBMCData]);
         
     }
 }

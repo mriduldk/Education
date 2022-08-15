@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
 use App\Models\BEEO;
+use App\Models\BMC;
 use App\Models\DEEO;
 use App\Models\DI;
 use App\Models\DMC;
@@ -37,7 +38,7 @@ class OfficerAuthController extends Controller
                 return response()->errorUnauthorised('Falied to login');
             }
 
-        }else if($request->officer_type == "DMC") {
+        } else if($request->officer_type == "DMC") {
             
             $dmc = DMC::where('dmc_email', $request->email)->where('is_deleted', 0)->first();
 
@@ -48,7 +49,7 @@ class OfficerAuthController extends Controller
                 return response()->errorUnauthorised('Falied to login');
             }
 
-        }else if($request->officer_type == "DPC") {
+        } else if($request->officer_type == "DPC") {
             
             $dpc = DPC::where('dpc_email', $request->email)->where('is_deleted', 0)->first();
 
@@ -59,7 +60,7 @@ class OfficerAuthController extends Controller
                 return response()->errorUnauthorised('Falied to login');
             }
 
-        }else if($request->officer_type == "DI") {
+        } else if($request->officer_type == "DI") {
             
             $di = DI::where('di_email', $request->email)->where('is_deleted', 0)->first();
 
@@ -71,7 +72,7 @@ class OfficerAuthController extends Controller
             }
 
 
-        }else if($request->officer_type == "DEEO") {
+        } else if($request->officer_type == "DEEO") {
             
             $deeo = DEEO::where('deeo_email', $request->email)->where('is_deleted', 0)->first();
 
@@ -83,7 +84,7 @@ class OfficerAuthController extends Controller
             }
 
 
-        }else if($request->officer_type == "BEEO") {
+        } else if($request->officer_type == "BEEO") {
             
             $beeo = BEEO::where('beeo_email', $request->email)->where('is_deleted', 0)->first();
 
@@ -95,7 +96,19 @@ class OfficerAuthController extends Controller
             }
 
 
-        }else {
+        } else if($request->officer_type == "BMC") {
+            
+            $bmc = BMC::where('bmc_email', $request->email)->where('is_deleted', 0)->first();
+
+            if ($bmc && Hash::check($request->password, $bmc->bmc_password)) {
+                Auth::guard('bmc')->login($bmc);
+                return response()->success('DEEO Officer login successful', 'officer', $bmc);
+            } else {
+                return response()->errorUnauthorised('Falied to login');
+            }
+
+
+        } else {
             return response()->errorNotFound('Please Select a valid Officer Type.');
         }
     }
@@ -128,6 +141,11 @@ class OfficerAuthController extends Controller
     public function BEEOLogout()
     {
         Auth::guard('beeo')->logout();
+        return view('Officer/auth/login');
+    }
+    public function BMCLogout()
+    {
+        Auth::guard('bmc')->logout();
         return view('Officer/auth/login');
     }
 

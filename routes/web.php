@@ -23,6 +23,8 @@ use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\BEEOAuthController;
 use App\Http\Controllers\BEEOController;
+use App\Http\Controllers\BMCAuthController;
+use App\Http\Controllers\BMCController;
 use App\Http\Controllers\CHDAuthController;
 use App\Http\Controllers\CHDController;
 use App\Http\Controllers\DEEOAuthController;
@@ -57,6 +59,11 @@ use App\Http\Controllers\TeacherLeaveController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+Route::get('/', function () {
+    return view('navigate');
+});
 
 Route::group(['prefix' => 'officer'], function () {
 
@@ -283,6 +290,14 @@ Route::middleware('user-access:dmc')->group(function () {
         Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
         Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
 
+        /** BMC */
+        Route::get('bmcList', [BMCAuthController::class, 'allBMCList']);
+        Route::get('all-bmc-data', [BMCAuthController::class, 'AllBMCData']);
+        Route::post('insert-bmc', [BMCAuthController::class, 'InsertBMC']);
+        Route::post('update-bmc', [BMCAuthController::class, 'UpdateBMC']);
+        Route::get('bmc-data-for-edit', [BMCAuthController::class, 'GetBMCDataForEdit']);
+        Route::post('bmc-delete', [BMCAuthController::class, 'BMCDelete']);
+
 
     });
 
@@ -390,6 +405,56 @@ Route::middleware('user-access:beeo')->group(function () {
 
 });
 
+Route::middleware('user-access:bmc')->group(function () {
+
+    Route::group(['prefix' => 'bmc'], function () {
+
+        Route::post('logout', [OfficerAuthController::class, 'BMCLogout']);
+
+        Route::get('dashboard', [BMCController::class, 'Dashboard']);
+        Route::get('blockSelect', [BMCController::class, 'BlockSelect']);
+
+        Route::get('schoolList', [BMCController::class, 'SchoolList']);
+
+        Route::get('teacherList', [BMCController::class, 'allTeacherList']);
+        Route::get('all-teachers-data', [BMCController::class, 'AllTeacherData']);
+
+        /** Approver */
+        Route::get('approverList', function () {
+            return view('/BMC/approver/allApproverList');
+        });
+        Route::get('all-approvers-data', [ApproverController::class, 'AllApproverData']);
+        Route::post('insert-approver', [ApproverController::class, 'InsertApprover']);
+        Route::post('update-approver', [ApproverController::class, 'UpdateApprover']);
+        Route::get('approver-data-for-edit', [ApproverController::class, 'GetApproverDataForEdit']);
+        Route::post('approver-delete', [ApproverController::class, 'ApproverDelete']);
+
+
+        /** Manager */
+        Route::get('managerList', function () {
+            return view('/BMC/manager/allManagerList');
+        });
+        Route::get('all-manager-data', [ManagerController::class, 'AllManagerData']);
+        Route::post('insert-manager', [ManagerController::class, 'InsertManager']);
+        Route::post('update-manager', [ManagerController::class, 'UpdateManager']);
+        Route::get('manager-data-for-edit', [ManagerController::class, 'GetManagerDataForEdit']);
+        Route::post('manager-delete', [ManagerController::class, 'ManagerDelete']);
+
+
+        /** DEO **/
+        Route::get('deoList', function () {
+            return view('/BMC/deo/allDEOList');
+        });
+        Route::get('all-deo-data', [DEOAuthController::class, 'AllDEOData']);
+        Route::post('insert-deo', [DEOAuthController::class, 'InsertDEO']);
+        Route::post('update-deo', [DEOAuthController::class, 'UpdateDEO']);
+        Route::get('deo-data-for-edit', [DEOAuthController::class, 'GetDEODataForEdit']);
+        Route::post('deo-delete', [DEOAuthController::class, 'DEODelete']);
+
+
+    });
+
+});
 
 Route::group(['prefix' => 'chd'], function () {
 
@@ -528,7 +593,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('latest-update-delete', [LatestUpdateController::class, 'destroy']);
     Route::get('latest-update-table-all-data', [LatestUpdateController::class, 'LatestTableAllData'])->name('latest-update.allData');
 
-    Route::get('/', [DashboardController::class, 'adminDashboard'])->name('adminDashboard');
+    //Route::get('/', [DashboardController::class, 'adminDashboard'])->name('adminDashboard');
 });
 
 

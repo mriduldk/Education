@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Inspector Of School (Kokrajhar)')
+@section('title', 'BEEO Dashboard')
 
 @section('vendor-style')
 {{-- vendor css files --}}

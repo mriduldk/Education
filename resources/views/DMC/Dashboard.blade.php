@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Inspector Of School (Kokrajhar)')
+@section('title', 'DMC Dashboard')
 
 @section('vendor-style')
 {{-- vendor css files --}}

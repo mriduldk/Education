@@ -71,10 +71,6 @@ class DEOController extends Controller
 
             $deo->created_by =  Auth::guard('deeo')->user()->defo_id;
 
-        } else if($request->deo_type == "BMC"){
-
-            $deo->created_by =  Auth::guard('bmc')->user()->bmc_id;
-
         } else if($request->deo_type == "BEEO"){
 
             $deo->created_by =  Auth::guard('beeo')->user()->beeo_id;
@@ -82,6 +78,14 @@ class DEOController extends Controller
         } else if($request->deo_type == "DI"){
 
             $deo->created_by =  Auth::guard('di')->user()->di_id;
+
+        } else if($request->deo_type == "BMC"){
+
+            $deo->created_by =  Auth::guard('bmc')->user()->bmc_id;
+
+        } else if($request->deo_type == "CHD"){
+
+            $deo->created_by =  Auth::guard('chd')->user()->chd_id;
 
         } else {
             return response()->errorUnauthorised('DEO type is not valid');
