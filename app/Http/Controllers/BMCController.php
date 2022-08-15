@@ -187,7 +187,12 @@ class BMCController extends Controller
 
         foreach($schools as $school){
             $teacher = Teacher::where('is_deleted', 0)->where('is_head_teacher', 1)->where('fk_school_id', $school->school_id)->first();
-            $school['headTeacher'] = $teacher;
+
+            if(empty($teacher)) {
+                $school['headTeacher'] = new Teacher();
+            } else {
+                $school['headTeacher'] = $teacher;
+            }
         }
         return $schools;
     }
