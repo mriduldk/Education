@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\BEEO;
 use Carbon\Carbon;
 
@@ -50,12 +51,13 @@ class BEEOAuthController extends Controller
     
             $beeo->beeo_image_url = $path;
         }
+        $pass = GenerateID::getPassword();
 
         $beeo->beeo_id = GenerateID::getId();
         $beeo->beeo_name =  $request->beeo_name;
         $beeo->beeo_phone = $request->beeo_phone;
         $beeo->beeo_email = $request->beeo_email;
-        $beeo->beeo_password = Hash::make('123456');
+        $beeo->beeo_password = Hash::make($pass);
         
         $beeo->beeo_office_name =  $request->beeo_office_name;
         $beeo->beeo_office_address =  $request->beeo_office_address;
@@ -65,6 +67,9 @@ class BEEOAuthController extends Controller
 
 
         $beeo ->save();
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->beeo_email, 'BEEO', $pass);
+
+        UserActivityLogController::AddUserActivityLogInsert($beeo->created_by, $beeo->beeo_id, $beeo->beeo_name, "BEEO Created");
 
         return response()->success('BEEO inserted successfully', 'beeo', $beeo);
 
@@ -103,6 +108,7 @@ class BEEOAuthController extends Controller
             $beeo->modified_by =  Auth::guard('deeo')->user()->deeo_id;
     
             $beeo->save();
+            UserActivityLogController::AddUserActivityLogUpdate($beeo->modified_by, $beeo->beeo_id, $beeo->beeo_name, "BEEO Updated");
     
             return response()->success('BEEO updated successfully', 'beeo', $beeo);
         }
@@ -120,6 +126,7 @@ class BEEOAuthController extends Controller
             $beeo->deleted_on = Carbon::now()->toDateTimeString();
     
             $beeo->save();
+            UserActivityLogController::AddUserActivityLogDelete($beeo->deleted_by, $beeo->beeo_id, $beeo->beeo_name, "BEEO Deleted");
             return response()->success('BEEO deleted successfully.', 'beeo', null);
         }
     }

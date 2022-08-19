@@ -279,6 +279,8 @@ class ApproverController extends Controller
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->approver_email, 'Approver', $pass);
 
+        UserActivityLogController::AddUserActivityLogInsert($approver->created_by, $approver->approver_id, $approver->approver_name, "Approver Created");
+
         return response()->success('Approver inserted successfully..!!', 'approver', $approver);
 
     }
@@ -361,6 +363,8 @@ class ApproverController extends Controller
     
             $approver->save();
     
+            UserActivityLogController::AddUserActivityLogUpdate($approver->modified_by, $approver->approver_id, $approver->approver_name, "Approver Updated");
+
             return response()->success('Approver updated successfully', 'approver', $approver);
         }
     }
@@ -413,6 +417,9 @@ class ApproverController extends Controller
             $approver->deleted_on = Carbon::now()->toDateTimeString();
     
             $approver->save();
+
+            UserActivityLogController::AddUserActivityLogDelete($approver->deleted_by, $approver->approver_id, $approver->approver_name, "Approver Deleted");
+
             return response()->success('Approver deleted successfully.', 'approver', null);
         }
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\DI;
 use Carbon\Carbon;
 
@@ -50,12 +51,13 @@ class DIAuthController extends Controller
     
             $di->di_image_url = $path;
         }
+        $pass = GenerateID::getPassword();
 
         $di->di_id = GenerateID::getId();
         $di->di_name =  $request->di_name;
         $di->di_phone = $request->di_phone;
         $di->di_email = $request->di_email;
-        $di->di_password = Hash::make('123456');
+        $di->di_password = Hash::make($pass);
         
         $di->di_office_name =  $request->di_office_name;
         $di->di_office_address =  $request->di_office_address;
@@ -65,6 +67,9 @@ class DIAuthController extends Controller
 
 
         $di ->save();
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->di_email, 'DI', $pass);
+
+        UserActivityLogController::AddUserActivityLogInsert($di->created_by, $di->di_id, $di->di_name, "DI Created");
 
         return response()->success('DI inserted successfully', 'di', $di);
 
@@ -104,6 +109,7 @@ class DIAuthController extends Controller
     
             $di->save();
     
+            UserActivityLogController::AddUserActivityLogUpdate($di->modified_by, $di->di_id, $di->di_name, "DI Updated");
             return response()->success('DI updated successfully', 'di', $di);
         }
     }
@@ -120,6 +126,7 @@ class DIAuthController extends Controller
             $di->deleted_on = Carbon::now()->toDateTimeString();
     
             $di->save();
+            UserActivityLogController::AddUserActivityLogDelete($di->deleted_by, $di->di_id, $di->di_name, "DI Deleted");
             return response()->success('DI deleted successfully.', 'di', null);
         }
     }

@@ -68,6 +68,7 @@ class DMCAuthController extends Controller
 
 
         $dmc ->save();
+        UserActivityLogController::AddUserActivityLogInsert($dmc->created_by, $dmc->dmc_id, $dmc->dmc_name, "DMC Created");
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->dmc_email, 'DMC', $pass);
 
@@ -108,6 +109,7 @@ class DMCAuthController extends Controller
             $dmc->modified_by =  Auth::guard('chd')->user()->chd_id;
     
             $dmc->save();
+            UserActivityLogController::AddUserActivityLogUpdate($dmc->modified_by, $dmc->dmc_id, $dmc->dmc_name, "DMC Updated");
     
             return response()->success('DMC updated successfully', 'dmc', $dmc);
         }
@@ -125,6 +127,7 @@ class DMCAuthController extends Controller
             $dmc->deleted_on = Carbon::now()->toDateTimeString();
     
             $dmc->save();
+            UserActivityLogController::AddUserActivityLogDelete($dmc->deleted_by, $dmc->dmc_id, $dmc->dmc_name, "DMC Deleted");
             return response()->success('DMC deleted successfully.', 'dmc', null);
         }
     }

@@ -35,8 +35,17 @@ class CHDAuthController extends Controller
 
         if ($chd && Hash::check($request->password, $chd->chd_password)) {
             Auth::guard('chd')->login($chd);
+
+            LoginActivityLogController::AddLoginActivityLogSuccess($chd->chd_id);
+
             return response()->success('CHD login successful', 'chd', $chd);
         } else {
+
+            if($chd != null) {
+                LoginActivityLogController::AddLoginActivityLogError($chd->chd_id);
+            } else {
+                LoginActivityLogController::AddLoginActivityLogError($request->email);
+            }
             return response()->errorUnauthorised('Falied to login');
         }
 

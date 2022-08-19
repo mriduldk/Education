@@ -43,10 +43,18 @@ class TeacherController extends Controller
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
         {
             Auth::guard('teacher')->login($teacher);
+
+            LoginActivityLogController::AddLoginActivityLogSuccess($teacher->teacher_id);
+
             return response()->success('Teacher Login Successful', 'teacher', $teacher);
         } 
         else
         {
+            if($teacher != null) {
+                LoginActivityLogController::AddLoginActivityLogError($teacher->teacher_id);
+            } else {
+                LoginActivityLogController::AddLoginActivityLogError($request->email);
+            }
             return response()->errorUnauthorised('Wrong Credentials of Teacher. Please try again.');
         }
     }
@@ -136,6 +144,7 @@ class TeacherController extends Controller
             $teacherSalaryAccountDetails->modified_on =  Carbon::now()->toDateTimeString();
     
             $teacherSalaryAccountDetails->save();
+            UserActivityLogController::AddUserActivityLogUpdate($teacherSalaryAccountDetails->modified_by, $teacherSalaryAccountDetails->fk_teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Salary Account Details Updated");
     
             return response()->success('Teacher Salary Details updated successfully', 'teacherSalaryAccountDetails', $teacherSalaryAccountDetails);
         }
@@ -274,6 +283,7 @@ class TeacherController extends Controller
             $teacherServiceDetails->modified_on =  Carbon::now()->toDateTimeString();
     
             $teacherServiceDetails->save();
+            UserActivityLogController::AddUserActivityLogUpdate($teacherServiceDetails->modified_by, $teacherServiceDetails->fk_teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Service Details Updated");
     
             return response()->success('Teacher Service Details updated successfully', 'teacherServiceDetails', $teacherServiceDetails);
         }

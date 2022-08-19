@@ -76,6 +76,8 @@ class ISAuthController extends Controller
 
         $is ->save();
 
+        UserActivityLogController::AddUserActivityLogInsert($is->created_by, $is->is_id,  $is->is_name, "IS Created");
+
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->is_email, 'IS', $pass);
 
         return response()->success('IS inserted successfully', 'is', $is);
@@ -115,6 +117,7 @@ class ISAuthController extends Controller
             $is->modified_by =  Auth::guard('chd')->user()->chd_id;
     
             $is->save();
+            UserActivityLogController::AddUserActivityLogUpdate($is->modified_by, $is->is_id,  $is->is_name, "IS Updated");
     
             return response()->success('IS updated successfully', 'is', $is);
         }
@@ -132,6 +135,7 @@ class ISAuthController extends Controller
             $is->deleted_on = Carbon::now()->toDateTimeString();
     
             $is->save();
+            UserActivityLogController::AddUserActivityLogDelete($is->deleted_by, $is->is_id,  $is->is_name, "IS Deleted");
             return response()->success('IS deleted successfully.', 'is', null);
         }
     }

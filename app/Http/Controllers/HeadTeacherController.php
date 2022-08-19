@@ -41,10 +41,18 @@ class HeadTeacherController extends Controller
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
         {
             Auth::guard('headTeacher')->login($teacher);
+
+            LoginActivityLogController::AddLoginActivityLogSuccess($teacher->teacher_id);
+
             return response()->success('Head Teacher Login Successful', 'teacher', $teacher);
         } 
         else
         {
+            if($teacher != null) {
+                LoginActivityLogController::AddLoginActivityLogError($teacher->teacher_id);
+            } else {
+                LoginActivityLogController::AddLoginActivityLogError($request->email);
+            }
             return response()->errorUnauthorised('Wrong Credentials of Head Teacher. Please try again.');
         }
     }
@@ -112,6 +120,7 @@ class HeadTeacherController extends Controller
             $teacher->deleted_on = Carbon::now()->toDateTimeString();
     
             $teacher->save();
+            UserActivityLogController::AddUserActivityLogDelete($teacher->deleted_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher Deleted");
             return response()->success('Teacher deleted successfully.', 'teacher', null);
         }
     }
@@ -142,6 +151,7 @@ class HeadTeacherController extends Controller
         $teacher ->save();
 
         SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
+        UserActivityLogController::AddUserActivityLogInsert($teacher->created_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher Created");
         
         return response()->success('Teacher added successfully', 'teacher', $teacher);
 
@@ -177,6 +187,7 @@ class HeadTeacherController extends Controller
             $teacher->modified_on =  Carbon::now()->toDateTimeString();
     
             $teacher->save();
+            UserActivityLogController::AddUserActivityLogUpdate($teacher->modified_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher Updated");
     
             return response()->success('Teacher updated successfully', 'teacher', $teacher);
         }

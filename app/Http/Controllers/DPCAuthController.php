@@ -75,6 +75,7 @@ class DPCAuthController extends Controller
 
 
         $dpc ->save();
+        UserActivityLogController::AddUserActivityLogInsert($dpc->created_by, $dpc->dpc_id, $dpc->dpc_name, "DPC Created");
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->dpc_email, 'DPC', $pass);
 
@@ -115,6 +116,7 @@ class DPCAuthController extends Controller
             $dpc->modified_by =  Auth::guard('chd')->user()->chd_id;
     
             $dpc->save();
+            UserActivityLogController::AddUserActivityLogUpdate($dpc->modified_by, $dpc->dpc_id, $dpc->dpc_name, "DPC Updated");
     
             return response()->success('DPC updated successfully', 'dpc', $dpc);
         }
@@ -132,6 +134,7 @@ class DPCAuthController extends Controller
             $dpc->deleted_on = Carbon::now()->toDateTimeString();
     
             $dpc->save();
+            UserActivityLogController::AddUserActivityLogDelete($dpc->deleted_by, $dpc->dpc_id, $dpc->dpc_name, "DPC Deleted");
             return response()->success('DPC deleted successfully.', 'dpc', null);
         }
     }

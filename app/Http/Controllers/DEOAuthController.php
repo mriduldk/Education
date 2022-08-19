@@ -111,6 +111,8 @@ class DEOAuthController extends Controller
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->deo_email, 'DEO', $pass);
 
+        UserActivityLogController::AddUserActivityLogInsert($deo->created_by, $deo->deo_id, $deo->deo_name, "DEO Created");
+
         return response()->success('DEO inserted successfully', 'deo', $deo);
 
     }
@@ -193,6 +195,8 @@ class DEOAuthController extends Controller
 
             $deo->save();
     
+            UserActivityLogController::AddUserActivityLogUpdate($deo->modified_by, $deo->deo_id, $deo->deo_name, "DEO Updated");
+
             return response()->success('DEO updated successfully', 'deo', $deo);
         }
     }
@@ -244,6 +248,9 @@ class DEOAuthController extends Controller
             }
 
             $deo->save();
+
+            UserActivityLogController::AddUserActivityLogDelete($deo->deleted_by, $deo->deo_id, $deo->deo_name, "DEO Deleted");
+
             return response()->success('DEO deleted successfully.', 'deo', null);
         }
     }

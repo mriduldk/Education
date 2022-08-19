@@ -282,7 +282,9 @@ class ManagerController extends Controller
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->manager_email, 'Manager', $pass);
 
-         return response()->success('Manager inserted successfully', 'manager', $manager);
+        UserActivityLogController::AddUserActivityLogInsert($manager->created_by, $manager->manager_id, $manager->manager_name, "Manager Created");
+
+        return response()->success('Manager inserted successfully', 'manager', $manager);
  
      }
      public function UpdateManager(Request $request)
@@ -352,19 +354,21 @@ class ManagerController extends Controller
     
             } else {
                  return response()->errorUnauthorised('Manager type is not valid');
-             }    
-     
-             $manager->manager_name =  $request->manager_name_e;
-             $manager->manager_phone = $request->manager_phone_e;
-             $manager->manager_email = $request->manager_email_e;
-             $manager->manager_office_name =  $request->manager_office_name_e;
-             $manager->manager_office_address =  $request->manager_office_address_e;
-             $manager->manager_dictrict =  $request->manager_dictrict_e;
-             $manager->modified_on =  Carbon::now()->toDateTimeString();
-     
-             $manager->save();
-     
-             return response()->success('Manager updated successfully', 'manager', $manager);
+            }    
+    
+            $manager->manager_name =  $request->manager_name_e;
+            $manager->manager_phone = $request->manager_phone_e;
+            $manager->manager_email = $request->manager_email_e;
+            $manager->manager_office_name =  $request->manager_office_name_e;
+            $manager->manager_office_address =  $request->manager_office_address_e;
+            $manager->manager_dictrict =  $request->manager_dictrict_e;
+            $manager->modified_on =  Carbon::now()->toDateTimeString();
+    
+            $manager->save();
+    
+            UserActivityLogController::AddUserActivityLogUpdate($manager->modified_by, $manager->manager_id, $manager->manager_name, "Manager Updated");
+
+            return response()->success('Manager updated successfully', 'manager', $manager);
          }
      }
      public function ManagerDelete(Request $request)
@@ -409,14 +413,17 @@ class ManagerController extends Controller
     
             }  else {
                  return response()->errorUnauthorised('Manager type is not valid');
-             }   
- 
-             $manager->is_deleted = 1;
-             //$manager->deleted_by = Auth::guard('manager')->user()->manager_id;
-             $manager->deleted_on = Carbon::now()->toDateTimeString();
-     
-             $manager->save();
-             return response()->success('Manager deleted successfully.', 'manager', null);
+            }   
+
+            $manager->is_deleted = 1;
+            //$manager->deleted_by = Auth::guard('manager')->user()->manager_id;
+            $manager->deleted_on = Carbon::now()->toDateTimeString();
+    
+            $manager->save();
+
+            UserActivityLogController::AddUserActivityLogDelete($manager->deleted_by, $manager->manager_id, $manager->manager_name, "Manager Deleted");
+
+            return response()->success('Manager deleted successfully.', 'manager', null);
          }
      }
 

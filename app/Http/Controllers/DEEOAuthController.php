@@ -66,8 +66,8 @@ class DEEOAuthController extends Controller
         $deeo->created_by =  Auth::guard('chd')->user()->chd_id;
         $deeo->created_on =  Carbon::now()->toDateTimeString();
 
-
         $deeo ->save();
+        UserActivityLogController::AddUserActivityLogInsert($deeo->created_by, $deeo->deeo_id, $deeo->deeo_name, "DEEO Created");
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->deeo_email, 'DEEO', $pass);
 
@@ -108,6 +108,7 @@ class DEEOAuthController extends Controller
             $deeo->modified_by =  Auth::guard('chd')->user()->chd_id;
     
             $deeo->save();
+            UserActivityLogController::AddUserActivityLogUpdate($deeo->modified_by, $deeo->deeo_id, $deeo->deeo_name, "DEEO Updated");
     
             return response()->success('DEEO updated successfully', 'deeo', $deeo);
         }
@@ -125,6 +126,7 @@ class DEEOAuthController extends Controller
             $deeo->deleted_on = Carbon::now()->toDateTimeString();
     
             $deeo->save();
+            UserActivityLogController::AddUserActivityLogDelete($deeo->deleted_by, $deeo->deeo_id, $deeo->deeo_name, "DEEO Deleted");
             return response()->success('DEEO deleted successfully.', 'deeo', null);
         }
     }

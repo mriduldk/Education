@@ -48,6 +48,7 @@ use App\Http\Controllers\leaveApplication;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherLeaveController;
+use App\Http\Controllers\UserActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,8 @@ Route::middleware('user-access:is')->group(function () {
 
         Route::get('teacherList', [ISController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [ISController::class, 'AllTeacherData']);
+
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
         /** Approver */
         Route::get('approverList', function () {
@@ -136,6 +139,9 @@ Route::middleware('user-access:dpc')->group(function () {
         Route::get('teacherList', [DPCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DPCController::class, 'AllTeacherData']);
 
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
+
         /** Approver */
         Route::get('approverList', function () {
             return view('/DPC/approver/allApproverList');
@@ -183,6 +189,9 @@ Route::middleware('user-access:deeo')->group(function () {
         Route::get('blockSelect', [DEEOController::class, 'BlockSelect']);
 
         Route::get('schoolList', [DEEOController::class, 'SchoolList']);
+
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
 
         /** Teacher */
         Route::get('teacherList', [DEEOController::class, 'allTeacherList']);
@@ -258,6 +267,9 @@ Route::middleware('user-access:dmc')->group(function () {
         Route::get('teacherList', [DMCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DMCController::class, 'AllTeacherData']);
 
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
+
         /** Approver */
         Route::get('approverList', function () {
             return view('/DMC/approver/allApproverList');
@@ -317,6 +329,9 @@ Route::middleware('user-access:di')->group(function () {
         Route::get('teacherList', [DIController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DIController::class, 'AllTeacherData']);
 
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
+
         /** Approver */
         Route::get('approverList', function () {
             return view('/DI/approver/allApproverList');
@@ -367,6 +382,9 @@ Route::middleware('user-access:beeo')->group(function () {
 
         Route::get('teacherList', [BEEOController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [BEEOController::class, 'AllTeacherData']);
+
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
 
         /** Approver */
         Route::get('approverList', function () {
@@ -421,6 +439,9 @@ Route::middleware('user-access:bmc')->group(function () {
 
         Route::get('teacherList', [BMCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [BMCController::class, 'AllTeacherData']);
+
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
 
         /** Approver */
         Route::get('approverList', function () {
@@ -478,6 +499,9 @@ Route::middleware('user-access:chd')->group(function () {
 
         Route::get('teacherList', [CHDController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [CHDController::class, 'AllTeacherData']);
+
+        Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
 
         /** IS */
         Route::get('isList', [ISAuthController::class, 'allISList']);

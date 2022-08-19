@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\BMC;
 use Carbon\Carbon;
 
@@ -49,11 +50,13 @@ class BMCAuthController extends Controller
             $bmc->bmc_image_url = $path;
         }
 
+        $pass = GenerateID::getPassword();
+
         $bmc->bmc_id = GenerateID::getId();
         $bmc->bmc_name =  $request->bmc_name;
         $bmc->bmc_phone = $request->bmc_phone;
         $bmc->bmc_email = $request->bmc_email;
-        $bmc->bmc_password = Hash::make('123456');
+        $bmc->bmc_password = Hash::make($pass);
         
         $bmc->bmc_office_name =  $request->bmc_office_name;
         $bmc->bmc_office_address =  $request->bmc_office_address;
@@ -63,6 +66,10 @@ class BMCAuthController extends Controller
 
 
         $bmc ->save();
+
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->bmc_email, 'BMC', $pass);
+
+        UserActivityLogController::AddUserActivityLogInsert($bmc->created_by, $bmc->bmc_id, "BMC Created");
 
         return response()->success('BMC inserted successfully', 'bmc', $bmc);
 
@@ -102,6 +109,8 @@ class BMCAuthController extends Controller
     
             $bmc->save();
     
+            UserActivityLogController::AddUserActivityLogUpdate($bmc->modified_by, $bmc->bmc_id, "BMC Updated");
+
             return response()->success('BMC updated successfully', 'bmc', $bmc);
         }
     }
@@ -118,6 +127,9 @@ class BMCAuthController extends Controller
             $bmc->deleted_on = Carbon::now()->toDateTimeString();
     
             $bmc->save();
+
+            UserActivityLogController::AddUserActivityLogDelete($bmc->deleted_by, $bmc->bmc_id, "BMC Deleted");
+
             return response()->success('BMC deleted successfully.', 'bmc', null);
         }
     }

@@ -33,8 +33,17 @@ class OfficerAuthController extends Controller
 
             if ($is && Hash::check($request->password, $is->is_password)) {
                 Auth::guard('is')->login($is);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($is->is_id);
+
                 return response()->success('IS Officer login successful', 'officer', $is);
             } else {
+
+                if($is != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($is->is_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 
@@ -44,8 +53,17 @@ class OfficerAuthController extends Controller
 
             if ($dmc && Hash::check($request->password, $dmc->dmc_password)) {
                 Auth::guard('dmc')->login($dmc);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($dmc->dmc_id);
+
                 return response()->success('DMC Officer login successful', 'officer', $dmc);
             } else {
+
+                if($dmc != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($dmc->dmc_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 
@@ -55,8 +73,17 @@ class OfficerAuthController extends Controller
 
             if ($dpc && Hash::check($request->password, $dpc->dpc_password)) {
                 Auth::guard('dpc')->login($dpc);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($dpc->dpc_id);
+
                 return response()->success('DPC Officer login successful', 'officer', $dpc);
             } else {
+
+                if($dpc != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($dpc->dpc_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 
@@ -66,8 +93,17 @@ class OfficerAuthController extends Controller
 
             if ($di && Hash::check($request->password, $di->di_password)) {
                 Auth::guard('di')->login($di);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($di->di_id);
+
                 return response()->success('DI Officer login successful', 'officer', $di);
             } else {
+
+                if($di != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($di->di_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 
@@ -78,8 +114,17 @@ class OfficerAuthController extends Controller
 
             if ($deeo && Hash::check($request->password, $deeo->deeo_password)) {
                 Auth::guard('deeo')->login($deeo);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($deeo->deeo_id);
+
                 return response()->success('DEEO Officer login successful', 'officer', $deeo);
             } else {
+
+                if($deeo != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($deeo->deeo_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 
@@ -90,8 +135,17 @@ class OfficerAuthController extends Controller
 
             if ($beeo && Hash::check($request->password, $beeo->beeo_password)) {
                 Auth::guard('beeo')->login($beeo);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($beeo->beeo_id);
+
                 return response()->success('BEEO Officer login successful', 'officer', $beeo);
             } else {
+
+                if($beeo != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($beeo->beeo_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 
@@ -102,8 +156,17 @@ class OfficerAuthController extends Controller
 
             if ($bmc && Hash::check($request->password, $bmc->bmc_password)) {
                 Auth::guard('bmc')->login($bmc);
+
+                LoginActivityLogController::AddLoginActivityLogSuccess($bmc->bmc_id);
+
                 return response()->success('BMC Officer login successful', 'officer', $bmc);
             } else {
+
+                if($bmc != null) {
+                    LoginActivityLogController::AddLoginActivityLogError($bmc->bmc_id);
+                } else {
+                    LoginActivityLogController::AddLoginActivityLogError($request->email);
+                }
                 return response()->errorUnauthorised('Falied to login');
             }
 

@@ -110,6 +110,9 @@ class BMCController extends Controller
 
         SendPasswordToEmail::SendPasswordToEmailHeadTeacher($request->head_teacher_email, $pass);
 
+        UserActivityLogController::AddUserActivityLogInsert($teacher->created_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Head Teacher Created");
+        UserActivityLogController::AddUserActivityLogInsert($school->created_by, $school->school_id,  $school->school_name, "School Created");
+
         return response()->success('School added successfully', 'school', $school);
 
 
