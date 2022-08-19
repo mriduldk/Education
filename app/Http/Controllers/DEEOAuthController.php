@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\DEEO;
 use Carbon\Carbon;
 
@@ -51,11 +52,13 @@ class DEEOAuthController extends Controller
             $deeo->deeo_image_url = $path;
         }
 
+        $pass = GenerateID::getPassword();
+
         $deeo->deeo_id = GenerateID::getId();
         $deeo->deeo_name =  $request->deeo_name;
         $deeo->deeo_phone = $request->deeo_phone;
         $deeo->deeo_email = $request->deeo_email;
-        $deeo->deeo_password = Hash::make('123456');
+        $deeo->deeo_password = Hash::make($pass);
         
         $deeo->deeo_office_name =  $request->deeo_office_name;
         $deeo->deeo_office_address =  $request->deeo_office_address;
@@ -66,7 +69,9 @@ class DEEOAuthController extends Controller
 
         $deeo ->save();
 
-        return response()->success('DEEO inserted successfully', 'deeo', $deeo);
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->deeo_email, 'DEEO', $pass);
+
+        return response()->success('DEEO inserted successfully', 'deeo', $deeo,);
 
     }
     public function UpdateDEEO(Request $request)

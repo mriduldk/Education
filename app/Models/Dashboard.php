@@ -12,21 +12,15 @@ use Laravel\Sanctum\HasApiTokens;
 class Dashboard extends Model
 {
     
-    use HasApiTokens, HasFactory, Notifiable;
+    public $is;
+    public $dpc;
+    public $dmc;
+    public $deeo;
+    public $approver;
+    public $manager;
+    public $deo;
+    public $school;
+    public $teacher;
 
-    protected $fillable = [
-        'notice_count', 
-        'tender_count', 
-        'event_count'
-    ];    
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        
-    ];
 
 }

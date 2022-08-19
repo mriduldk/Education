@@ -90,7 +90,7 @@ class OfficerAuthController extends Controller
 
             if ($beeo && Hash::check($request->password, $beeo->beeo_password)) {
                 Auth::guard('beeo')->login($beeo);
-                return response()->success('DEEO Officer login successful', 'officer', $beeo);
+                return response()->success('BEEO Officer login successful', 'officer', $beeo);
             } else {
                 return response()->errorUnauthorised('Falied to login');
             }
@@ -102,7 +102,7 @@ class OfficerAuthController extends Controller
 
             if ($bmc && Hash::check($request->password, $bmc->bmc_password)) {
                 Auth::guard('bmc')->login($bmc);
-                return response()->success('DEEO Officer login successful', 'officer', $bmc);
+                return response()->success('BMC Officer login successful', 'officer', $bmc);
             } else {
                 return response()->errorUnauthorised('Falied to login');
             }

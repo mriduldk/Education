@@ -23,40 +23,76 @@
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">6</h3>
-                        <span>Total Block</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->school->count(); }}</h3>
+                        <span>Total School / College</span>
                     </div>
                     <div class="avatar bg-light-primary p-50">
-                        <span class="avatar-content">                        
-                        <i data-feather='box'  class="font-medium-4"></i>
+                        <span class="avatar-content">
+                            <i data-feather='box' class="font-medium-4"></i>
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/di/schoolList') }}"><i data-feather='eye'></i>
+                    View</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">30</h3>
-                        <span>Total School / College</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->teacher->count(); }}</h3>
+                        <span>Total Teacher</span>
                     </div>
                     <div class="avatar bg-light-danger p-50">
                         <span class="avatar-content">
-                        <i data-feather='home'  class="font-medium-4"></i>
+                            <i data-feather='home' class="font-medium-4"></i>
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/di/teacherList') }}"><i data-feather='eye'></i>
+                    View</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">9,860</h3>
-                        <span>Total Teachers</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->approver->count(); }}</h3>
+                        <span>Total Approver</span>
+                    </div>
+                    <div class="avatar bg-light-primary p-50">
+                        <span class="avatar-content">
+                            <i data-feather='user-check' class="font-medium-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-gradient-primary" href="{{ url('/di/approverList') }}"><i data-feather='eye'></i>
+                    View</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->manager->count(); }}</h3>
+                        <span>Total Manager</span>
+                    </div>
+                    <div class="avatar bg-light-danger p-50">
+                        <span class="avatar-content">
+                            <i data-feather='home' class="font-medium-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-gradient-primary" href="{{ url('/di/managerList') }}"><i data-feather='eye'></i>
+                    View</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->deo->count(); }}</h3>
+                        <span>Total DEO</span>
                     </div>
                     <div class="avatar bg-light-success p-50">
                         <span class="avatar-content">
@@ -64,27 +100,13 @@
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/di/deoList') }}"><i data-feather='eye'></i>
+                    View</a>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6">
-            <div class="card">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h3 class="fw-bolder mb-75">237</h3>
-                        <span>Total Students</span>
-                    </div>
-                    <div class="avatar bg-light-warning p-50">
-                        <span class="avatar-content">                          
-                        <i data-feather='user' class="font-medium-4"></i>
-                        </span>
-                    </div>
-                </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
-            </div>
-        </div>
-    </div>
 
+    </div>
+    
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -98,10 +120,10 @@
                             <th>Administrator Name</th>
                             <th>Contact Details</th>
 
-                            <th>Salary</th> 
-                            
-                            <th>Status (Completed/Pending)</th> 
-                            
+                            <th>Salary</th>
+
+                            <th>Status (Completed/Pending)</th>
+
                             <th>Action</th>
                         </tr>
                     </thead>

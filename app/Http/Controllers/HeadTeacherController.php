@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// ini_set("SMTP","ssl://smtp.gmail.com");
+// ini_set("smtp_port","587");
+
 use Illuminate\Http\Request;
 use App\Models\School;
 use App\Models\SchoolEntrolmentOfStudent;
@@ -9,12 +12,14 @@ use App\Models\SchoolFacilities;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class HeadTeacherController extends Controller
 {
 
+    
     /** Authentications */
     public function HeadTeacherLoginPage()
     {
@@ -122,6 +127,8 @@ class HeadTeacherController extends Controller
 
         $teacher = new Teacher();
 
+        $pass = GenerateID::getPassword();
+
         $teacher->teacher_id = GenerateID::getId();
         $teacher->fk_school_id =  Auth::guard('headTeacher')->user()->fk_school_id;
         $teacher->teacher_employee_code = $request->teacher_employee_code;
@@ -129,11 +136,15 @@ class HeadTeacherController extends Controller
         $teacher->teacher_last_name =$request->teacher_last_name;
         $teacher->teacher_mobile =  $request->teacher_mobile;
         $teacher->teacher_email =  $request->teacher_email;
+        $teacher->teacher_password =  Hash::make($pass);
         $teacher->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
         $teacher->created_on =  Carbon::now()->toDateTimeString();
         $teacher ->save();
 
+        SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
+        
         return response()->success('Teacher added successfully', 'teacher', $teacher);
+
     }
     public function EditTeacher(string $teacher_id){
 
@@ -331,11 +342,6 @@ class HeadTeacherController extends Controller
     public function teacherDatas(){
         return view('headTeacher/teacherDatas');
     }
-
-
-
-
-
 
 
 }

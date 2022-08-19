@@ -562,9 +562,6 @@ Route::get('kharithiHome', [KnowYourSchoolController::class, 'kharithiHome'])->n
 
 Route::get('example', [exampleController::class, 'example']);
 
-Route::get('leaveApplication', [TeacherLeaveController::class, 'index']);
-Route::post('leave-insert', [TeacherLeaveController::class, 'store']);
-
 
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
    
@@ -671,6 +668,15 @@ Route::middleware('user-access:teacher')->group(function () {
 
     Route::get('reviewTeacherDetails', [TeacherController::class, 'ReviewTeacherDetails']);
     Route::post('store-teacher-details', [TeacherController::class, 'StoreTeacherDetails']);
+
+    Route::get('leaveApplication', [TeacherLeaveController::class, 'index']);
+    Route::post('leave-insert', [TeacherLeaveController::class, 'store']);
+
+    Route::get('teacher/leaveApplicationList', [TeacherController::class, 'LeaveApplicationList'])->name('LeaveApplicationList');
+    Route::get('get-all-leave-application', [TeacherLeaveController::class, 'showOnlyTeachers']);
+    Route::get('get-one-leave-application/{id}', [TeacherLeaveController::class, 'GetLeaveApplicationDetails'])->name('GetLeaveApplicationDetails');
+
+
 
 });
 

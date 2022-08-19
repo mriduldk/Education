@@ -23,6 +23,10 @@ class TeacherController extends Controller
     {
         return view('teacher/teacherLogin');
     }
+    public function LeaveApplicationList()
+    {
+        return view('teacher/leaveApplicationList');
+    }
 
     public function TeacherLoginCheck(Request $request)
     {

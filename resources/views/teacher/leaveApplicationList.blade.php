@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'All Teacher List')
+@section('title', 'Leave Application List')
 
 @section('vendor-style')
 {{-- vendor css files --}}
@@ -25,13 +25,13 @@
                 <table class="datatables-teacher table table-bordered">
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>teacher_first_name</th>
-                            <th>teacher_mobile</th>
-                            <th>teacher_email</th>
-                            <th>teacher_employee_code</th>
-                            <th>teacher designation</th>
-                            <th>Action</th>
+                            <th>Sl No</th>
+                            <th>Application No</th>
+                            <th>Name</th>
+                            <th>Employee Code</th>
+                            <th>Date</th>
+                            <th>View Application</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                 </table>
@@ -79,9 +79,81 @@
             </form>
         </div>
     </div>
-    <div class="input-group mb-3">
-        <div id="recaptcha-container"></div>
+
+    <div class="modal fade text-start" id="inlineForm" tabindex="-1" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">View Application</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="#">
+                    <div class="modal-body">
+                        <div class="card-body">
+
+                            <ul class="list-unstyled">
+                                <h4>From,</h4>
+                                <li class="mb-75">
+                                    <span class="fw-bolder me-25" id="modal_userName_with_employee_code"></span>
+                                </li>
+                                <li class="mb-75">
+                                    <span class="fw-bolder me-25">Mobile: </span>
+                                    <span id="modal_phone"></span>
+                                </li>
+                                <li class="mb-75">
+                                    <span class="fw-bolder me-25">Email: </span>
+                                    <span id="modal_email"></span>
+                                </li>
+                            </ul>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="mb-1">
+                                    <span class="fw-bolder me-25">Date: </span>
+                                        <span id="modal_date_from"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-2">
+                                    <div class="mb-1">
+                                        <h4>Subject: </h4>
+                                        <span id="modal_subject"></span>
+                                    </div>
+                                </div>
+                                <!-- Basic Textarea start -->
+
+                                <div class="col-12">
+                                    <h4>Respected Sir/Madam,</h4>
+                                    <span id="model_message"></span>
+                                </div>
+
+                                <ul class="list-unstyled card-body mt-2">
+                                    <li class="mb-1">
+                                        <h4>Thanking You,</h4>
+                                    </li>
+
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Your sincerely</span>
+                                    </li>
+                                    <li class="mb-10">
+                                        <h5 id="modal_username">
+                                            </h3>
+                                    </li>
+                                    <li class="mb-75">
+                                        <h6 id="modal_teacher_post"></h6>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="footerModal">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btnLoading"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
 
 </section>
 
@@ -122,7 +194,7 @@ var datatable = dt_notice_table.DataTable({
     searchDelay: 500,
     destroy: true,
     ajax: {
-        url: "{{ url('all-teachers-of-school') }}",
+        url: "{{ url('get-all-leave-application') }}",
         type: 'GET',
         dataSrc: ''
     },
@@ -138,24 +210,24 @@ var datatable = dt_notice_table.DataTable({
             title: 'id',
         },
         {
+            data: 'leave_application_no',
+            title: 'Application No',
+        },
+        {
+            data: 'status',
+            title: 'Status',
+        },
+        {
+            data: 'remarks',
+            title: 'remarks',
+        },
+        {
+            data: 'leave_date_from',
+            title: 'Date',
+        },
+        {
             data: null,
-            title: 'teacher name',
-        },
-        {
-            data: 'teacher_mobile',
-            title: 'teacher mobile',
-        },
-        {
-            data: 'teacher_email',
-            title: 'teacher email',
-        },
-        {
-            data: 'teacher_employee_code',
-            title: 'teacher employee code',
-        },
-        {
-            data: 'teacher_category_type',
-            title: 'teacher designation',
+            title: 'View Application',
         },
         {
             data: null,
@@ -164,13 +236,35 @@ var datatable = dt_notice_table.DataTable({
     ],
     columnDefs: [{
             // Actions
-            targets: 1,
+            targets: 2,
             title: 'Teacher Name',
             orderable: false,
             render: function(data, type, full, meta) {
 
+                var spanText = "";
+
+                if(data == "Pending") {
+                    spanText = '<span class="badge bg-warning">Pending</span>'
+                } else if(data == "Accepted") {
+                    spanText = '<span class="badge bg-success">Accepted</span>'
+                } else if(data == "Rejected") {
+                    spanText = '<span class="badge bg-danger">Rejected</span>'
+                } else {
+                    spanText = '<span class="badge bg-danger">Pending</span>'
+                } 
+
+                return (spanText);
+            }
+        },{
+            // Actions
+            targets: 5,
+            title: 'View Application',
+            orderable: false,
+            render: function(data, type, full, meta) {
+
                 return (
-                    '<span>' + data.teacher_first_name + ' ' + data.teacher_last_name + '</span>'
+                    '<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target = "#inlineForm" data-id="' + data.id +
+                    '" onclick="viewApplicationModal(' + data.id +')" id="btnViewApplication">View Application</a>'
                 );
             }
         },
@@ -219,11 +313,10 @@ var datatable = dt_notice_table.DataTable({
     buttons: [{
         text: feather.icons['plus'].toSvg({
             class: 'me-50 font-small-4'
-        }) + 'Add New Record',
+        }) + 'Add Leave',
         className: 'create-new btn btn-primary',
-        attr: {
-            'data-bs-toggle': 'modal',
-            'data-bs-target': '#modals-slide-in'
+        action : function (e, dt, node, config) {
+            window.location.replace("{{url('leaveApplication')}}");
         },
         init: function(api, node, config) {
             $(node).removeClass('btn-secondary');
@@ -231,7 +324,7 @@ var datatable = dt_notice_table.DataTable({
     }],
 });
 
-$('div.head-label').html('<h6 class="mb-0">All Teacher List</h6>');
+$('div.head-label').html('<h6 class="mb-0">Leave Application List</h6>');
 
 
 $("tbody").on("click", "#deleteTeacher", function() {
@@ -321,12 +414,59 @@ $("tbody").on("click", "#deleteTeacher", function() {
     });
 
 });
+
+function viewApplicationModal(id) {
+
+    //let applicationId = $('#btnViewApplication').attr("data-id");
+    let applicationId = id;
+
+    var url = '{{ route("GetLeaveApplicationDetails", ":id") }}';
+    url = url.replace(':id', applicationId);
+
+    $('#btnLoading').html('Loading');
+
+    $.ajax({
+        url: url,
+        enctype: 'multipart/form-data',
+        type: "GET",
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function(response) {
+
+            $('#btnLoading').hide();
+            $('#footerModal').hide();
+
+            $('#modal_userName_with_employee_code').text(response.teacher.teacher_first_name + " " + response.teacher.teacher_last_name + "( " + response.teacher.teacher_employee_code + " )");
+            $('#modal_phone').text(response.teacher.teacher_mobile);
+            $('#modal_email').text(response.teacher.teacher_email);
+            $('#modal_date_from').text(response.leave_date_from);
+            $('#modal_subject').text(response.leave_subject);
+            $('#model_message').text(response.leave_message);
+            $('#modal_username').text(response.teacher.teacher_first_name + " " + response.teacher.teacher_last_name);
+            $('#modal_teacher_post').text(response.teacher.teacher_category_type);
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            $('#btnLoading').hide();
+            $('#footerModal').hide();
+
+            toastr['error'](
+                'Failed to get Leave Application Data. Please Try again.',
+                'Error!', {
+                    closeButton: true,
+                    tapToDismiss: false,
+                    rtl: false
+                });
+        }
+    });
+
+}
 </script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-
-<script src="https://smtpjs.com/v3/smtp.js"></script>
 
 <script>
 if ($("#formAddTeacher").length > 0) {
@@ -413,11 +553,7 @@ if ($("#formAddTeacher").length > 0) {
                                 rtl: false
                             });
 
-                        //var email = response.data.teacher.teacher_email;
-
-                        //sentPassowordInEmail(email);
-
-                        //window.location.reload();
+                        window.location.reload();
 
                     } else {
 
@@ -448,7 +584,6 @@ if ($("#formAddTeacher").length > 0) {
     })
 }
 </script>
-
 
 
 <!-- <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script> -->

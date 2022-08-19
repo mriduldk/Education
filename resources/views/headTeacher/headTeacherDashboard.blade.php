@@ -219,13 +219,22 @@
                                     <td>@php echo $school->schoolFacility->no_of_cwsn_toilets;
                                         @endphp</td>
                                     <th>Drinking Water Availability </th>
-                                    <td>@php echo
-                                        $school->schoolFacility->drinking_water_availability;
+                                    <td>@php 
+                                        if($school->schoolFacility->drinking_water_availability == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
                                         @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Hand Wash Facility </th>
-                                    <td>@php echo $school->schoolFacility->hand_wash_facility;
+                                    <td>@php 
+                                        if($school->schoolFacility->hand_wash_facility == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
                                         @endphp</td>
                                     <th>Functional Generator </th>
                                     <td>@php echo $school->schoolFacility->functional_generator;
@@ -233,14 +242,31 @@
                                 </tr>
                                 <tr>
                                     <th>Library </th>
-                                    <td>@php echo $school->schoolFacility->library; @endphp</td>
+                                    <td>@php 
+                                        if($school->schoolFacility->library == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
+                                         @endphp</td>
                                     <th>Reading Corner </th>
-                                    <td>@php echo $school->schoolFacility->reading_corner;
+                                    <td>@php 
+                                        if($school->schoolFacility->reading_corner == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
                                         @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Book Bank </th>
-                                    <td>@php echo $school->schoolFacility->book_bank; @endphp
+                                    <td>@php 
+                                        if($school->schoolFacility->book_bank == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
+                                         @endphp
                                     </td>
                                     <th>Functional Laptop </th>
                                     <td>@php echo $school->schoolFacility->functional_laptop;
@@ -272,10 +298,22 @@
                                 </tr>
                                 <tr>
                                     <th>Internet </th>
-                                    <td>@php echo $school->schoolFacility->internet; @endphp
+                                    <td>@php 
+                                        if($school->schoolFacility->internet == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
+                                         @endphp
                                     </td>
                                     <th>DTH </th>
-                                    <td>@php echo $school->schoolFacility->dth; @endphp</td>
+                                    <td>@php 
+                                        if($school->schoolFacility->dth == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Functional Web Cam </th>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\DMC;
 use Carbon\Carbon;
 
@@ -51,11 +52,13 @@ class DMCAuthController extends Controller
             $dmc->dmc_image_url = $path;
         }
 
+        $pass = GenerateID::getPassword();
+
         $dmc->dmc_id = GenerateID::getId();
         $dmc->dmc_name =  $request->dmc_name;
         $dmc->dmc_phone = $request->dmc_phone;
         $dmc->dmc_email = $request->dmc_email;
-        $dmc->dmc_password = Hash::make('123456');
+        $dmc->dmc_password = Hash::make($pass);
         
         $dmc->dmc_office_name =  $request->dmc_office_name;
         $dmc->dmc_office_address =  $request->dmc_office_address;
@@ -65,6 +68,8 @@ class DMCAuthController extends Controller
 
 
         $dmc ->save();
+
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->dmc_email, 'DMC', $pass);
 
         return response()->success('DMC inserted successfully', 'dmc', $dmc);
 

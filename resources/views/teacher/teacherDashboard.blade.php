@@ -132,16 +132,16 @@
                         <span class="fw-bold"><i data-feather='file-text'></i> Qualification</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="btnLeaveStatus">
                         <span class="fw-bold"><i data-feather='list'></i> Leave Status</span>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="btnTransferDetails">
                         <span class="fw-bold"><i data-feather='info'></i> Transfer Details</span>
                     </a>
-                </li>
+                </li> -->
 
 
             </ul>
@@ -469,10 +469,9 @@
 
 
 <!-- Buynow Button-->
-<div class="buy-now">
+<!-- <div class="buy-now">
     <a href="{{ url('leaveApplication') }}" class="btn btn-danger"><i data-feather='check-square'></i> Apply for Leave</a>
-    <!-- <a href="#" target="_blank" class="btn btn-success"><i data-feather='edit-3'></i> Update Data</a> -->
-</div>
+</div> -->
 
 
 

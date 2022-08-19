@@ -11,7 +11,14 @@
       "name": "Edit Profile",
       "icon": "hexagon",
       "slug": "editTeacher"
-    }
+    },
+    {
+      "url": "teacher/leaveApplicationList",
+      "name": "Leave Applications",
+      "icon": "square",
+      "slug": "teacher/leaveApplicationList"
+    }  
+    
     
   ]
 }

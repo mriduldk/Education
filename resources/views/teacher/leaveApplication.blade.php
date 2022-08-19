@@ -172,7 +172,7 @@ if ($("#leaveForm").length > 0) {
             },
             message: {
                 required: true,
-                maxlength: 500
+                maxlength: 2000
             },
             subject: {
                 required: true,
@@ -186,7 +186,7 @@ if ($("#leaveForm").length > 0) {
             },
             message: {
                 required: "Please enter your leave message",
-                maxlength: "Leave message should less than or equal to 300 characters",
+                maxlength: "Leave message should less than or equal to 2000 characters",
             },
             subject: {
                 required: "Please enter subject",
@@ -229,7 +229,7 @@ if ($("#leaveForm").length > 0) {
                             rtl: false
                         });
 
-                    window.location.replace("{{url('teacherDashboard')}}");
+                    window.location.replace("{{url('teacher/leaveApplicationList')}}");
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

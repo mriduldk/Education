@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use Carbon\Carbon;
 
 use function PHPSTORM_META\type;
@@ -261,23 +262,26 @@ class ManagerController extends Controller
 
         } else {
              return response()->errorUnauthorised('Manager type is not valid');
-         }
+        }
  
+         $pass = GenerateID::getPassword();
  
-         $manager->manager_id = GenerateID::getId();
-         $manager->manager_name =  $request->manager_name;
-         $manager->manager_phone = $request->manager_phone;
-         $manager->manager_email = $request->manager_email;
-         $manager->manager_password = Hash::make($request->manager_password);
-         
-         $manager->manager_office_name =  $request->manager_office_name;
-         $manager->manager_office_address =  $request->manager_office_address;
-         $manager->manager_dictrict =  $request->manager_dictrict;
-         $manager->created_on =  Carbon::now()->toDateTimeString();
- 
- 
-         $manager ->save();
- 
+        $manager->manager_id = GenerateID::getId();
+        $manager->manager_name =  $request->manager_name;
+        $manager->manager_phone = $request->manager_phone;
+        $manager->manager_email = $request->manager_email;
+        $manager->manager_password = Hash::make($pass);
+        
+        $manager->manager_office_name =  $request->manager_office_name;
+        $manager->manager_office_address =  $request->manager_office_address;
+        $manager->manager_dictrict =  $request->manager_dictrict;
+        $manager->created_on =  Carbon::now()->toDateTimeString();
+
+
+        $manager ->save();
+
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->manager_email, 'Manager', $pass);
+
          return response()->success('Manager inserted successfully', 'manager', $manager);
  
      }

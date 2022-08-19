@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use Carbon\Carbon;
 
 class ApproverController extends Controller
@@ -261,20 +262,22 @@ class ApproverController extends Controller
             return response()->errorUnauthorised('Approver type is not valid');
         }
 
+        $pass = GenerateID::getPassword();
 
         $approver->approver_id = GenerateID::getId();
         $approver->approver_name =  $request->approver_name;
         $approver->approver_phone = $request->approver_phone;
         $approver->approver_email = $request->approver_email;
-        $approver->approver_password = Hash::make("123456");//$request->approver_password);
+        $approver->approver_password = Hash::make($pass);
         
         $approver->approver_office_name =  $request->approver_office_name;
         $approver->approver_office_address =  $request->approver_office_address;
         $approver->approver_dictrict =  $request->approver_dictrict;
         $approver->created_on =  Carbon::now()->toDateTimeString();
 
-
         $approver ->save();
+
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->approver_email, 'Approver', $pass);
 
         return response()->success('Approver inserted successfully..!!', 'approver', $approver);
 

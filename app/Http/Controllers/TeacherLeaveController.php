@@ -38,7 +38,7 @@ class TeacherLeaveController extends Controller
         // $path = 'https://dashboard.edu.bodoland.gov.in/public/files/profile/deeo' . $fileName;
 
 
-        $teacher = Teacher::where('is_deleted', 0)->where('id', Auth::user()->id)->first(); // shold be teacher_id
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
         $headTeacher = Teacher::where('is_deleted', 0)->where('fk_school_id', $teacher->fk_school_id)->where('is_head_teacher', 1)->first(); 
 
 
@@ -52,7 +52,7 @@ class TeacherLeaveController extends Controller
         $teacherLeave->leave_subject =  $request->subject;
         $teacherLeave->leave_message =  $request->message;
         $teacherLeave->is_only_uploaded_application = false;
-        $teacherLeave->created_by =  Auth::user()->id;
+        $teacherLeave->created_by =  $teacher->teacher_id;
         $teacherLeave->created_on =  Carbon::now()->toDateTimeString();
 
 
@@ -65,6 +65,17 @@ class TeacherLeaveController extends Controller
     public function showAll()
     {
         $leaves = TeacherLeave::where('is_deleted', 0)->get();
+
+        foreach($leaves as $leave){
+            $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $leave->fk_teacher_id)->first();
+
+            $leave['teacher'] = $teacher;    
+        }
+        return $leaves;
+    }
+    public function showOnlyTeachers()
+    {
+        $leaves = TeacherLeave::where('is_deleted', 0)->where('fk_teacher_id', Auth::guard('teacher')->user()->teacher_id)->get();
 
         foreach($leaves as $leave){
             $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $leave->fk_teacher_id)->first();

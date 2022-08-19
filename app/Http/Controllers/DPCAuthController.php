@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\BEEO;
 use App\Models\CHD;
 use App\Models\DEEO;
@@ -58,11 +59,13 @@ class DPCAuthController extends Controller
             $dpc->dpc_image_url = $path;
         }
 
+        $pass = GenerateID::getPassword();
+
         $dpc->dpc_id = GenerateID::getId();
         $dpc->dpc_name =  $request->dpc_name;
         $dpc->dpc_phone = $request->dpc_phone;
         $dpc->dpc_email = $request->dpc_email;
-        $dpc->dpc_password = Hash::make('123456');
+        $dpc->dpc_password = Hash::make($pass);
         
         $dpc->dpc_office_name =  $request->dpc_office_name;
         $dpc->dpc_office_address =  $request->dpc_office_address;
@@ -72,6 +75,8 @@ class DPCAuthController extends Controller
 
 
         $dpc ->save();
+
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->dpc_email, 'DPC', $pass);
 
         return response()->success('DPC inserted successfully', 'dpc', $dpc);
 

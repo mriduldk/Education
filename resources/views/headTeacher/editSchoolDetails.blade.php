@@ -149,6 +149,13 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
+                                    <label class="form-label" for="school_type">School Type </label>
+                                    <input type="text" id="school_type" class="form-control" name="school_type"
+                                        value="{{ $school->school_type }}" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-1">
                                     <label class="form-label" for="school_medium">School Medium </label>
                                     <select name="school_medium" id="school_medium"
                                         class="form-select text-capitalize mb-md-0 mb-2xx">
@@ -202,9 +209,8 @@
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="status">Status </label>
-                                    <input type="text" id="status" class="form-control"
-                                        name="status" placeholder="Status "
-                                        value="{{ $school->status }}" />
+                                    <input type="text" id="status" class="form-control" name="status"
+                                        placeholder="Status " value="{{ $school->status }}" />
                                 </div>
                             </div>
                             <div class="col-6">
@@ -231,8 +237,9 @@
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="year_of_establishment">Year of Establishment </label>
-                                    <input type="text" id="year_of_establishment" class="form-control" name="year_of_establishment"
-                                        placeholder="Year of Establishment " value="{{ $school->year_of_establishment }}" />
+                                    <input type="text" id="year_of_establishment" class="form-control"
+                                        name="year_of_establishment" placeholder="Year of Establishment "
+                                        value="{{ $school->year_of_establishment }}" />
                                 </div>
                             </div>
                             <div class="col-6">
@@ -295,20 +302,45 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="drinking_water_availability">Drinking Water
-                                        Availability
-                                    </label>
-                                    <input type="text" id="drinking_water_availability" class="form-control"
+                                    <!-- <label class="form-label" for="drinking_water_availability">Drinking Water
+                                            Availability
+                                    </label> -->
+                                    <!-- <input type="text" id="drinking_water_availability" class="form-control"
                                         name="drinking_water_availability" placeholder="Drinking Water Availability "
-                                        value="{{ $school->schoolFacility->drinking_water_availability }}" />
+                                        value="{{ $school->schoolFacility->drinking_water_availability }}" /> -->
+                                    <!-- <input type="checkbox" class="form-check-input" id="drinking_water_availability"
+                                        name="drinking_water_availability" /> -->
+
+                                    <!-- <div class="form-check form-switch mt-2">
+                                        <label class="form-check-label" for="customSwitch1">Drinking Water
+                                            Availability</label>
+                                        <input type="checkbox" class="form-check-input" id="drinking_water_availability" name="drinking_water_availability"
+                                            @php if($school->schoolFacility->drinking_water_availability){ echo 'checked'; } @endphp />
+
+                                    </div> -->
+
+                                    <label class="form-label" for="drinking_water_availability">Drinking Water Availability</label>
+                                    <select name="drinking_water_availability" id="drinking_water_availability"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->drinking_water_availability == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->drinking_water_availability == '0' || $school->schoolFacility->drinking_water_availability == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="hand_wash_facility">Hand Wash Facility </label>
-                                    <input type="text" id="hand_wash_facility" class="form-control"
-                                        name="hand_wash_facility" placeholder="Hand Wash Facility "
-                                        value="{{ $school->schoolFacility->hand_wash_facility }}" />
+                                    <select name="hand_wash_facility" id="hand_wash_facility"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->hand_wash_facility == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->hand_wash_facility == '0' || $school->schoolFacility->hand_wash_facility == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -322,8 +354,14 @@
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="library">Library </label>
-                                    <input type="text" id="library" class="form-control" name="library"
-                                        placeholder="Library " value="{{ $school->schoolFacility->library }}" />
+                                    <select name="library" id="library"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->library == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->library == '0' || $school->schoolFacility->library == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <!-- <div class="col-6">
@@ -335,17 +373,28 @@
                             </div> -->
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="book_bank">Reading Corner </label>
-                                    <input type="text" id="book_bank" class="form-control" name="book_bank"
-                                        placeholder="Reading Corner "
-                                        value="{{ $school->schoolFacility->book_bank }}" />
+                                    <label class="form-label" for="reading_corner">Reading Corner </label>
+                                    <select name="reading_corner" id="reading_corner"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->reading_corner == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->reading_corner == '0' || $school->schoolFacility->reading_corner == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="book_bank">Book Bank </label>
-                                    <input type="text" id="book_bank" class="form-control" name="book_bank"
-                                        placeholder="Book Bank " value="{{ $school->schoolFacility->book_bank }}" />
+                                    <select name="book_bank" id="book_bank"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->book_bank == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->book_bank == '0' || $school->schoolFacility->book_bank == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -406,17 +455,28 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="functional_digiboard">Internet </label>
-                                    <input type="text" id="functional_digiboard" class="form-control"
-                                        name="functional_digiboard" placeholder="Internet "
-                                        value="{{ $school->schoolFacility->functional_digiboard }}" />
+                                    <label class="form-label" for="internet">Internet </label>
+                                    <select name="internet" id="internet"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->internet == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->internet == '0' || $school->schoolFacility->internet == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
                                     <label class="form-label" for="dth">DTH </label>
-                                    <input type="text" id="dth" class="form-control" name="dth" placeholder="DTH "
-                                        value="{{ $school->schoolFacility->dth }}" />
+                                    <select name="dth" id="dth"
+                                        class="form-select text-capitalize mb-md-0 mb-2xx">
+                                        <option value="">Select Option</option>
+                                        <option value="1" @php if($school->schoolFacility->dth == "1" ) {
+                                            @endphp selected="selected" @php } @endphp >Yes</option>
+                                        <option value="0" @php if($school->schoolFacility->dth == '0' || $school->schoolFacility->dth == null ) { @endphp
+                                            selected="selected" @php } @endphp>No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -551,17 +611,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="testtea">Class XII </label>
-                                    <input type="number" id="testtea" class="form-control" name="testtea"
-                                        placeholder="State "
-                                        value="{{ $school->schoolEnreolmentOfStudent->school_name }}" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
                                     <label class="form-label" for="class_12">Class XII </label>
                                     <input type="number" id="class_12" class="form-control" name="class_12"
-                                        placeholder="PinCode "
+                                        placeholder="XII "
                                         value="{{ $school->schoolEnreolmentOfStudent->class_12 }}" />
                                 </div>
                             </div>
@@ -1170,7 +1222,7 @@ if ($("#schoolForm").length > 0) {
                                 rtl: false
                             });
 
-                            window.location.replace("{{ url('headTeacherDashboard') }}");
+                        window.location.replace("{{ url('headTeacherDashboard') }}");
 
                     } else {
 

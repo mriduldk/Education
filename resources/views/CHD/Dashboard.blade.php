@@ -23,8 +23,8 @@
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">6</h3>
-                        <span>Total Block</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->is->count(); }}</h3>
+                        <span>Total IS</span>
                     </div>
                     <div class="avatar bg-light-primary p-50">
                         <span class="avatar-content">                        
@@ -32,15 +32,15 @@
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/isList') }}"><i data-feather='eye'></i> View</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">30</h3>
-                        <span>Total School / College</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->dpc->count(); }}</h3>
+                        <span>Total DPC</span>
                     </div>
                     <div class="avatar bg-light-danger p-50">
                         <span class="avatar-content">
@@ -48,15 +48,15 @@
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/dpcList') }}"><i data-feather='eye'></i> View</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">9,860</h3>
-                        <span>Total Teachers</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->dmc->count(); }}</h3>
+                        <span>Total DMC</span>
                     </div>
                     <div class="avatar bg-light-success p-50">
                         <span class="avatar-content">
@@ -64,15 +64,15 @@
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/dmcList') }}"><i data-feather='eye'></i> View</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6">
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h3 class="fw-bolder mb-75">237</h3>
-                        <span>Total Students</span>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->deeo->count(); }}</h3>
+                        <span>Total DEEO</span>
                     </div>
                     <div class="avatar bg-light-warning p-50">
                         <span class="avatar-content">                          
@@ -80,7 +80,71 @@
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-gradient-primary"><i data-feather='eye'></i> View</button>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/deeoList') }}"><i data-feather='eye'></i> View</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->approver->count(); }}</h3>
+                        <span>Total Approver</span>
+                    </div>
+                    <div class="avatar bg-light-primary p-50">
+                        <span class="avatar-content">                        
+                        <i data-feather='box'  class="font-medium-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/approverList') }}"><i data-feather='eye'></i> View</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->manager->count(); }}</h3>
+                        <span>Total Manager</span>
+                    </div>
+                    <div class="avatar bg-light-danger p-50">
+                        <span class="avatar-content">
+                        <i data-feather='home'  class="font-medium-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/managerList') }}"><i data-feather='eye'></i> View</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->deo->count(); }}</h3>
+                        <span>Total DEO</span>
+                    </div>
+                    <div class="avatar bg-light-success p-50">
+                        <span class="avatar-content">
+                            <i data-feather="user-check" class="font-medium-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/deoList') }}"><i data-feather='eye'></i> View</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="fw-bolder mb-75">{{ $dashboard->school->count(); }}</h3>
+                        <span>Total Schools</span>
+                    </div>
+                    <div class="avatar bg-light-warning p-50">
+                        <span class="avatar-content">                          
+                        <i data-feather='user' class="font-medium-4"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-gradient-primary" href="{{ url('/chd/schoolList') }}"><i data-feather='eye'></i> View</a>
             </div>
         </div>
     </div>

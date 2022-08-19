@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
+use App\Http\SendPasswordToEmail;
 use App\Models\BEEO;
 use App\Models\CHD;
 use App\Models\DEEO;
@@ -58,11 +59,13 @@ class ISAuthController extends Controller
             $is->is_image_url = $path;
         }
 
+        $pass = GenerateID::getPassword();
+
         $is->is_id = GenerateID::getId();
         $is->is_name =  $request->is_name;
         $is->is_phone = $request->is_phone;
         $is->is_email = $request->is_email;
-        $is->is_password = Hash::make('123456');
+        $is->is_password = Hash::make($pass);
         
         $is->is_office_name =  $request->is_office_name;
         $is->is_office_address =  $request->is_office_address;
@@ -72,6 +75,8 @@ class ISAuthController extends Controller
 
 
         $is ->save();
+
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->is_email, 'IS', $pass);
 
         return response()->success('IS inserted successfully', 'is', $is);
 
