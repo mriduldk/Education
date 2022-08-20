@@ -54,6 +54,7 @@ class BEEOAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $beeo->beeo_id = GenerateID::getId();
+        $beeo->beeo_no = '7' . rand(1000, 9999);
         $beeo->beeo_name =  $request->beeo_name;
         $beeo->beeo_phone = $request->beeo_phone;
         $beeo->beeo_email = $request->beeo_email;

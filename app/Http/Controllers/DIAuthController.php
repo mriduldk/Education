@@ -54,6 +54,7 @@ class DIAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $di->di_id = GenerateID::getId();
+        $di->di_no = '6' . rand(1000, 9999);
         $di->di_name =  $request->di_name;
         $di->di_phone = $request->di_phone;
         $di->di_email = $request->di_email;

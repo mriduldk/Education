@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('i_s', function (Blueprint $table) {
             $table->id();
             $table->string('is_id')->unique();
+            $table->string('is_no')->unique();
             $table->string('is_name')->nullable();
             $table->string('is_phone')->unique();
             $table->string('is_email')->unique();

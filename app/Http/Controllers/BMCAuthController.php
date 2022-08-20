@@ -53,6 +53,7 @@ class BMCAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $bmc->bmc_id = GenerateID::getId();
+        $bmc->bmc_no = '8' . rand(1000, 9999);
         $bmc->bmc_name =  $request->bmc_name;
         $bmc->bmc_phone = $request->bmc_phone;
         $bmc->bmc_email = $request->bmc_email;
@@ -67,9 +68,9 @@ class BMCAuthController extends Controller
 
         $bmc ->save();
 
-        SendPasswordToEmail::SendPasswordToEmailOfficer($request->bmc_email, 'BMC', $pass);
+        //SendPasswordToEmail::SendPasswordToEmailOfficer($request->bmc_email, 'BMC', $pass);
 
-        UserActivityLogController::AddUserActivityLogInsert($bmc->created_by, $bmc->bmc_id, "BMC Created");
+        UserActivityLogController::AddUserActivityLogInsert($bmc->created_by, $bmc->bmc_id, $bmc->bmc_name, "BMC Created");
 
         return response()->success('BMC inserted successfully', 'bmc', $bmc);
 
@@ -109,7 +110,7 @@ class BMCAuthController extends Controller
     
             $bmc->save();
     
-            UserActivityLogController::AddUserActivityLogUpdate($bmc->modified_by, $bmc->bmc_id, "BMC Updated");
+            UserActivityLogController::AddUserActivityLogUpdate($bmc->modified_by, $bmc->bmc_id, $bmc->bmc_name, "BMC Updated");
 
             return response()->success('BMC updated successfully', 'bmc', $bmc);
         }
@@ -128,7 +129,7 @@ class BMCAuthController extends Controller
     
             $bmc->save();
 
-            UserActivityLogController::AddUserActivityLogDelete($bmc->deleted_by, $bmc->bmc_id, "BMC Deleted");
+            UserActivityLogController::AddUserActivityLogDelete($bmc->deleted_by, $bmc->bmc_id, $bmc->bmc_name, "BMC Deleted");
 
             return response()->success('BMC deleted successfully.', 'bmc', null);
         }

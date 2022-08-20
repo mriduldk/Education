@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('teacher_leaves', function (Blueprint $table) {
             $table->id();
-            $table->int('leave_application_no')->unique();
+            $table->integer('leave_application_no')->unique();
             $table->string('teacher_leave_id')->unique();
             $table->string('fk_teacher_id');
             $table->string('fk_school_id');

@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th>id</th>
+                            <th>teacher_no</th>
                             <th>teacher_first_name</th>
                             <th>teacher_mobile</th>
                             <th>teacher_email</th>
@@ -132,6 +133,10 @@ var datatable = dt_notice_table.DataTable({
     columns: [{
             data: 'id',
             title: 'id',
+        },
+        {
+            data: 'teacher_no',
+            title: 'teacher no',
         },
         {
             data: null,

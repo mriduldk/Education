@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('d_i_s', function (Blueprint $table) {
             $table->id();
             $table->string('di_id')->unique();
+            $table->string('di_no')->unique();
             $table->string('di_name')->nullable();
             $table->string('di_phone')->unique();
             $table->string('di_email')->unique();

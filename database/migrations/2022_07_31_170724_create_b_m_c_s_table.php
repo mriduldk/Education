@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('b_m_c_s', function (Blueprint $table) {
             $table->id();
             $table->string('bmc_id')->unique();
+            $table->string('bmc_no')->unique();
             $table->string('bmc_name')->nullable();
             $table->string('bmc_phone')->unique();
             $table->string('bmc_email')->unique();

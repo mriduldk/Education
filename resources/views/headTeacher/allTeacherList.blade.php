@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th>id</th>
+                            <th>teacher_no</th>
                             <th>teacher_first_name</th>
                             <th>teacher_mobile</th>
                             <th>teacher_email</th>
@@ -138,6 +139,10 @@ var datatable = dt_notice_table.DataTable({
             title: 'id',
         },
         {
+            data: 'teacher_no',
+            title: 'teacher no',
+        },
+        {
             data: null,
             title: 'teacher name',
         },
@@ -164,7 +169,7 @@ var datatable = dt_notice_table.DataTable({
     ],
     columnDefs: [{
             // Actions
-            targets: 1,
+            targets: 2,
             title: 'Teacher Name',
             orderable: false,
             render: function(data, type, full, meta) {
@@ -413,11 +418,7 @@ if ($("#formAddTeacher").length > 0) {
                                 rtl: false
                             });
 
-                        //var email = response.data.teacher.teacher_email;
-
-                        //sentPassowordInEmail(email);
-
-                        //window.location.reload();
+                        window.location.reload();
 
                     } else {
 

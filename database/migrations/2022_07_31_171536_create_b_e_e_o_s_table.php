@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('b_e_e_o_s', function (Blueprint $table) {
             $table->id();
             $table->string('beeo_id')->unique();
+            $table->string('beeo_no')->unique();
             $table->string('beeo_name')->nullable();
             $table->string('beeo_phone')->unique();
             $table->string('beeo_email')->unique();

@@ -13,6 +13,11 @@ use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use App\HTTP\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Models\TeacherAcademicQualification;
+use App\Models\TeacherDependentFamily;
+use App\Models\TeacherProfessionalQualification;
+use App\Models\TeacherSalaryAccountDetails;
+use App\Models\TeacherServiceDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -139,6 +144,7 @@ class HeadTeacherController extends Controller
         $pass = GenerateID::getPassword();
 
         $teacher->teacher_id = GenerateID::getId();
+        $teacher->teacher_no = '9' . rand(100000, 999999);
         $teacher->fk_school_id =  Auth::guard('headTeacher')->user()->fk_school_id;
         $teacher->teacher_employee_code = $request->teacher_employee_code;
         $teacher->teacher_first_name = $request->teacher_first_name;
@@ -150,7 +156,43 @@ class HeadTeacherController extends Controller
         $teacher->created_on =  Carbon::now()->toDateTimeString();
         $teacher ->save();
 
-        SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
+        $teacherDependentFamily = new TeacherDependentFamily();
+        $teacherDependentFamily->teacher_d_f_id = GenerateID::getId();
+        $teacherDependentFamily->fk_teacher_id = $teacher->teacher_id;
+        $teacherDependentFamily->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacherDependentFamily->created_on =  Carbon::now()->toDateTimeString();
+        $teacherDependentFamily->save();
+
+        $teacherProfessionalQualification = new TeacherProfessionalQualification();
+        $teacherProfessionalQualification->teacehr_p_q_id = GenerateID::getId();
+        $teacherProfessionalQualification->fk_teacher_id = $teacher->teacher_id;
+        $teacherProfessionalQualification->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacherProfessionalQualification->created_on =  Carbon::now()->toDateTimeString();
+        $teacherProfessionalQualification->save();
+
+        $teacherAcademicQualification = new TeacherAcademicQualification();
+        $teacherAcademicQualification->teacehr_a_q_id = GenerateID::getId();
+        $teacherAcademicQualification->fk_teacher_id = $teacher->teacher_id;
+        $teacherAcademicQualification->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacherAcademicQualification->created_on =  Carbon::now()->toDateTimeString();
+        $teacherAcademicQualification->save();
+
+        $teacherSalaryAccountDetails = new TeacherSalaryAccountDetails();
+        $teacherSalaryAccountDetails->teacehr_s_d_id = GenerateID::getId();
+        $teacherSalaryAccountDetails->fk_teacher_id = $teacher->teacher_id;
+        $teacherSalaryAccountDetails->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacherSalaryAccountDetails->created_on =  Carbon::now()->toDateTimeString();
+        $teacherSalaryAccountDetails->save();
+
+        $teacherServiceDetails = new TeacherServiceDetails();
+        $teacherServiceDetails->teacehr_s_d_id = GenerateID::getId();
+        $teacherServiceDetails->fk_teacher_id = $teacher->teacher_id;
+        $teacherServiceDetails->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacherServiceDetails->created_on =  Carbon::now()->toDateTimeString();
+        $teacherServiceDetails->save();
+
+
+        //SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
         UserActivityLogController::AddUserActivityLogInsert($teacher->created_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher Created");
         
         return response()->success('Teacher added successfully', 'teacher', $teacher);

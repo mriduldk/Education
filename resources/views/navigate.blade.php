@@ -82,6 +82,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-4 col-sm-6 col-12 mb-2 mb-sm-0">
+                            <div class="d-flex flex-row">
+                                <div class="avatar bg-light-danger me-2">
+                                    <div class="avatar-content">
+                                        <i data-feather="box" class="avatar-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="my-auto">
+                                    <h4 class="fw-bolder mb-0"></h4>
+                                    <a href="{{ url('adminLogin') }}" class="btn btn-primary">Admin Login</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

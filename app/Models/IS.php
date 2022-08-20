@@ -12,6 +12,7 @@ class IS extends Authenticatable
 
     protected $fillable = [
         'is_id', 
+        'is_no', 
         'is_name', 
         'is_phone', 
         'is_email', 

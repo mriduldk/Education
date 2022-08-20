@@ -55,6 +55,7 @@ class DEEOAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $deeo->deeo_id = GenerateID::getId();
+        $deeo->deeo_no = '5' . rand(1000, 9999);
         $deeo->deeo_name =  $request->deeo_name;
         $deeo->deeo_phone = $request->deeo_phone;
         $deeo->deeo_email = $request->deeo_email;

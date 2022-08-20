@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('approvers', function (Blueprint $table) {
             $table->id();
             $table->string('approver_id')->unique();
+            $table->string('approver_no')->nullable();
             $table->string('approver_name')->nullable();
             $table->string('approver_phone')->unique();
             $table->string('approver_email')->unique();

@@ -587,7 +587,7 @@ Route::get('kharithiHome', [KnowYourSchoolController::class, 'kharithiHome'])->n
 Route::get('example', [exampleController::class, 'example']);
 
 
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
+Route::middleware('user-access:admin')->group(function () {
    
     Route::get('notice-index', [NoticeController::class, 'index']);
     Route::get('notice-insert', [NoticeController::class, 'index']);
@@ -617,7 +617,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('latest-update-delete', [LatestUpdateController::class, 'destroy']);
     Route::get('latest-update-table-all-data', [LatestUpdateController::class, 'LatestTableAllData'])->name('latest-update.allData');
 
-    //Route::get('/', [DashboardController::class, 'adminDashboard'])->name('adminDashboard');
+    Route::get('adminDashboard', [DashboardController::class, 'adminDashboard'])->name('adminDashboard');
 });
 
 
@@ -676,6 +676,10 @@ Route::middleware('user-access:teacher')->group(function () {
 
     Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
 
+    Route::get('editTeacher', [TeacherController::class, 'editTeacher'])->name('editTeacher');
+    Route::post('edit-teacher', [TeacherController::class, 'UpdateTeacher'])->name('editTeacher');
+
+
     Route::get('editEmployeementDetails', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
     Route::post('update-employeement-details', [TeacherController::class, 'UpdateEmployeementDetails']);
     Route::get('insertEmployeementDetails', [TeacherController::class, 'InsertEmployeementDetails'])->name('InsertEmployeementDetails');;
@@ -687,6 +691,7 @@ Route::middleware('user-access:teacher')->group(function () {
     Route::post('insert-salary-account', [TeacherController::class, 'StoreSalaryAccount']);
 
     Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
+    Route::post('update-teacher-qualification', [TeacherController::class, 'UpdateTeacherQualification']);
     Route::get('insertTeacherQualification', [TeacherController::class, 'InsertTeacherQualification']);
     Route::post('insert-teacher-qualification', [TeacherController::class, 'StoreTeacherQualification']);
 

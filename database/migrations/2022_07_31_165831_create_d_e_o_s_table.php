@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('d_e_o_s', function (Blueprint $table) {
             $table->id();
             $table->string('deo_id')->unique();
+            $table->string('deo_no')->nullable();
             $table->string('deo_name')->nullable();
             $table->string('deo_phone')->unique();
             $table->string('deo_email')->unique();

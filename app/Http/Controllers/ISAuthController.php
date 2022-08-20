@@ -62,6 +62,7 @@ class ISAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $is->is_id = GenerateID::getId();
+        $is->is_no =  '2' . rand(1000, 9999);
         $is->is_name =  $request->is_name;
         $is->is_phone = $request->is_phone;
         $is->is_email = $request->is_email;
@@ -78,7 +79,7 @@ class ISAuthController extends Controller
 
         UserActivityLogController::AddUserActivityLogInsert($is->created_by, $is->is_id,  $is->is_name, "IS Created");
 
-        SendPasswordToEmail::SendPasswordToEmailOfficer($request->is_email, 'IS', $pass);
+        //SendPasswordToEmail::SendPasswordToEmailOfficer($request->is_email, 'IS', $pass);
 
         return response()->success('IS inserted successfully', 'is', $is);
 

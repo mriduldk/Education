@@ -39,6 +39,9 @@
                                 @elseif (Auth::guard('headTeacher')->check())
                                 {{ Auth::guard('headTeacher')->user()->teacher_first_name }}
 
+                                @elseif (Auth::guard('admin')->check())
+                                {{ Auth::guard('admin')->user()->name }}
+
                                 @elseif (Auth::guard('is')->check())
                                 {{ Auth::guard('is')->user()->is_name }}
 
@@ -97,6 +100,16 @@
                             <i class="me-50" data-feather="power"></i> Logout
                         </a>
                         <form method="POST" id="logout-form" action="{{ url('headTeacher-logout') }}">
+                            @csrf
+                        </form>
+
+                        @elseif (Auth::guard('admin')->check())
+
+                        <a class="dropdown-item" href="{{ url('admin-logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="me-50" data-feather="power"></i> Logout
+                        </a>
+                        <form method="POST" id="logout-form" action="{{ url('admin-logout') }}">
                             @csrf
                         </form>
 

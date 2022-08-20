@@ -66,12 +66,11 @@
                         </ul>
 
                         <div class="d-flex justify-content-center pt-2">
-                            <a href="javascript:;" class="btn btn-primary me-1 waves-effect waves-float waves-light"
-                                data-bs-target="#editUser" data-bs-toggle="modal">
+                            <a href="{{ url('editTeacher') }}" class="btn btn-primary me-1 waves-effect waves-float waves-light">
                                 <i data-feather='settings'></i> Edit
                             </a>
-                            <a href="javascript:;" class="btn btn-outline-danger suspend-user waves-effect"><i
-                                    data-feather='log-out'></i> Logout</a>
+                            <!-- <a href="javascript:;" class="btn btn-outline-danger suspend-user waves-effect"><i
+                                    data-feather='log-out'></i> Logout</a> -->
                         </div>
                     </div>
 
@@ -115,7 +114,13 @@
             <ul class="nav nav-pills mb-2">
                 <li class="nav-item">
                     <a class="nav-link active" id="btnSchoolProfile">
-                        <span class="fw-bold"> <i data-feather='box'></i> School Profile</span></a>
+                        <span class="fw-bold"> <i data-feather='box'></i> School Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="btnPersonalDetails">
+                        <span class="fw-bold"> <i data-feather='box'></i> Personal Details</span>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="btnFacilities">
@@ -224,6 +229,105 @@
                                     <th>Pre-Primary </th>
                                     <td>@php echo $teacher->school->pre_primary; @endphp</td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="divPersonalDetails">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Persolan Details</h4>
+                        <a href="{{ url('editTeacher') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>@php echo $teacher->teacher_first_name .' ' . $teacher->teacher_last_name; @endphp</td>
+                                    <th>Employee Code</th>
+                                    <td>@php echo $teacher->teacher_employee_code; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Designation</th>
+                                    <td>@php echo $teacher->teacher_category_type; @endphp</td>
+                                    <th>Gender</th>
+                                    <td>@php echo $teacher->teacher_gender; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Caste</th>
+                                    <td>@php echo $teacher->teacher_caste; @endphp</td>
+                                    <th>Date Of Birth</th>
+                                    <td>@php echo $teacher->teacher_dob; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Religion </th>
+                                    <td>@php echo $teacher->teacher_religion; @endphp</td>
+                                    <th>Nationality</th>
+                                    <td>@php echo $teacher->teacher_nationality; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Present Address</th>
+                                    <td colspan="3">@php echo $teacher->teacher_present_address; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Permanent Address</th>
+                                    <td colspan="3">@php echo $teacher->teacher_parmanent_address; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Aadhar No</th>
+                                    <td>@php echo $teacher->teacher_aadhaar_no; @endphp</td>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>@php echo $teacher->teacher_email; @endphp</td>
+                                    <th>Mobile</th>
+                                    <td>@php echo $teacher->teacher_mobile; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Mother Name</th>
+                                    <td>@php echo $teacher->teacher_mother_name; @endphp</td>
+                                    <th>Father Name</th>
+                                    <td>@php echo $teacher->teacher_father_name; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Identification Mark</th>
+                                    <td>@php echo $teacher->teacher_identification_mark; @endphp</td>
+                                    <th>Blood Group</th>
+                                    <td>@php echo $teacher->teacher_blood_group; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Differently Abled</th>
+                                    <td>@php echo $teacher->teacher_differntly_abled; @endphp</td>
+                                    <th>Maritial Status</th>
+                                    <td>@php echo $teacher->teacher_maritial_status; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Spouse Name</th>
+                                    <td>@php echo $teacher->teacher_spouse_name; @endphp</td>
+                                    <th>Is Spouse working under Govt Service</th>
+                                    <td>@php
+                                        if($teacher->teacher_spouse_working_under_govt_serveice == 1) {
+                                            echo 'Yes';
+                                        } else {
+                                            echo 'No';
+                                        }
+                                        @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Language</th>
+                                    <td>@php echo $teacher->teacher_language; @endphp</td>
+                                    <th>TET Category</th>
+                                    <td>@php echo $teacher->teacher_tet_category; @endphp</td>
+                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -347,7 +451,44 @@
             <div id="divTeacherQualification">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Teacher Qualification</h4>
+                        <h4>Teacher Academic Qualification</h4>
+                        <a href="{{ url('editTeacherQualification') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Qualification</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->qualification; @endphp</td>
+                                    <th>Stream / Discipline</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->stream_displine; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Subjects Studied</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->subjects_studied; @endphp</td>
+                                    <th>Board / University</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->board_university; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>School / College</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->school_college; @endphp</td>
+                                    <th>Passing Year</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->roll_no; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Marks Obtain</th>
+                                    <td>@php echo $teacher->teacherAcademicQualification->marks_obtained; @endphp</td>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Teacher Professional Qualification</h4>
                         <a href="{{ url('editTeacherQualification') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
                     </div>
                     <div class="table-responsive">
@@ -356,14 +497,26 @@
                                 <tr>
                                     <th>Qualification</th>
                                     <td>@php echo $teacher->teacherProfessionalQualification->qualification; @endphp</td>
-                                    <th>Others Qualification</th>
-                                    <td></td>
+                                    <th>Mode</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->mode; @endphp</td>
                                 </tr>
                                 <tr>
-                                    <th>Basic Trainning </th>
-                                    <td></td>
-                                    <th>Advance Trainning </th>
-                                    <td></td>
+                                    <th>Status</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->status; @endphp</td>
+                                    <th>Subjects Studied</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->subjects_studied; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Board / University</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->board_university; @endphp</td>
+                                    <th>School / College</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->school_college; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Passing Year</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->roll_no; @endphp</td>
+                                    <th>Marks Obtain</th>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->marks_obtained; @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -481,16 +634,38 @@
 
 <script>
 $("#divSchoolProfile").show();
+$("#divPersonalDetails").hide();
 $("#divFacilities").hide();
 $("#divSalary").hide();
 $("#divTeacherQualification").hide();
 $("#divLeaveStatus").hide();
 $("#divTransferDetails").hide();
 
+$("#btnPersonalDetails").click(function() {
+
+    $("#divSchoolProfile").hide();
+    $("#divFacilities").hide();
+    $("#divPersonalDetails").show();
+    $("#divTeacherQualification").hide();
+    $("#divLeaveStatus").hide();
+    $("#divTransferDetails").hide();
+    $("#divSalary").hide();
+
+    $('#btnFacilities').removeClass('active');
+    $('#btnTransferDetails').removeClass('active');
+    $('#btnSchoolProfile').removeClass('active');
+    $('#btnQualification').removeClass('active');
+    $('#btnLeaveStatus').removeClass('active');
+    $('#btnSalaryAccount').removeClass('active');
+
+    $(this).addClass('active');
+
+})
 
 $("#btnSchoolProfile").click(function() {
 
     $("#divFacilities").hide();
+    $("#divPersonalDetails").hide();
     $("#divEnrolmentOfStudent").hide();
     $("#divSalary").hide();
     $("#divTeacherQualification").hide();
@@ -498,6 +673,7 @@ $("#btnSchoolProfile").click(function() {
     $("#divTransferDetails").hide();
     $("#divSchoolProfile").show();
 
+    $('#btnPersonalDetails').removeClass('active');
     $('#btnFacilities').removeClass('active');
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
@@ -512,6 +688,7 @@ $("#btnFacilities").click(function() {
 
     $("#divSchoolProfile").hide();
     $("#divEnrolmentOfStudent").hide();
+    $("#divPersonalDetails").hide();
     $("#divTeacherQualification").hide();
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
@@ -521,6 +698,7 @@ $("#btnFacilities").click(function() {
 
     $('#btnEnrolmentOfStudent').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $('#btnPersonalDetails').removeClass('active');
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
@@ -534,6 +712,7 @@ $("#btnFacilities").click(function() {
 $("#btnSalaryAccount").click(function() {
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
+    $("#divPersonalDetails").hide();
     $("#divTeacherQualification").hide();
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
@@ -541,6 +720,7 @@ $("#btnSalaryAccount").click(function() {
     $("#divSalary").show();
 
     $('#btnFacilities').removeClass('active');
+    $('#btnPersonalDetails').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
@@ -553,6 +733,7 @@ $("#btnQualification").click(function() {
 
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
+    $("#divPersonalDetails").hide();
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
     $("#divSalary").hide();
@@ -561,6 +742,7 @@ $("#btnQualification").click(function() {
 
     $('#btnFacilities').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $('#btnPersonalDetails').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
@@ -573,6 +755,7 @@ $("#btnLeaveStatus").click(function() {
 
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
+    $("#divPersonalDetails").hide();
     $("#divTeacherQualification").hide();
     $("#divTransferDetails").hide();
     $("#divSalary").hide();
@@ -581,6 +764,7 @@ $("#btnLeaveStatus").click(function() {
 
     $('#btnFacilities').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $('#btnPersonalDetails').removeClass('active');
     $('#btnQualification').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
@@ -593,6 +777,7 @@ $("#btnTransferDetails").click(function() {
 
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
+    $("#divPersonalDetails").hide();
     $("#divTeacherQualification").hide();
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").show();
@@ -600,6 +785,7 @@ $("#btnTransferDetails").click(function() {
 
     $('#btnFacilities').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
+    $('#btnPersonalDetails').removeClass('active');
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
@@ -607,6 +793,8 @@ $("#btnTransferDetails").click(function() {
     $(this).addClass('active');
 
 })
+
+
 </script>
 
 

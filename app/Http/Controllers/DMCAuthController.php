@@ -55,6 +55,7 @@ class DMCAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $dmc->dmc_id = GenerateID::getId();
+        $dmc->dmc_no = '4' . rand(1000, 9999);
         $dmc->dmc_name =  $request->dmc_name;
         $dmc->dmc_phone = $request->dmc_phone;
         $dmc->dmc_email = $request->dmc_email;
@@ -70,7 +71,7 @@ class DMCAuthController extends Controller
         $dmc ->save();
         UserActivityLogController::AddUserActivityLogInsert($dmc->created_by, $dmc->dmc_id, $dmc->dmc_name, "DMC Created");
 
-        SendPasswordToEmail::SendPasswordToEmailOfficer($request->dmc_email, 'DMC', $pass);
+        //SendPasswordToEmail::SendPasswordToEmailOfficer($request->dmc_email, 'DMC', $pass);
 
         return response()->success('DMC inserted successfully', 'dmc', $dmc);
 

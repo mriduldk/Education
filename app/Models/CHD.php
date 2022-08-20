@@ -13,6 +13,7 @@ class CHD extends Authenticatable
 
     protected $fillable = [
         'chd_id', 
+        'chd_no', 
         'chd_name', 
         'chd_phone', 
         'chd_email', 

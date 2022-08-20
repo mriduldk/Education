@@ -33,7 +33,7 @@
 <section id="basic-vertical-layouts">
     <div class="row">
         <div class="col-md-12 col-12">
-            <form class="form form-vertical">
+            <form class="form form-vertical" id="qualificationForm">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Academic Qualifications</h4>
@@ -43,65 +43,69 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Qualification</label>
-                                    <!-- <input type="text" id="first-name-vertical" class="form-control" name="fname"
+                                    <label class="form-label" for="rtteaetqaeaatat">Qualification</label>
+                                    <!-- <input type="text" id="rtteaetqaeaatat" class="form-control" name="rtteaetqaeaatat"
                                         placeholder="Enter Qualification" /> -->
-                                        <select name="" class="form-control">
-                                            <option value="">Select Qualification</option>
-                                            <option value="hslc">HSLC</option>
-                                            <option value="hs">HS</option>
-                                            <option value="graduate">Graduate</option>
-                                            <option value="pg">PG</option>
+                                        <select name="qualification" id="qualification" class="form-control">
+                                            <option value="">Select Option</option>
+                                            <option value="HSLC" @php if($teacherAcademicQualification->qualification == "HSLC" ) {
+                                                @endphp selected="selected" @php } @endphp >HSLC</option>
+                                            <option value="HS" @php if($teacherAcademicQualification->qualification == 'HS' ) { @endphp
+                                                selected="selected" @php } @endphp>HS</option>
+                                            <option value="Graduate" @php if($teacherAcademicQualification->qualification == 'Graduate' ) { @endphp
+                                                selected="selected" @php } @endphp>Graduate</option>
+                                            <option value="PG" @php if($teacherAcademicQualification->qualification == 'PG' ) { @endphp
+                                                selected="selected" @php } @endphp>PG</option>
                                         </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="email-id-vertical">Stream/Discipline)</label>
-                                    <input type="text" id="email-id-vertical" class="form-control" name="email-id"
-                                        placeholder="Enter Stream/Discipline)" />                                    
+                                    <label class="form-label" for="stream_displine">Stream/Discipline)</label>
+                                    <input type="text" id="stream_displine" class="form-control" name="stream_displine"
+                                        placeholder="Enter Stream/Discipline)" value="{{ $teacherAcademicQualification->stream_displine }}" />                                    
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="password-vertical">Bubjects Studied</label>
-                                    <input type="text" id="password-vertical" class="form-control" name="contact"
-                                        placeholder="Enter Bubjects Studied" />
+                                    <label class="form-label" for="subjects_studied">Bubjects Studied</label>
+                                    <input type="text" id="subjects_studied" class="form-control" name="subjects_studied"
+                                        placeholder="Enter Bubjects Studied" value="{{ $teacherAcademicQualification->subjects_studied }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Board / University</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Board / University" />
+                                    <label class="form-label" for="board_university">Board / University</label>
+                                    <input type="text" id="board_university" class="form-control" name="board_university"
+                                        placeholder="Enter Board / University" value="{{ $teacherAcademicQualification->board_university }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">School / College</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter School / College" />
+                                    <label class="form-label" for="school_college">School / College</label>
+                                    <input type="text" id="school_college" class="form-control" name="school_college"
+                                        placeholder="Enter School / College" value="{{ $teacherAcademicQualification->school_college }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Passing Year</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Passing Year" />
+                                    <label class="form-label" for="passing_year">Passing Year</label>
+                                    <input type="text" id="passing_year" class="form-control" name="passing_year"
+                                        placeholder="Enter Passing Year" value="{{ $teacherAcademicQualification->passing_year }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Roll No</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Roll No" />
+                                    <label class="form-label" for="roll_no">Roll No</label>
+                                    <input type="text" id="roll_no" class="form-control" name="roll_no"
+                                        placeholder="Roll No" value="{{ $teacherAcademicQualification->roll_no }}"  />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Marks Obtained</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Marks Obtained" />
+                                    <label class="form-label" for="marks_obtained">Marks Obtained</label>
+                                    <input type="text" id="marks_obtained" class="form-control" name="marks_obtained"
+                                        placeholder="Marks Obtained" value="{{ $teacherAcademicQualification->marks_obtained }}" />
                                 </div>
                             </div>
 
@@ -110,78 +114,74 @@
                         </div>
                         <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Qualification</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Qualification" />
+                                    <label class="form-label" for="qualification_p">Qualification</label>
+                                    <input type="text" id="qualification_p" class="form-control" name="qualification_p"
+                                        placeholder="Enter Qualification" value="{{ $teacherProfessionalQualification->qualification }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Mode</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Mode" />
+                                    <label class="form-label" for="mode_p">Mode</label>
+                                    <input type="text" id="mode_p" class="form-control" name="mode_p"
+                                        placeholder="Enter Mode" value="{{ $teacherProfessionalQualification->mode }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Status</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Status" />
+                                    <label class="form-label" for="status_p">Status</label>
+                                    <input type="text" id="status_p" class="form-control" name="status_p"
+                                        placeholder="Enter Status" value="{{ $teacherProfessionalQualification->status }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Subject Studied</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Subject Studied" />
+                                    <label class="form-label" for="subjects_studied_p">Subject Studied</label>
+                                    <input type="text" id="subjects_studied_p" class="form-control" name="subjects_studied_p"
+                                        placeholder="Enter Subject Studied" value="{{ $teacherProfessionalQualification->subjects_studied }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Board / University</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Board / University" />
+                                    <label class="form-label" for="board_university_p">Board / University</label>
+                                    <input type="text" id="board_university_p" class="form-control" name="board_university_p"
+                                        placeholder="Enter Board / University" value="{{ $teacherProfessionalQualification->board_university }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">School / College</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter School / College" />
+                                    <label class="form-label" for="school_college_p">School / College</label>
+                                    <input type="text" id="school_college_p" class="form-control" name="school_college_p"
+                                        placeholder="Enter School / College" value="{{ $teacherProfessionalQualification->school_college }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Passing Year</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Passing Year" />
+                                    <label class="form-label" for="passing_year_p">Passing Year</label>
+                                    <input type="text" id="passing_year_p" class="form-control" name="passing_year_p"
+                                        placeholder="Enter Passing Year" value="{{ $teacherProfessionalQualification->passing_year }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Roll No</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Roll No" />
+                                    <label class="form-label" for="roll_no_p">Roll No</label>
+                                    <input type="text" id="roll_no_p" class="form-control" name="roll_no_p"
+                                        placeholder="Enter Roll No" value="{{ $teacherProfessionalQualification->roll_no }}" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-1">
-                                    <label class="form-label" for="first-name-vertical">Marks Obtained</label>
-                                    <input type="text" id="first-name-vertical" class="form-control" name="fname"
-                                        placeholder="Enter Marks Obtained" />
+                                    <label class="form-label" for="marks_obtained_p">Marks Obtained</label>
+                                    <input type="text" id="marks_obtained_p" class="form-control" name="marks_obtained_p"
+                                        placeholder="Enter Marks Obtained" value="{{ $teacherProfessionalQualification->marks_obtained }}" />
                                 </div>
                             </div>
                               
-                            
-
-
-
                             
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="col-12">
-                            <button type="reset" class="btn btn-primary me-1">Submit</button>
+                            <button type="submit" class="btn btn-primary me-1" id="btnSubmit">Update</button>
                             <button type="reset" class="btn btn-outline-secondary">Reset</button>
                         </div>
                     </div>
@@ -196,49 +196,75 @@
 <script>
 var isRtl = $('html').attr('data-textdirection') === 'rtl';
 
-if ($("#noticeForm").length > 0) {
-    $("#noticeForm").validate({
+if ($("#qualificationForm").length > 0) {
+    $("#qualificationForm").validate({
         rules: {
-            notice_title: {
+            qualification: {
                 required: true,
-                maxlength: 50
+                maxlength: 100
             },
-            notice_publish_date: {
+            stream_displine: {
                 required: true,
-                maxlength: 50
+                maxlength: 100
             },
-            entrusted_dept: {
+            subjects_studied: {
                 required: true,
-                maxlength: 300
+                maxlength: 100
             },
-            notice_description: {
+            board_university: {
                 required: true,
-                maxlength: 300
+                maxlength: 100
             },
-            notice_file: {
-                required: true
+            school_college: {
+                required: true,
+                maxlength: 100
             },
+            passing_year: {
+                required: true,
+                maxlength: 100
+            },
+            roll_no: {
+                required: true,
+                maxlength: 100
+            },
+            marks_obtained: {
+                required: true,
+                maxlength: 100
+            }
         },
         messages: {
-            notice_title: {
-                required: "Please enter Notice Title",
-                maxlength: "Your name maxlength should be 50 characters long."
+            qualification: {
+                required: "Please enter Qualificatiom",
+                maxlength: "Qualificatiom maxlength should be 100 characters long."
             },
-            notice_publish_date: {
-                required: "Please enter Publish Date",
-                maxlength: "The email name should less than or equal to 50 characters",
+            stream_displine: {
+                required: "Please enter Stram",
+                maxlength: "Stram should less than or equal to 100 characters",
             },
-            entrusted_dept: {
-                required: "Please select Department",
-                maxlength: "Your message name maxlength should be 300 characters long."
+            subjects_studied: {
+                required: "Please enter Subjects",
+                maxlength: "Subjects maxlength should be 100 characters long."
             },
-            notice_description: {
-                required: "Please enter Notice Description",
-                maxlength: "Your message name maxlength should be 300 characters long."
+            board_university: {
+                required: "Please enter Board",
+                maxlength: "Board maxlength should be 100 characters long."
             },
-            notice_file: {
-                required: "Please Select a file"
+            school_college: {
+                required: "Please enter School/College",
+                maxlength: "School/College maxlength should be 100 characters long."
             },
+            passing_year: {
+                required: "Please enter Passing Year",
+                maxlength: "Passing Year maxlength should be 100 characters long."
+            },
+            roll_no: {
+                required: "Please enter Roll No",
+                maxlength: "Roll No maxlength should be 100 characters long."
+            },
+            marks_obtained: {
+                required: "Please enter Marks Obtain",
+                maxlength: "Marks Obtain maxlength should be 100 characters long."
+            }
         },
         submitHandler: function(form) {
             $.ajaxSetup({
@@ -246,18 +272,18 @@ if ($("#noticeForm").length > 0) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#noticeSubmit').html('Please Wait...');
-            $("#noticeSubmit").attr("disabled", true);
+            $('#btnSubmit').html('Please Wait...');
+            $("#btnSubmit").attr("disabled", true);
             debugger;
 
-            var form = $('#noticeForm')[0];
+            var form = $('#qualificationForm')[0];
             var data = new FormData(form);
             //console.log(data);
-            var data2 = $('#noticeForm').serialize();
+            var data2 = $('#qualificationForm').serialize();
             console.log(data2);
 
             $.ajax({
-                url: "{{url('store-data')}}",
+                url: "{{url('update-teacher-qualification')}}",
                 enctype: 'multipart/form-data',
                 type: "POST",
                 data: data,
@@ -265,26 +291,39 @@ if ($("#noticeForm").length > 0) {
                 contentType: false,
                 cache: false,
                 success: function(response) {
-                    $('#noticeSubmit').html('Submit');
-                    $("#noticeSubmit").attr("disabled", false);
+                    $('#btnSubmit').html('Submit');
+                    $("#btnSubmit").attr("disabled", false);
 
-                    toastr['success'](
-                        'Notice data has been stored succesfully.',
-                        'Success!', {
-                            closeButton: true,
-                            tapToDismiss: false,
-                            rtl: false
-                        });
+                    if (response.status == 200) {
 
-                    window.location.replace("{{url('notice-table')}}");
+                        toastr['success'](
+                            response.message,
+                            'Success!', {
+                                closeButton: true,
+                                tapToDismiss: false,
+                                rtl: false
+                            });
+
+                        window.location.replace("{{ url('teacherDashboard') }}");
+
+                    } else {
+
+                        toastr['error'](
+                            response.message,
+                            'Error!', {
+                                closeButton: true,
+                                tapToDismiss: false,
+                                rtl: false
+                            });
+                    }
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    $('#noticeSubmit').html('Submit');
-                    $("#noticeSubmit").attr("disabled", false);
+                    $('#btnSubmit').html('Submit');
+                    $("#btnSubmit").attr("disabled", false);
 
                     toastr['error'](
-                        'Failed to insert Notice. Please try again.',
+                        response.message,
                         'Error!', {
                             closeButton: true,
                             tapToDismiss: false,

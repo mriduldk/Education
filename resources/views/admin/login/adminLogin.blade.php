@@ -147,18 +147,7 @@ $("#btnSignin").click(function() {
                         rtl: false
                     });
 
-                
-
-                if(response.type == "admin") {
-                    window.location.replace("{{url('/')}}");
-                } else if(response.type == "districtAdmin") {
-                    window.location.replace("{{url('/districtAdminDashboard')}}");
-                } else if(response.type == "headTeacher") {
-                    window.location.replace("{{url('/headTeacherDashboard')}}");
-                } else if(response.type == "teacher") {
-                    window.location.replace("{{url('/teacherDashboard')}}");
-                }
-
+                window.location.replace("{{url('adminDashboard')}}");
 
             } else {
                 toastr['error'](

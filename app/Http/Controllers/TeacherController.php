@@ -74,7 +74,7 @@ class TeacherController extends Controller
 
         //dd($teacher);
 
-        $teacherAcademicQualification = TeacherAcademicQualification::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->get();
+        $teacherAcademicQualification = TeacherAcademicQualification::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->first();
         $teacherDependentFamily = TeacherDependentFamily::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->first();
         $teacherProfessionalQualification = TeacherProfessionalQualification::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->first();
         $teacherSalaryAccountDetails = TeacherSalaryAccountDetails::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->first();
@@ -97,6 +97,79 @@ class TeacherController extends Controller
 
 
     // Edit 
+    public function editTeacher()
+    {
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+        return view('teacher/editTeacher')->with('teacher', $teacher);
+    }
+    public function UpdateTeacher(Request $request)
+    {
+        $teacher_id = Auth::guard('teacher')->user()->teacher_id;
+
+        $request->validate([
+            'teacher_employee_code'  => 'required',
+            'teacher_first_name'  => 'required',
+            'teacher_last_name'  => 'required',
+            'teacher_gender'  => 'required',
+            'teacher_dob'  => 'required',
+            'teacher_caste'  => 'required',
+            'teacher_religion'  => 'required',
+            'teacher_nationality'  => 'required',
+            'teacher_present_address'  => 'required',
+            'teacher_parmanent_address'  => 'required',
+            'teacher_aadhaar_no'  => 'required',
+            'teacher_mobile'  => 'required',
+            'teacher_email'  => 'required',
+            'teacher_mother_name'  => 'required',
+            'teacher_father_name'  => 'required',
+            'teacher_identification_mark'  => 'required',
+            'teacher_blood_group'  => 'required',
+            'teacher_differntly_abled'  => 'required',
+            'teacher_maritial_status'  => 'required',
+            'teacher_spouse_name'  => 'required',
+            'teacher_spouse_working_under_govt_serveice'  => 'required',
+            'teacher_language'  => 'required',
+            'teacher_tet_category'  => 'required',
+            'teacher_category_type'  => 'required'
+          ]);
+
+        $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', $teacher_id)->first();
+
+        $teacher->teacher_employee_code =  $request->teacher_employee_code;
+        $teacher->teacher_first_name =  $request->teacher_first_name;
+        $teacher->teacher_last_name =  $request->teacher_last_name;
+        $teacher->teacher_gender =  $request->teacher_gender;
+        $teacher->teacher_dob =  $request->teacher_dob;
+        $teacher->teacher_caste =  $request->teacher_caste;
+        $teacher->teacher_religion =  $request->teacher_religion;
+        $teacher->teacher_nationality =  $request->teacher_nationality;
+        $teacher->teacher_present_address =  $request->teacher_present_address;
+        $teacher->teacher_parmanent_address =  $request->teacher_parmanent_address;
+        $teacher->teacher_aadhaar_no =  $request->teacher_aadhaar_no;
+        //$teacher->teacher_mobile =  $request->teacher_mobile;
+        //$teacher->teacher_email =  $request->teacher_email;
+        $teacher->teacher_mother_name =  $request->teacher_mother_name;
+        $teacher->teacher_father_name =  $request->teacher_father_name;
+        $teacher->teacher_identification_mark =  $request->teacher_identification_mark;
+        $teacher->teacher_blood_group =  $request->teacher_blood_group;
+        $teacher->teacher_differntly_abled =  $request->teacher_differntly_abled;
+        $teacher->teacher_maritial_status =  $request->teacher_maritial_status;
+        $teacher->teacher_spouse_name =  $request->teacher_spouse_name;
+        $teacher->teacher_spouse_working_under_govt_serveice =  $request->teacher_spouse_working_under_govt_serveice;
+        $teacher->teacher_language =  $request->teacher_language;
+        $teacher->teacher_tet_category =  $request->teacher_tet_category;
+        $teacher->teacher_category_type =  $request->teacher_category_type;
+
+        $teacher->modified_by =  Auth::guard('teacher')->user()->teacher_id;
+        $teacher->modified_on =  Carbon::now()->toDateTimeString();
+
+        $teacher->save();
+        UserActivityLogController::AddUserActivityLogUpdate($teacher->modified_by, $teacher->teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Details Updated");
+
+        return response()->success('Teacher Details updated successfully', 'teacher', $teacher);
+    }
+
+
     public function EditSalaryAccount(){
 
         $teacherSalaryAccountDetails = TeacherSalaryAccountDetails::where('is_deleted', 0)->where('fk_teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
@@ -192,7 +265,66 @@ class TeacherController extends Controller
 
     public function EditTeacherQualification(){
         
-        return view("teacher/EditTeacherQualification");
+        $teacherAcademicQualification = TeacherAcademicQualification::where('is_deleted', 0)->where('fk_teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+        $teacherProfessionalQualification = TeacherProfessionalQualification::where('is_deleted', 0)->where('fk_teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+
+        return view("teacher/EditTeacherQualification")->with('teacherAcademicQualification', $teacherAcademicQualification)->with('teacherProfessionalQualification', $teacherProfessionalQualification);
+    }
+    public function UpdateTeacherQualification(Request $request)
+    {
+        $teacher_id = Auth::guard('teacher')->user()->teacher_id;
+
+        $request->validate([
+            'qualification' => 'required',
+            'stream_displine' => 'required',
+            'subjects_studied' => 'required',
+            'board_university' => 'required',
+            'school_college' => 'required',
+            'passing_year' => 'required',
+            'roll_no' => 'required',
+            'marks_obtained' => 'required'
+
+          ]);
+
+        $teacherAcademicQualification = TeacherAcademicQualification::where('is_deleted', 0)->where('fk_teacher_id', $teacher_id)->first();
+        $teacherProfessionalQualification = TeacherProfessionalQualification::where('is_deleted', 0)->where('fk_teacher_id', $teacher_id)->first();
+
+        if(empty($teacherAcademicQualification)) {
+            return response()->errorNotFound('Teacher Academic Qualification data not found.');
+        } else if(empty($teacherProfessionalQualification)) {
+            return response()->errorNotFound('Teacher Professional Qualification data not found.');
+        } else {
+    
+            $teacherAcademicQualification->qualification = $request->qualification;
+            $teacherAcademicQualification->stream_displine = $request->stream_displine;
+            $teacherAcademicQualification->subjects_studied = $request->subjects_studied;
+            $teacherAcademicQualification->board_university = $request->board_university;
+            $teacherAcademicQualification->school_college = $request->school_college;
+            $teacherAcademicQualification->passing_year = $request->passing_year;
+            $teacherAcademicQualification->roll_no = $request->roll_no;
+            $teacherAcademicQualification->marks_obtained = $request->marks_obtained;
+            $teacherAcademicQualification->modified_by =  Auth::guard('teacher')->user()->teacher_id;
+            $teacherAcademicQualification->modified_on =  Carbon::now()->toDateTimeString();
+            $teacherAcademicQualification->save();
+
+            $teacherProfessionalQualification->qualification = $request->qualification_p;
+            $teacherProfessionalQualification->mode = $request->mode_p;
+            $teacherProfessionalQualification->status = $request->status_p;
+            $teacherProfessionalQualification->subjects_studied = $request->subjects_studied_p;
+            $teacherProfessionalQualification->board_university = $request->board_university_p;
+            $teacherProfessionalQualification->school_college = $request->school_college_p;
+            $teacherProfessionalQualification->passing_year = $request->passing_year_p;
+            $teacherProfessionalQualification->roll_no = $request->roll_no_p;
+            $teacherProfessionalQualification->marks_obtained = $request->marks_obtained_p;
+            $teacherProfessionalQualification->modified_by =  Auth::guard('teacher')->user()->teacher_id;
+            $teacherProfessionalQualification->modified_on =  Carbon::now()->toDateTimeString();
+            $teacherProfessionalQualification->save();
+
+            UserActivityLogController::AddUserActivityLogUpdate($teacherAcademicQualification->modified_by, $teacherAcademicQualification->fk_teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Academic Qualification Details Updated");
+            UserActivityLogController::AddUserActivityLogUpdate($teacherProfessionalQualification->modified_by, $teacherProfessionalQualification->fk_teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Professional Qualification Details Updated");
+    
+            return response()->success('Teacher Qualification Details updated successfully', 'teacherAcademicQualification', $teacherAcademicQualification);
+        }
     }
     public function InsertTeacherQualification(){
         
@@ -227,6 +359,8 @@ class TeacherController extends Controller
         
         return response()->success('Teacehr Qualification Details Saved', 'teacherAcademicQualification', null);
     }
+
+
 
 
     public function EditEmployeementDetails()

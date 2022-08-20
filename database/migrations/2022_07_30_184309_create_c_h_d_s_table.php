@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('c_h_d_s', function (Blueprint $table) {
             $table->id();
             $table->string('chd_id')->unique();
+            $table->string('chd_no')->unique();
             $table->string('chd_name')->nullable();
             $table->string('chd_phone')->unique();
             $table->string('chd_email')->unique();

@@ -62,6 +62,7 @@ class DPCAuthController extends Controller
         $pass = GenerateID::getPassword();
 
         $dpc->dpc_id = GenerateID::getId();
+        $dpc->dpc_no =  '3' . rand(1000, 9999);
         $dpc->dpc_name =  $request->dpc_name;
         $dpc->dpc_phone = $request->dpc_phone;
         $dpc->dpc_email = $request->dpc_email;

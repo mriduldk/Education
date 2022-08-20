@@ -207,7 +207,7 @@ if ($("#formSchool").length > 0) {
                     $("#btnSubmit").attr("disabled", false);
 
                     toastr['error'](
-                        'Failed to insert Notice. Please try again.',
+                        'Failed to insert School. Please try again.',
                         'Error!', {
                             closeButton: true,
                             tapToDismiss: false,

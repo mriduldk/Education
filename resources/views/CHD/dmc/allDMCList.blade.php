@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th>id</th>
+                            <th>dmc_no</th>
                             <th>dmc_name</th>
                             <th>dmc_phone</th>
                             <th>dmc_email</th>
@@ -202,6 +203,10 @@ var datatable = dt_notice_table.DataTable({
     columns: [{
             data: 'id',
             title: 'id',
+        },
+        {
+            data: 'dmc_no',
+            title: 'dmc no',
         },
         {
             data: 'dmc_name',

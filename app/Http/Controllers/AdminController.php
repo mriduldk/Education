@@ -33,17 +33,17 @@ class AdminController extends Controller
         // ]);
         
 
-        $user = User::where('email', $request->email)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return $user;
+        $admin = Admin::where('email', $request->email)->first();
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            Auth::guard('admin')->login($admin);
+            return $admin;
         }
 
     }
 
     public function logout()
     {
-        Auth::logout();
+        Auth::guard('admin')->logout();
         return view('admin/login/adminLogin');
     }
 }

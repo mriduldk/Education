@@ -218,7 +218,7 @@ var datatable = dt_notice_table.DataTable({
             title: 'Teacher Name',
         },
         {
-            data: 'teacher.teacher_employee_code',
+            data: null,
             title: 'Employee Code',
         },
         {
@@ -243,6 +243,17 @@ var datatable = dt_notice_table.DataTable({
 
                 return (
                     '<span>' + data.teacher.teacher_first_name + ' ' + data.teacher.teacher_last_name + '</span>'
+                );
+            }
+        },{
+            // Actions
+            targets: 3,
+            title: 'Teacher Name',
+            orderable: false,
+            render: function(data, type, full, meta) {
+
+                return (
+                    '<span>' + data.teacher.teacher_employee_code + '</span>'
                 );
             }
         },{
