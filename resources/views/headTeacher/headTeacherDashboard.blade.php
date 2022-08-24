@@ -55,7 +55,8 @@
                             </li>
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">Head Teacher:</span>
-                                <span>{{ $school->headTeacher->teacher_first_name; }} {{ $school->headTeacher->teacher_last_name; }}</span>
+                                <span>{{ $school->headTeacher->teacher_first_name; }}
+                                    {{ $school->headTeacher->teacher_last_name; }}</span>
                             </li>
                             <li class="mb-75">
                                 <span class="fw-bolder me-25">Head Teacher Number:</span>
@@ -97,15 +98,20 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="btnEnrolmentOfStudent" onclick="clicked()">
+                    <a class="nav-link" id="btnEnrolmentOfStudent">
                         <span class="fw-bold"><i data-feather='user-check'></i> Enrolment of The Students</span>
                     </a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" id="btnLeaveApplication" onclick="clicked()">
-                        <span class="fw-bold"><i data-feather='user-check'></i> Leave Applications</span>
+                <li class="nav-item">
+                    <a class="nav-link" id="btnStudentDetails">
+                        <span class="fw-bold"><i data-feather='user-check'></i> Student Details</span>
                     </a>
-                </li> -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="btnResults">
+                        <span class="fw-bold"><i data-feather='user-check'></i> Results</span>
+                    </a>
+                </li>
             </ul>
             <!--/ User Pills -->
 
@@ -219,21 +225,21 @@
                                     <td>@php echo $school->schoolFacility->no_of_cwsn_toilets;
                                         @endphp</td>
                                     <th>Drinking Water Availability </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->drinking_water_availability == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
                                         @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Hand Wash Facility </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->hand_wash_facility == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
                                         @endphp</td>
                                     <th>Functional Generator </th>
@@ -242,31 +248,31 @@
                                 </tr>
                                 <tr>
                                     <th>Library </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->library == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
-                                         @endphp</td>
+                                        @endphp</td>
                                     <th>Reading Corner </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->reading_corner == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
                                         @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Book Bank </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->book_bank == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
-                                         @endphp
+                                        @endphp
                                     </td>
                                     <th>Functional Laptop </th>
                                     <td>@php echo $school->schoolFacility->functional_laptop;
@@ -298,20 +304,20 @@
                                 </tr>
                                 <tr>
                                     <th>Internet </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->internet == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
-                                         @endphp
+                                        @endphp
                                     </td>
                                     <th>DTH </th>
-                                    <td>@php 
+                                    <td>@php
                                         if($school->schoolFacility->dth == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
                                         @endphp</td>
                                 </tr>
@@ -345,7 +351,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
 
             <div id="divEnrolmentOfStudent">
@@ -452,45 +457,141 @@
 
             </div>
 
-
-            <!-- <div id="divLeaveApplication">
+            <div id="divStudentDetails">
                 <div class="card">
-                    <h4 class="card-header">Leave Applications</h4>
+                    <div class="card-header">
+                        <h4 class="card-header">Student Details</h4>
+                        <a href="{{ url('addStudentDetails') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Insert</a>
+
+                    </div>
+
+                    @foreach ($school->schoolStudentDetails as $schoolStudentDetails)
+
                     <div class="table-responsive">
+
+                        <div class="card-header">
+                            <h4>Class {{ $schoolStudentDetails->class; }}</h4>
+                            <div>
+                                <a onclick="EditSudentDetails('@php echo $schoolStudentDetails->school_sd_id; @endphp')" class="btn btn-warning"><i
+                                        data-feather='settings'></i> Edit</a>
+                                <a href="{{ url('addStudentDetails') }}" class="btn btn-gradient-danger hidden"><i
+                                        data-feather='settings'></i> Delete</a>
+
+                            </div>
+                        </div>
+
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th>1</th>
-                                    <th>Application Id</th>
-                                    <th>Name</th>
-                                    <th>Employment Id</th>
-                                    <th>View Application</th>
-                                    <th>View Application</th>
-                                    <th width="25%">Action</th>
-
+                                    <th>Total Student</th>
+                                    <td>@php echo $schoolStudentDetails->total_student; @endphp</td>
+                                    <th></th>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td>1</td>
-                                    <td>101524</td>
-                                    <td>Dipankar Rabha</td>
-                                    <td>6542954264</td>
-                                    <td>View Application</td>
-                                    <td>Download</td>
-                                    <td>
-
-                                        <button class="btn btn-gradient-success btn-sm"><i data-feather='check'></i>
-                                            Accept</button>
-                                        <button class="btn btn-gradient-danger btn-sm"><i data-feather='x-square'></i>
-                                            Reject</button>
-
-
-                                    </td>
+                                    <th>Total Male Student</th>
+                                    <td>@php echo $schoolStudentDetails->total_male_student; @endphp</td>
+                                    <th>Total Female Student</th>
+                                    <td>@php echo $schoolStudentDetails->total_female_student; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>General</th>
+                                    <td>@php echo $schoolStudentDetails->general; @endphp</td>
+                                    <th>OBC/MOBC</th>
+                                    <td>@php echo $schoolStudentDetails->obc; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>SC</th>
+                                    <td>@php echo $schoolStudentDetails->sc; @endphp</td>
+                                    <th>ST</th>
+                                    <td>@php echo $schoolStudentDetails->st; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Minority</th>
+                                    <td>@php echo $schoolStudentDetails->minority; @endphp</td>
+                                    <th>BPL</th>
+                                    <td>@php echo $schoolStudentDetails->bpl; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Tea Tribe</th>
+                                    <td>@php echo $schoolStudentDetails->tea_tribe; @endphp</td>
+                                    <th>Others</th>
+                                    <td>@php echo $schoolStudentDetails->others; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Students having Aadhaar Card</th>
+                                    <td>@php echo $schoolStudentDetails->students_having_aadhaar_card; @endphp</td>
+                                    <th>Students having Bank A/C</th>
+                                    <td>@php echo $schoolStudentDetails->students_having_bank_account; @endphp</td>
                                 </tr>
                             </tbody>
                         </table>
+
                     </div>
+
+                    @endforeach
                 </div>
-            </div> -->
+            </div>
+
+            <div id="divResults">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-header">School Results</h4>
+                        <a href="{{ url('addResult') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Insert</a>
+
+                    </div>
+
+                    @foreach ($school->schoolResult as $schoolResult)
+
+                    <div class="table-responsive">
+
+                        <div class="card-header">
+                            <h4>Result of : {{ $schoolResult->class; }} , {{ $schoolResult->stream; }} ( {{ $schoolResult->year; }} )</h4>
+                            <div>
+                                <a onclick="EditResult('@php echo $schoolResult->school_r_id; @endphp')" class="btn btn-warning"><i
+                                        data-feather='settings'></i> Edit</a>
+                                <a href="{{ url('addStudentDetails') }}" class="btn btn-gradient-danger hidden"><i
+                                        data-feather='settings'></i> Delete</a>
+
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Total Student Appeared</th>
+                                    <td>@php echo $schoolResult->total_appeared; @endphp</td>
+                                    <th>Total Disinction</th>
+                                    <td>@php echo $schoolResult->distinction; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Star</th>
+                                    <td>@php echo $schoolResult->star; @endphp</td>
+                                    <th>Total 1st Division</th>
+                                    <td>@php echo $schoolResult->fst_division; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Total 2nd Division</th>
+                                    <td>@php echo $schoolResult->snd_division; @endphp</td>
+                                    <th>Total 3rd Division</th>
+                                    <td>@php echo $schoolResult->trd_visision; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Failed</th>
+                                    <td>@php echo $schoolResult->fail; @endphp</td>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    @endforeach
+                </div>
+            </div>
 
         </div>
 </section>
@@ -504,11 +605,33 @@
 
 
 <script>
+
+function EditSudentDetails(id) {
+
+    var url = '{{ route("editStudentDetails", ":id") }}';
+    url = url.replace(':id', id);
+
+    debugger;
+    window.location.replace(url);
+
+}
+
+function EditResult(id) {
+
+var url = '{{ route("editResult", ":id") }}';
+url = url.replace(':id', id);
+
+debugger;
+window.location.replace(url);
+
+}
+
 $("#divSchoolProfile").show();
 $("#divFacilities").hide();
 $("#divRoomDetails").hide();
 $("#divEnrolmentOfStudent").hide();
-$("#divLeaveApplication").hide();
+$("#divStudentDetails").hide();
+$("#divResults").hide();
 
 
 $("#btnSchoolProfile").click(function() {
@@ -516,15 +639,17 @@ $("#btnSchoolProfile").click(function() {
     $("#divFacilities").hide();
     $("#divRoomDetails").hide();
     $("#divEnrolmentOfStudent").hide();
-    $("#divLeaveApplication").hide();
+    $("#divStudentDetails").hide();
+    $("#divResults").hide();
 
 
     $("#divSchoolProfile").show();
 
     $('#btnFacilities').removeClass('active');
+    $('#btnResults').removeClass('active');
     $('#btnRoomDetails').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
-    $('#btnLeaveApplication').removeClass('active');
+    $('#btnStudentDetails').removeClass('active');
 
     $(this).addClass('active');
 });
@@ -535,15 +660,16 @@ $("#btnFacilities").click(function() {
     $("#divSchoolProfile").hide();
     $("#divRoomDetails").hide();
     $("#divEnrolmentOfStudent").hide();
-    $("#divLeaveApplication").hide();
+    $("#divStudentDetails").hide();
+    $("#divResults").hide();
 
     $("#divFacilities").show();
 
     $('#btnRoomDetails').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
-    $('#btnSchoolProfile').removeClass('active');
-    $('#btnLeaveApplication').removeClass('active');
+    $('#btnResults').removeClass('active');
+    $('#btnStudentDetails').removeClass('active');
 
     $(this).addClass('active');
 
@@ -553,7 +679,8 @@ $("#btnRoomDetails").click(function() {
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
     $("#divEnrolmentOfStudent").hide();
-    $("#divLeaveApplication").hide();
+    $("#divStudentDetails").hide();
+    $("#divResults").hide();
 
 
     $("#divRoomDetails").show();
@@ -561,7 +688,8 @@ $("#btnRoomDetails").click(function() {
     $('#btnFacilities').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
-    $("#btnLeaveApplication").removeClass('active');
+    $("#btnStudentDetails").removeClass('active');
+    $('#btnResults').removeClass('active');
 
 
     $(this).addClass('active');
@@ -571,7 +699,8 @@ $("#btnEnrolmentOfStudent").click(function() {
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
     $("#divRoomDetails").hide();
-    $("#divLeaveApplication").hide();
+    $("#divStudentDetails").hide();
+    $("#divResults").hide();
 
 
     $("#divEnrolmentOfStudent").show();
@@ -579,23 +708,44 @@ $("#btnEnrolmentOfStudent").click(function() {
     $('#btnFacilities').removeClass('active');
     $('#btnRoomDetails').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
-    $('#btnLeaveApplication').removeClass('active');
+    $('#btnStudentDetails').removeClass('active');
+    $('#btnResults').removeClass('active');
 
     $(this).addClass('active');
 
 });
 
-$("#btnLeaveApplication").click(function() {
+$("#btnStudentDetails").click(function() {
     $("#divSchoolProfile").hide();
     $("#divFacilities").hide();
     $("#divRoomDetails").hide();
     $("#divEnrolmentOfStudent").hide();
-    $("#divLeaveApplication").show();
+    $("#divResults").hide();
+    $("#divStudentDetails").show();
 
     $('#btnFacilities').removeClass('active');
     $('#btnRoomDetails').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
     $('#btnEnrolmentOfStudent').removeClass('active');
+    $('#btnResults').removeClass('active');
+
+    $(this).addClass('active');
+
+});
+
+$("#btnResults").click(function() {
+    $("#divSchoolProfile").hide();
+    $("#divFacilities").hide();
+    $("#divRoomDetails").hide();
+    $("#divEnrolmentOfStudent").hide();
+    $("#divStudentDetails").hide();
+    $("#divResults").show();
+
+    $('#btnFacilities').removeClass('active');
+    $('#btnRoomDetails').removeClass('active');
+    $('#btnSchoolProfile').removeClass('active');
+    $('#btnEnrolmentOfStudent').removeClass('active');
+    $('#btnStudentDetails').removeClass('active');
 
     $(this).addClass('active');
 

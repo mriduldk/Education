@@ -17,6 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('teacehr_s_d_id')->unique();
             $table->string('fk_teacher_id');
+            $table->string('employeement_type', 50)->nullable();
+            $table->string('pran_no', 50)->nullable();
+            $table->string('uan_no', 50)->nullable();
+            $table->string('ssa_contactual_appointment_order_no', 50)->nullable();
+            $table->string('retention_no', 50)->nullable();
+            $table->string('service_confirmed', 100)->nullable();
             $table->string('post_name')->nullable();
             $table->string('medium_of_school')->nullable();
             $table->string('subjects')->nullable();

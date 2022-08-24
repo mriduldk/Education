@@ -11,13 +11,16 @@ use App\Models\SchoolEntrolmentOfStudent;
 use App\Models\SchoolFacilities;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Models\SchoolResult;
+use App\Models\SchoolStudentDetails;
 use App\Models\TeacherAcademicQualification;
 use App\Models\TeacherDependentFamily;
 use App\Models\TeacherProfessionalQualification;
 use App\Models\TeacherSalaryAccountDetails;
 use App\Models\TeacherServiceDetails;
+use App\Models\TeacherStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,6 +44,39 @@ class HeadTeacherController extends Controller
         //     'password' => Hash::make($request->password),
         //     'type' => 1
         // ]);
+
+        if (Auth::guard('teacher')->check())
+        { Auth::guard('teacher')->logout(); }
+
+        if (Auth::guard('headTeacher')->check())
+        { Auth::guard('headTeacher')->logout(); }
+
+        if (Auth::guard('admin')->check())
+        { Auth::guard('admin')->logout(); }
+
+        if (Auth::guard('is')->check())
+        { Auth::guard('is')->logout(); }
+
+        if (Auth::guard('dpc')->check())
+        { Auth::guard('dpc')->logout(); }
+
+        if (Auth::guard('dmc')->check())
+        { Auth::guard('dmc')->logout(); }
+
+        if (Auth::guard('deeo')->check())
+        { Auth::guard('deeo')->logout(); }
+
+        if (Auth::guard('di')->check())
+        { Auth::guard('di')->logout(); }
+
+        if (Auth::guard('beeo')->check())
+        { Auth::guard('beeo')->logout(); }
+
+        if (Auth::guard('chd')->check())
+        { Auth::guard('chd')->logout(); }
+        
+        if (Auth::guard('bmc')->check())
+        { Auth::guard('bmc')->logout(); }
 
         $teacher = Teacher::where('teacher_email', $request->email)->where('is_deleted', 0)->where('is_head_teacher', 1)->first();
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
@@ -82,6 +118,8 @@ class HeadTeacherController extends Controller
         $schoolFacility = SchoolFacilities::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $schoolEnreolmentOfStudent = SchoolEntrolmentOfStudent::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->first();
         $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('headTeacher')->user()->teacher_id)->first();
+        $schoolStudentDetails = SchoolStudentDetails::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->orderBy('class', 'ASC')->get();
+        $schoolResult = SchoolResult::where('is_deleted', 0)->where('fk_school_id', $school->school_id)->orderBy('class', 'ASC')->get();
 
         if(empty($schoolFacility)){
             $schoolFacility = new SchoolFacilities();
@@ -92,10 +130,18 @@ class HeadTeacherController extends Controller
         if(empty($teacher)){
             $teacher = new Teacher();
         }
+        if(empty($schoolStudentDetails)){
+            $schoolStudentDetails = new SchoolStudentDetails();
+        }
+        if(empty($schoolResult)){
+            $schoolResult = new SchoolResult();
+        }
 
         $school['schoolFacility'] = $schoolFacility;
         $school['schoolEnreolmentOfStudent'] = $schoolEnreolmentOfStudent;
         $school['headTeacher'] = $teacher;
+        $school['schoolStudentDetails'] = $schoolStudentDetails;
+        $school['schoolResult'] = $schoolResult;
 
         return view('/headTeacher/headTeacherDashboard')->with('school', $school);
     }
@@ -110,7 +156,19 @@ class HeadTeacherController extends Controller
     }
     public function AllTeacherOfSchool()
     {
-        $teachers = Teacher::where('is_deleted', 0)->where('fk_school_id', Auth::guard('headTeacher')->user()->fk_school_id)->get();
+        //$teachers = Teacher::where('is_deleted', 0)->where('fk_school_id', Auth::guard('headTeacher')->user()->fk_school_id)->get();
+
+
+        $teachers = Teacher::leftJoin('teacher_transfers', 'teacher_transfers.fk_teacher_id', '=', 'teachers.teacher_id')
+            ->join('teacher_statuses', 'teacher_statuses.fk_teacher_id', '=', 'teachers.teacher_id')
+            ->where('teachers.is_deleted', 0)
+            ->where('teacher_statuses.is_deleted', 0)
+            ->where('teacher_statuses.is_active', 1)
+            ->where('teachers.fk_school_id', Auth::guard('headTeacher')->user()->fk_school_id)
+            ->get();
+
+
+
         return $teachers;
     }
     public function DeleteTeacher()
@@ -191,6 +249,14 @@ class HeadTeacherController extends Controller
         $teacherServiceDetails->created_on =  Carbon::now()->toDateTimeString();
         $teacherServiceDetails->save();
 
+        $teacherStatus = new TeacherStatus();
+        $teacherStatus->teacher_status_id =  GenerateID::getId();
+        $teacherStatus->fk_teacher_id =  $teacher->teacher_id;
+        $teacherStatus->status = 'Working';
+        $teacherStatus->is_active =  1;
+        $teacherStatus->created_by =  Auth::guard('headTeacher')->user()->teacher_id;
+        $teacherStatus->created_on =  Carbon::now()->toDateTimeString();
+        $teacherStatus->save();
 
         //SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
         UserActivityLogController::AddUserActivityLogInsert($teacher->created_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher Created");

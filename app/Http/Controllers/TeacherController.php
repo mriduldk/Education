@@ -13,7 +13,8 @@ use App\Models\School;
 use App\Models\TeacherLeave;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
+use App\Models\TeacherStatus;
 use Carbon\Carbon;
 
 class TeacherController extends Controller
@@ -27,6 +28,10 @@ class TeacherController extends Controller
     {
         return view('teacher/leaveApplicationList');
     }
+    public function InsertTeacherDocuments()
+    {
+        return view('teacher/insert/InsertTeacherDocuments');
+    }
 
     public function TeacherLoginCheck(Request $request)
     {
@@ -38,6 +43,39 @@ class TeacherController extends Controller
         //     'password' => Hash::make($request->password),
         //     'type' => 1
         // ]);
+
+        if (Auth::guard('teacher')->check())
+        { Auth::guard('teacher')->logout(); }
+
+        if (Auth::guard('headTeacher')->check())
+        { Auth::guard('headTeacher')->logout(); }
+
+        if (Auth::guard('admin')->check())
+        { Auth::guard('admin')->logout(); }
+
+        if (Auth::guard('is')->check())
+        { Auth::guard('is')->logout(); }
+
+        if (Auth::guard('dpc')->check())
+        { Auth::guard('dpc')->logout(); }
+
+        if (Auth::guard('dmc')->check())
+        { Auth::guard('dmc')->logout(); }
+
+        if (Auth::guard('deeo')->check())
+        { Auth::guard('deeo')->logout(); }
+
+        if (Auth::guard('di')->check())
+        { Auth::guard('di')->logout(); }
+
+        if (Auth::guard('beeo')->check())
+        { Auth::guard('beeo')->logout(); }
+
+        if (Auth::guard('chd')->check())
+        { Auth::guard('chd')->logout(); }
+        
+        if (Auth::guard('bmc')->check())
+        { Auth::guard('bmc')->logout(); }
 
         $teacher = Teacher::where('teacher_email', $request->email)->where('is_deleted', 0)->first();
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
@@ -80,6 +118,7 @@ class TeacherController extends Controller
         $teacherSalaryAccountDetails = TeacherSalaryAccountDetails::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->first();
         $teacherServiceDetails = TeacherServiceDetails::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->first();
         $teacherLeave = TeacherLeave::where('is_deleted', 0)->where('fk_teacher_id', $teacher->teacher_id)->get();
+        $teacherStatus = TeacherStatus::where('is_deleted', 0)->where('is_active', 1)->where('fk_teacher_id', $teacher->teacher_id)->first();
 
         $school = School::where('is_deleted', 0)->where('school_id', $teacher->fk_school_id)->first();
 
@@ -90,6 +129,7 @@ class TeacherController extends Controller
         $teacher['teacherServiceDetails'] = $teacherServiceDetails;
         $teacher['school'] = $school;
         $teacher['teacherLeaves'] = $teacherLeave;
+        $teacher['teacherStatus'] = $teacherStatus;
 
         //dd($teacherLeave);
         return view('/teacher/teacherDashboard')->with('teacher', $teacher);
@@ -101,6 +141,54 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
         return view('teacher/editTeacher')->with('teacher', $teacher);
+    }
+    public function editTeacherStatus()
+    {
+        $teacherStatus = TeacherStatus::where('is_deleted', 0)->where('is_active', 1)->where('fk_teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
+        return view('teacher/editTeacherStatus')->with('teacherStatus', $teacherStatus);
+    }
+    public function UpdateTeacherStatus(Request $request)
+    {
+        $teacher_id = Auth::guard('teacher')->user()->teacher_id;
+
+        $request->validate([
+            'status' => 'required'
+          ]);
+
+        $teacherStatus = TeacherStatus::where('is_deleted', 0)->where('fk_teacher_id', $teacher_id)->where('is_active', 1)->first();
+
+        if(empty($teacherStatus)) {
+            return response()->errorNotFound('Teacher Status data not found.');
+        } else {
+
+            $teacherStatus->is_active =  0;
+            $teacherStatus->modified_by =  Auth::guard('teacher')->user()->teacher_id;
+            $teacherStatus->modified_on =  Carbon::now()->toDateTimeString();
+    
+            $teacherStatus->save();
+            UserActivityLogController::AddUserActivityLogUpdate($teacherStatus->modified_by, $teacherStatus->fk_teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Status Details Updated");
+            
+            $teacherStatusNew = new TeacherStatus();
+            $teacherStatusNew->teacher_status_id =  GenerateID::getId();
+            $teacherStatusNew->fk_teacher_id =  $teacher_id;
+            $teacherStatusNew->status =  $request->status;
+
+            if($request->status == 'Attachment') {
+                $teacherStatusNew->attachement_date = $request->attachement_date;
+                $teacherStatusNew->block_name = $request->block_name;
+                $teacherStatusNew->school_name =  $request->school_name;
+                $teacherStatusNew->udice_code =  $request->udice_code;
+            }
+            
+            $teacherStatusNew->is_active =  1;
+            $teacherStatusNew->created_by =  Auth::guard('teacher')->user()->teacher_id;
+            $teacherStatusNew->created_on =  Carbon::now()->toDateTimeString();
+            $teacherStatusNew->save();
+
+            UserActivityLogController::AddUserActivityLogInsert($teacherStatusNew->created_by, $teacherStatusNew->fk_teacher_id,  Auth::guard('teacher')->user()->teacher_first_name . ' ' . Auth::guard('teacher')->user()->teacher_last_name, "Teacher Status Details Inserted. Status is " . $request->status);
+    
+            return response()->success('Teacher Status Details updated successfully', 'teacherStatus', $teacherStatusNew);
+        }
     }
     public function UpdateTeacher(Request $request)
     {
@@ -375,21 +463,7 @@ class TeacherController extends Controller
         $teacher_id = Auth::guard('teacher')->user()->teacher_id;
 
         $request->validate([
-            'post_name' => 'required',
-            'medium_of_school' => 'required',
-            'subjects' => 'required',
-            'category_of_post' => 'required',
-            'pay_scale' => 'required',
-            'grade_pay' => 'required',
-            'appointment_latter_no' => 'required',
-            'appointment_date' => 'required',
-            'post_creation_no' => 'required',
-            'post_creation_date' => 'required',
-            'date_of_effect_of_service_provincialisation' => 'required',
-            'date_of_joining_in_service' => 'required',
-            'date_of_joining_in_present_post' => 'required',
-            'date_of_retirement' => 'required',
-            'period_spent_on_non_teaching_assignment' => 'required'
+            'employeement_type' => 'required'
           ]);
 
         $teacherServiceDetails = TeacherServiceDetails::where('is_deleted', 0)->where('fk_teacher_id', $teacher_id)->first();
@@ -398,6 +472,13 @@ class TeacherController extends Controller
             return response()->errorNotFound('Teacher data not found.');
         } else {
     
+            $teacherServiceDetails->employeement_type =  $request->employeement_type;
+            $teacherServiceDetails->pran_no =  $request->pran_no;
+            $teacherServiceDetails->uan_no =  $request->uan_no;
+            $teacherServiceDetails->ssa_contactual_appointment_order_no =  $request->ssa_contactual_appointment_order_no;
+            $teacherServiceDetails->retention_no =  $request->retention_no;
+            $teacherServiceDetails->service_confirmed =  $request->service_confirmed;
+
             $teacherServiceDetails->post_name =  $request->post_name;
             $teacherServiceDetails->medium_of_school = $request->medium_of_school;
             $teacherServiceDetails->subjects = $request->subjects;
@@ -433,21 +514,7 @@ class TeacherController extends Controller
     public function StoreEmployeementDetails(Request $request)
     {
         $validatedData = $request->validate([
-            'post_name' => 'required',
-            'medium_of_school' => 'required',
-            'subjects' => 'required',
-            'category_of_post' => 'required',
-            'pay_scale' => 'required',
-            'grade_pay' => 'required',
-            'appointment_latter_no' => 'required',
-            'appointment_date' => 'required',
-            'post_creation_no' => 'required',
-            'post_creation_date' => 'required',
-            'date_of_effect_of_service_provincialisation' => 'required',
-            'date_of_joining_in_service' => 'required',
-            'date_of_joining_in_present_post' => 'required',
-            'date_of_retirement' => 'required',
-            'period_spent_on_non_teaching_assignment' => 'required'
+            'employeement_type' => 'required'
           ]);
 
 
@@ -490,6 +557,14 @@ class TeacherController extends Controller
         $teacherServiceDetails1 = new TeacherServiceDetails();
         $teacherServiceDetails1->teacehr_s_d_id = GenerateID::getId();
         $teacherServiceDetails1->fk_teacher_id = $teacher_id;
+
+        $teacherServiceDetails1->employeement_type =  $teacherServiceDetails->employeement_type;
+        $teacherServiceDetails1->pran_no =  $teacherServiceDetails->pran_no;
+        $teacherServiceDetails1->uan_no =  $teacherServiceDetails->uan_no;
+        $teacherServiceDetails1->ssa_contactual_appointment_order_no =  $teacherServiceDetails->ssa_contactual_appointment_order_no;
+        $teacherServiceDetails1->retention_no =  $teacherServiceDetails->retention_no;
+        $teacherServiceDetails1->service_confirmed =  $teacherServiceDetails->service_confirmed;
+
         $teacherServiceDetails1->post_name = $teacherServiceDetails->post_name;
         $teacherServiceDetails1->medium_of_school = $teacherServiceDetails->medium_of_school;
         $teacherServiceDetails1->subjects = $teacherServiceDetails->subjects;
@@ -546,6 +621,78 @@ class TeacherController extends Controller
 
         return response()->success('Teacehr Details Saved Successfully', 'teacher', null);
     }
+
+    public function AddTeacherDocuments(Request $request)
+    {
+        $request->validate([
+            'teacherPhoto' => 'required',
+            'teacherSignature' => 'required',
+            'panCard' => 'required'
+            ]);
+
+        $teacher = Teacher::where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->where('is_deleted', 0)->first();
+        
+        if(empty($teacher)) {
+            return response()->errorNotFound('Teacher data not found. Please Login and try again.');
+        } else {
+        
+            if($request->teacherPhoto != null && $request->teacherPhoto != "") {
+
+                $fileName = time().'.'.$request->teacherPhoto->extension();  
+                $request->teacherPhoto->move(public_path('files/teacher/photo'), $fileName);
+        
+                $path = 'https://education.bodoland.gov.in/Dashboard/public/files/teacher/photo/' . $fileName;
+        
+                $teacher->teacher_image_url = $path;
+            } else {
+                return response()->errorNotFound('Teacher Photo not provided.');
+            }
+    
+            if($request->teacherSignature != null && $request->teacherSignature != "") {
+    
+                $fileName = time().'.'.$request->teacherSignature->extension();  
+                $request->teacherSignature->move(public_path('files/teacher/signature'), $fileName);
+        
+                $path = 'https://education.bodoland.gov.in/Dashboard/public/files/teacher/signature/' . $fileName;
+        
+                $teacher->teacher_signature_url = $path;
+            } else {
+                return response()->errorNotFound('Teacher Signature not provided.');
+            }
+    
+            if($request->panCard != null) {
+    
+                $fileName = time().'.'.$request->panCard->extension();  
+                $request->panCard->move(public_path('files/teacher/pan'), $fileName);
+        
+                $path = 'https://education.bodoland.gov.in/Dashboard/public/files/teacher/pan/' . $fileName;
+        
+                $teacher->teacher_pan_url = $path;
+            } else {
+                return response()->errorNotFound('Teacher PAN Card not provided.');
+            }
+    
+            if($request->aadhaarCard != null) {
+    
+                $fileName = time().'.'.$request->aadhaarCard->extension();  
+                $request->aadhaarCard->move(public_path('files/teacher/aadhaar'), $fileName);
+        
+                $path = 'https://education.bodoland.gov.in/Dashboard/public/files/teacher/aadhaar/' . $fileName;
+        
+                $teacher->teacher_aadhaar_url = $path;
+            }
+    
+            $teacher->modified_by =  Auth::guard('teacher')->user()->teacher_id;
+            $teacher->modified_on =  Carbon::now()->toDateTimeString();
+
+            $teacher ->save();
+            UserActivityLogController::AddUserActivityLogInsert($teacher->modified_by, $teacher->teacher_id, $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher document uploaded");
+    
+            return response()->success('Teacher document uploaded succesfully', 'teacher', $teacher);
+
+        }
+    }
+
 
 
 }

@@ -157,6 +157,7 @@
 
 </section>
 
+
 @endsection
 
 @section('vendor-script')
@@ -465,8 +466,10 @@ function viewApplicationModal(id) {
 }
 </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<!-- JQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
 <script>
 if ($("#formAddTeacher").length > 0) {
@@ -585,7 +588,4 @@ if ($("#formAddTeacher").length > 0) {
 }
 </script>
 
-
-<!-- <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script> -->
-<!-- <script src="{{ asset(mix('js/scripts/tables/table-datatables-basic.js')) }}"></script> -->
 @endsection

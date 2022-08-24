@@ -4,16 +4,17 @@
 
 @section('vendor-style')
 {{-- Page Css files --}}
-<link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
+<!-- <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/animate/animate.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/sweetalert2.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
-<link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}"> -->
 <!-- JQuery -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
 @endsection
 
 @section('page-style')
@@ -32,12 +33,16 @@
                 <div class="card-body">
                     <div class="user-avatar-section">
                         <div class="d-flex align-items-center flex-column">
-                            <img class="img-fluid rounded mb-2" src="{{asset('images/avatars/user.png')}}" height="100"
-                                width="100" alt="User avatar" />
+                            <!-- <img class="img-fluid rounded mb-2" src="{{asset('images/avatars/user.png')}}" height="100"
+                                width="100" alt="User avatar" /> -->
+                            <img class="round" src="{{ $teacher->teacher_image_url }}" alt="Image" height="100"
+                                width="100">
+
                             <div class="user-info text-center">
                                 <h4>@php echo $teacher->teacher_first_name . " " . $teacher->teacher_last_name; @endphp
                                 </h4>
-                                <span class="badge bg-light-secondary">@php echo $teacher->teacher_category_type; @endphp</span>
+                                <span class="badge bg-light-secondary">@php echo $teacher->teacher_category_type;
+                                    @endphp</span>
                             </div>
                         </div>
                     </div>
@@ -63,14 +68,64 @@
                                 <span class="fw-bolder me-25">Email:</span>
                                 <span>@php echo $teacher->teacher_email; @endphp </span>
                             </li>
+                            <li class="mb-75">
+                                <span class="fw-bolder me-25">Status:</span>
+                                <span>
+                                    @php 
+                                        if ($teacher->teacherStatus->status == 'Working') {
+                                            echo '<span class="badge rounded-pill badge-light-success">Working</span>';
+                                        } else if ($teacher->teacherStatus->status == 'On Leave') {
+                                            echo '<span class="badge rounded-pill badge-light-info">On Leave</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Child Care Leave') {
+                                            echo '<span class="badge rounded-pill badge-light-info">Child Care Leave</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Maternity Leave') {
+                                            echo '<span class="badge rounded-pill badge-light-info">Maternity Leave</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Retired') {
+                                            echo '<span class="badge rounded-pill badge-light-danger">Retired</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Expired') {
+                                            echo '<span class="badge rounded-pill badge-light-danger">Expired</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Transferred') {
+                                            echo '<span class="badge rounded-pill badge-light-warning">Transferred</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Suspension') {
+                                            echo '<span class="badge rounded-pill badge-light-warning">Suspension</span>';
+                                        } else if ($teacher->teacherStatus->status == 'Attachment') {
+                                            echo '<span class="badge rounded-pill badge-light-warning">Attachment</span>';
+
+                                            if ($teacher->teacherStatus->attachement_date != null && $teacher->teacherStatus->attachement_date != "") {
+                                            @endphp 
+                                            <div><span >Attachment Date : {{ $teacher->teacherStatus->attachement_date }}</span></div>
+                                            @php 
+                                            }
+                                            if ($teacher->teacherStatus->block_name != null && $teacher->teacherStatus->block_name != "") {
+                                                @endphp 
+                                                <div><span >Block name : {{ $teacher->teacherStatus->block_name }}</span></div>
+                                                @php 
+                                            }
+                                            if ($teacher->teacherStatus->school_name != null && $teacher->teacherStatus->school_name != "") {
+                                                @endphp 
+                                                <div><span >School Name : {{ $teacher->teacherStatus->school_name }}</span></div>
+                                                @php 
+                                            }  
+                                            
+                                            if ($teacher->teacherStatus->udice_code != null && $teacher->teacherStatus->udice_code != "") {
+                                                @endphp 
+                                                <div><span >UDICE Code: {{ $teacher->teacherStatus->udice_code }}</span></div>
+                                                @php 
+                                            }  
+                                        } 
+                                        
+                                    @endphp 
+                                </span>
+                            </li>
                         </ul>
 
                         <div class="d-flex justify-content-center pt-2">
-                            <a href="{{ url('editTeacher') }}" class="btn btn-primary me-1 waves-effect waves-float waves-light">
-                                <i data-feather='settings'></i> Edit
+                            <a href="{{ url('editTeacher') }}"
+                                class="btn btn-primary me-1 waves-effect waves-float waves-light">
+                                <i data-feather='settings'></i> Edit Profile
                             </a>
-                            <!-- <a href="javascript:;" class="btn btn-outline-danger suspend-user waves-effect"><i
-                                    data-feather='log-out'></i> Logout</a> -->
+                            <a href="{{ url('editTeacherStatus') }}" class="btn btn-outline-warning waves-effect"><i
+                                    data-feather='edit'></i> Edit Status</a>
                         </div>
                     </div>
 
@@ -110,7 +165,8 @@
 
 
         <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-            <!-- User Pills -->
+
+
             <ul class="nav nav-pills mb-2">
                 <li class="nav-item">
                     <a class="nav-link active" id="btnSchoolProfile">
@@ -137,20 +193,12 @@
                         <span class="fw-bold"><i data-feather='file-text'></i> Qualification</span>
                     </a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" id="btnLeaveStatus">
-                        <span class="fw-bold"><i data-feather='list'></i> Leave Status</span>
+                <li class="nav-item">
+                    <a class="nav-link" id="btnDocuments">
+                        <span class="fw-bold"> <i data-feather='box'></i> Documents</span>
                     </a>
-                </li> -->
-                <!-- <li class="nav-item">
-                    <a class="nav-link" id="btnTransferDetails">
-                        <span class="fw-bold"><i data-feather='info'></i> Transfer Details</span>
-                    </a>
-                </li> -->
-
-
+                </li>
             </ul>
-            <!--/ User Pills -->
 
             <div id="divSchoolProfile">
 
@@ -240,7 +288,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Persolan Details</h4>
-                        <a href="{{ url('editTeacher') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+                        <a href="{{ url('editTeacher') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Edit</a>
 
                     </div>
                     <div class="table-responsive">
@@ -248,7 +297,8 @@
                             <tbody>
                                 <tr>
                                     <th>Name</th>
-                                    <td>@php echo $teacher->teacher_first_name .' ' . $teacher->teacher_last_name; @endphp</td>
+                                    <td>@php echo $teacher->teacher_first_name .' ' . $teacher->teacher_last_name;
+                                        @endphp</td>
                                     <th>Employee Code</th>
                                     <td>@php echo $teacher->teacher_employee_code; @endphp</td>
                                 </tr>
@@ -314,9 +364,9 @@
                                     <th>Is Spouse working under Govt Service</th>
                                     <td>@php
                                         if($teacher->teacher_spouse_working_under_govt_serveice == 1) {
-                                            echo 'Yes';
+                                        echo 'Yes';
                                         } else {
-                                            echo 'No';
+                                        echo 'No';
                                         }
                                         @endphp
                                     </td>
@@ -327,7 +377,97 @@
                                     <th>TET Category</th>
                                     <td>@php echo $teacher->teacher_tet_category; @endphp</td>
                                 </tr>
-                                
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="divDocuments">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Documents</h4>
+                        <a href="{{ url('insertTeacherDocuments') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Edit</a>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Teacher Photo</th>
+                                    <td>
+                                        @php if ($teacher->teacher_image_url == null || $teacher->teacher_image_url ==
+                                        "")
+                                        {
+                                        echo '-NA-';
+                                        }
+                                        else
+                                        {
+                                        @endphp
+                                        <img class="square" src="{{ $teacher->teacher_image_url }}" alt="Teacher Photo"
+                                            height="150" width="150">
+                                        @php
+                                        }
+                                        @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Teacher Signature</th>
+                                    <td>
+                                        @php if ($teacher->teacher_signature_url == null ||
+                                        $teacher->teacher_signature_url == "")
+                                        {
+                                        echo '-NA-';
+                                        }
+                                        else
+                                        {
+                                        @endphp
+                                        <img class="square" src="{{ $teacher->teacher_signature_url }}"
+                                            alt="Teacher Signature" height="100" width="220">
+                                        @php
+                                        }
+                                        @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Teacher PAN</th>
+                                    <td>
+                                        @php if ($teacher->teacher_pan_url == null || $teacher->teacher_pan_url == "")
+                                        {
+                                        echo '-NA-';
+                                        }
+                                        else
+                                        {
+                                        @endphp
+                                        <img class="square" src="{{ $teacher->teacher_pan_url }}" alt="PAN" height="150"
+                                            width="220">
+                                        @php
+                                        }
+                                        @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Teacher Aadhar</th>
+                                    <td>
+                                        @php if ($teacher->teacher_iteacher_aadhaar_urlmage_url == null ||
+                                        $teacher->teacher_aadhaar_url == "")
+                                        {
+                                        echo '-NA-';
+                                        }
+                                        else
+                                        {
+                                        @endphp
+                                        <img class="square" src="{{ $teacher->teacher_aadhaar_url }}" alt="Aadhaar"
+                                            height="150" width="150">
+                                        @php
+                                        }
+                                        @endphp
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -339,16 +479,33 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Employeement Details</h4>
-                        <a href="{{ url('editEmployeementDetails') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+                        <a href="{{ url('editEmployeementDetails') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Edit</a>
 
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
+                                    <th>Employeement Type </th>
+                                    <td colspan="3">@php echo $teacher->teacherServiceDetails->employeement_type; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>PRAN No (If Regular)</th>
+                                    <td>@php echo $teacher->teacherServiceDetails->pran_no; @endphp</td>
+                                    <th>UAN No (If Contractual)</th>
+                                    <td>@php echo $teacher->teacherServiceDetails->uan_no; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">SSA CONTRACTUAL Appointment Order no (If Contractual)</th>
+                                    <td colspan="2">@php echo $teacher->teacherServiceDetails->ssa_contactual_appointment_order_no;
+                                        @endphp</td>
+                                </tr>
+
+                                <tr>
                                     <th>Name of the Post Held </th>
                                     <td>@php echo $teacher->teacherServiceDetails->post_name; @endphp</td>
-                                    <th>Medium of School</th>
+                                    <th>Teacher Medium</th>
                                     <td>@php echo $teacher->teacherServiceDetails->medium_of_school; @endphp</td>
                                 </tr>
                                 <tr>
@@ -356,6 +513,12 @@
                                     <td>@php echo $teacher->teacherServiceDetails->subjects; @endphp</td>
                                     <th>Category of Post</th>
                                     <td>@php echo $teacher->teacherServiceDetails->category_of_post; @endphp</td>
+                                </tr>
+                                <tr>
+                                    <th>Retention No</th>
+                                    <td>@php echo $teacher->teacherServiceDetails->retention_no; @endphp</td>
+                                    <th>Service Conformation</th>
+                                    <td>@php echo $teacher->teacherServiceDetails->service_confirmed; @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Pay Scale</th>
@@ -377,15 +540,21 @@
                                 </tr>
                                 <tr>
                                     <th>Date of effect of Service Provincialisation (If Provincialised then) </th>
-                                    <td>@php echo $teacher->teacherServiceDetails->date_of_effect_of_service_provincialisation; @endphp</td>
+                                    <td>@php echo
+                                        $teacher->teacherServiceDetails->date_of_effect_of_service_provincialisation;
+                                        @endphp</td>
                                     <th>Date of joining in Service </th>
-                                    <td>@php echo $teacher->teacherServiceDetails->date_of_joining_in_service; @endphp</td>
+                                    <td>@php echo $teacher->teacherServiceDetails->date_of_joining_in_service; @endphp
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Date of joining in Present post</th>
-                                    <td>@php echo $teacher->teacherServiceDetails->date_of_joining_in_present_post; @endphp</td>
+                                    <td>@php echo $teacher->teacherServiceDetails->date_of_joining_in_present_post;
+                                        @endphp</td>
                                     <th>Period spent on Non-Teaching assignment </th>
-                                    <td>@php echo $teacher->teacherServiceDetails->period_spent_on_non_teaching_assignment; @endphp</td>
+                                    <td>@php echo
+                                        $teacher->teacherServiceDetails->period_spent_on_non_teaching_assignment;
+                                        @endphp</td>
                                 </tr>
                                 <tr>
                                     <th>Date of Retirement </th>
@@ -397,14 +566,14 @@
                         </table>
                     </div>
                 </div>
-
             </div>
 
             <div id="divSalary">
                 <div class="card">
                     <div class="card-header">
                         <h4>Salary Account and Other Official Account Details</h4>
-                        <a href="{{ url('editSalaryAccount') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+                        <a href="{{ url('editSalaryAccount') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Edit</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -430,13 +599,17 @@
                                 <tr>
                                     <th>Name of the district where your salary account no is active Name of the state
                                         where your salary account no is active </th>
-                                    <td>@php echo $teacher->teacherSalaryAccountDetails->district_name_of_active_salary_account_no; @endphp</td>
+                                    <td>@php echo
+                                        $teacher->teacherSalaryAccountDetails->district_name_of_active_salary_account_no;
+                                        @endphp</td>
                                     <th>Salary Payment Mode Gross Provident Fund (GPF) No </th>
-                                    <td>@php echo $teacher->teacherSalaryAccountDetails->salary_payment_mode; @endphp</td>
+                                    <td>@php echo $teacher->teacherSalaryAccountDetails->salary_payment_mode; @endphp
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Group Insurance Scheme (GIS) No. </th>
-                                    <td>@php echo $teacher->teacherSalaryAccountDetails->group_insurance_scheme; @endphp</td>
+                                    <td>@php echo $teacher->teacherSalaryAccountDetails->group_insurance_scheme; @endphp
+                                    </td>
                                     <th> </th>
                                     <td></td>
                                 </tr>
@@ -452,7 +625,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Teacher Academic Qualification</h4>
-                        <a href="{{ url('editTeacherQualification') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+                        <a href="{{ url('editTeacherQualification') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Edit</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -489,14 +663,16 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Teacher Professional Qualification</h4>
-                        <a href="{{ url('editTeacherQualification') }}" class="btn btn-gradient-success"><i data-feather='settings'></i> Edit</a>
+                        <a href="{{ url('editTeacherQualification') }}" class="btn btn-gradient-success"><i
+                                data-feather='settings'></i> Edit</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
                                     <th>Qualification</th>
-                                    <td>@php echo $teacher->teacherProfessionalQualification->qualification; @endphp</td>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->qualification; @endphp
+                                    </td>
                                     <th>Mode</th>
                                     <td>@php echo $teacher->teacherProfessionalQualification->mode; @endphp</td>
                                 </tr>
@@ -504,19 +680,23 @@
                                     <th>Status</th>
                                     <td>@php echo $teacher->teacherProfessionalQualification->status; @endphp</td>
                                     <th>Subjects Studied</th>
-                                    <td>@php echo $teacher->teacherProfessionalQualification->subjects_studied; @endphp</td>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->subjects_studied; @endphp
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Board / University</th>
-                                    <td>@php echo $teacher->teacherProfessionalQualification->board_university; @endphp</td>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->board_university; @endphp
+                                    </td>
                                     <th>School / College</th>
-                                    <td>@php echo $teacher->teacherProfessionalQualification->school_college; @endphp</td>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->school_college; @endphp
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Passing Year</th>
                                     <td>@php echo $teacher->teacherProfessionalQualification->roll_no; @endphp</td>
                                     <th>Marks Obtain</th>
-                                    <td>@php echo $teacher->teacherProfessionalQualification->marks_obtained; @endphp</td>
+                                    <td>@php echo $teacher->teacherProfessionalQualification->marks_obtained; @endphp
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -525,7 +705,7 @@
 
             </div>
 
-            <div id="divLeaveStatus">
+            <!-- <div id="divLeaveStatus">
                 <div class="card">
                     <h4 class="card-header">Teacher Leave Status</h4>
                     <div class="table-responsive">
@@ -569,21 +749,14 @@
                                 </tr>
 
                                 @endforeach
-                                <!-- <tr>
-                                    <td>2</td>
-                                    <td>26-12-2022</td>
-                                    <td>Feaver</td>
-                                    <td><span class="badge badge-glow bg-danger">Rejected</span></td>
-                                    <td><button class="btn btn-parimary"><i
-                                                data-feather='arrow-down-circle'></i></button></td>
-                                </tr> -->
+
 
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
             <!-- <div id="divTransferDetails">
                 <div class="card">
@@ -621,17 +794,6 @@
 </section>
 
 
-<!-- Buynow Button-->
-<!-- <div class="buy-now">
-    <a href="{{ url('leaveApplication') }}" class="btn btn-danger"><i data-feather='check-square'></i> Apply for Leave</a>
-</div> -->
-
-
-
-
-
-
-
 <script>
 $("#divSchoolProfile").show();
 $("#divPersonalDetails").hide();
@@ -640,6 +802,8 @@ $("#divSalary").hide();
 $("#divTeacherQualification").hide();
 $("#divLeaveStatus").hide();
 $("#divTransferDetails").hide();
+$("#divDocuments").hide();
+
 
 $("#btnPersonalDetails").click(function() {
 
@@ -650,6 +814,7 @@ $("#btnPersonalDetails").click(function() {
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
     $("#divSalary").hide();
+    $("#divDocuments").hide();
 
     $('#btnFacilities').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
@@ -657,6 +822,7 @@ $("#btnPersonalDetails").click(function() {
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
+    $('#btnDocuments').removeClass('active');
 
     $(this).addClass('active');
 
@@ -672,7 +838,32 @@ $("#btnSchoolProfile").click(function() {
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
     $("#divSchoolProfile").show();
+    $("#divDocuments").hide();
 
+    $('#btnPersonalDetails').removeClass('active');
+    $('#btnFacilities').removeClass('active');
+    $('#btnQualification').removeClass('active');
+    $('#btnLeaveStatus').removeClass('active');
+    $('#btnTransferDetails').removeClass('active');
+    $('#btnSalaryAccount').removeClass('active');
+    $('#btnDocuments').removeClass('active');
+
+    $(this).addClass('active');
+});
+
+$("#btnDocuments").click(function() {
+
+    $("#divFacilities").hide();
+    $("#divPersonalDetails").hide();
+    $("#divEnrolmentOfStudent").hide();
+    $("#divSalary").hide();
+    $("#divTeacherQualification").hide();
+    $("#divLeaveStatus").hide();
+    $("#divTransferDetails").hide();
+    $("#divSchoolProfile").hide();
+    $("#divDocuments").show();
+
+    $('#btnSchoolProfile').removeClass('active');
     $('#btnPersonalDetails').removeClass('active');
     $('#btnFacilities').removeClass('active');
     $('#btnQualification').removeClass('active');
@@ -682,7 +873,6 @@ $("#btnSchoolProfile").click(function() {
 
     $(this).addClass('active');
 });
-
 
 $("#btnFacilities").click(function() {
 
@@ -693,6 +883,7 @@ $("#btnFacilities").click(function() {
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
     $("#divSalary").hide();
+    $("#divDocuments").hide();
 
     $("#divFacilities").show();
 
@@ -703,11 +894,11 @@ $("#btnFacilities").click(function() {
     $('#btnLeaveStatus').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
+    $('#btnDocuments').removeClass('active');
 
     $(this).addClass('active');
 
 });
-
 
 $("#btnSalaryAccount").click(function() {
     $("#divSchoolProfile").hide();
@@ -716,6 +907,7 @@ $("#btnSalaryAccount").click(function() {
     $("#divTeacherQualification").hide();
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
+    $("#divDocuments").hide();
 
     $("#divSalary").show();
 
@@ -725,6 +917,7 @@ $("#btnSalaryAccount").click(function() {
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
+    $('#btnDocuments').removeClass('active');
     $(this).addClass('active');
 
 });
@@ -737,6 +930,7 @@ $("#btnQualification").click(function() {
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").hide();
     $("#divSalary").hide();
+    $("#divDocuments").hide();
 
     $("#divTeacherQualification").show();
 
@@ -746,6 +940,7 @@ $("#btnQualification").click(function() {
     $('#btnLeaveStatus').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
+    $('#btnDocuments').removeClass('active');
 
     $(this).addClass('active');
 
@@ -759,6 +954,7 @@ $("#btnLeaveStatus").click(function() {
     $("#divTeacherQualification").hide();
     $("#divTransferDetails").hide();
     $("#divSalary").hide();
+    $("#divDocuments").hide();
 
     $("#divLeaveStatus").show();
 
@@ -768,6 +964,7 @@ $("#btnLeaveStatus").click(function() {
     $('#btnQualification').removeClass('active');
     $('#btnTransferDetails').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
+    $('#btnDocuments').removeClass('active');
 
     $(this).addClass('active');
 
@@ -782,6 +979,7 @@ $("#btnTransferDetails").click(function() {
     $("#divLeaveStatus").hide();
     $("#divTransferDetails").show();
     $("#divSalary").hide();
+    $("#divDocuments").hide();
 
     $('#btnFacilities').removeClass('active');
     $('#btnSchoolProfile').removeClass('active');
@@ -789,12 +987,11 @@ $("#btnTransferDetails").click(function() {
     $('#btnQualification').removeClass('active');
     $('#btnLeaveStatus').removeClass('active');
     $('#btnSalaryAccount').removeClass('active');
+    $('#btnDocuments').removeClass('active');
 
     $(this).addClass('active');
 
 })
-
-
 </script>
 
 

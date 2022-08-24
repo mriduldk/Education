@@ -6,7 +6,7 @@ use App\Models\BMC;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
 use App\Models\Approver;
 use App\Models\Manager;
@@ -21,6 +21,7 @@ use App\Models\TeacherDependentFamily;
 use App\Models\TeacherProfessionalQualification;
 use App\Models\TeacherSalaryAccountDetails;
 use App\Models\TeacherServiceDetails;
+use App\Models\TeacherStatus;
 use Carbon\Carbon;
 
 class BMCController extends Controller
@@ -165,6 +166,14 @@ class BMCController extends Controller
         $teacherServiceDetails->created_on =  Carbon::now()->toDateTimeString();
         $teacherServiceDetails->save();
 
+        $teacherStatus = new TeacherStatus();
+        $teacherStatus->teacher_status_id =  GenerateID::getId();
+        $teacherStatus->fk_teacher_id =  $teacher->teacher_id;
+        $teacherStatus->status = 'Working';
+        $teacherStatus->is_active =  1;
+        $teacherStatus->created_by =  Auth::guard('bmc')->user()->teacher_id;
+        $teacherStatus->created_on =  Carbon::now()->toDateTimeString();
+        $teacherStatus->save();
 
         //SendPasswordToEmail::SendPasswordToEmailHeadTeacher($request->head_teacher_email, $pass);
 

@@ -11,6 +11,12 @@ class TeacherServiceDetails extends Model
     protected $fillable = [
         'teacehr_s_d_id',
         'fk_teacher_id',
+        'employeement_type',
+        'pran_no',
+        'uan_no',
+        'ssa_contactual_appointment_order_no',
+        'retention_no',
+        'service_confirmed',
         'post_name',
         'medium_of_school',
         'subjects',

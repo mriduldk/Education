@@ -31,6 +31,9 @@
                             <th>teacher_mobile</th>
                             <th>teacher_email</th>
                             <th>teacher_employee_code</th>
+                            <th>teacher designation</th>
+                            <th>teacher Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -40,45 +43,49 @@
     <!-- Modal to add new record -->
     <div class="modal modal-slide-in fade" id="modals-slide-in">
         <div class="modal-dialog sidebar-sm">
-            <form class="add-new-record modal-content pt-0" id="formAddTeacher">
+            <form class="add-new-record modal-content pt-0" id="formTransfer">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                 <div class="modal-header mb-1">
-                    <h5 class="modal-title" id="exampleModalLabel">Add New Teacher</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Transfer Teacher</h5>
                 </div>
                 <div class="modal-body flex-grow-1">
                     <div class="mb-1">
-                        <label class="form-label" for="teacher_first_name">Teacher First Name</label>
-                        <input type="text" class="form-control dt-full-name" id="teacher_first_name"
-                            name="teacher_first_name" placeholder="First Name" aria-label="First Name" />
+                        <label class="form-label" for="teacher_name">Teacher Name</label>
+                        <input type="text" class="form-control" id="teacher_name" name="teacher_name"
+                            placeholder="Teacher Name" aria-label="Teacher Name" disabled />
+                        <input type="text" class="form-control" id="teacher_id" name="teacher_id"
+                            placeholder="First Name" aria-label="First Name" hidden />
+                        <input type="text" class="form-control" id="school_id" name="school_id" placeholder="First Name"
+                            aria-label="First Name" hidden />
                     </div>
                     <div class="mb-1">
-                        <label class="form-label" for="teacher_last_name">Teacher Last Name</label>
-                        <input type="text" class="form-control dt-full-name" id="teacher_last_name"
-                            name="teacher_last_name" placeholder="Last Name" aria-label="Last Name" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="teacher_mobile">Phone Number</label>
-                        <input type="text" id="teacher_mobile" name="teacher_mobile" class="form-control dt-post"
-                            placeholder="Phone Number" aria-label="Phone Number" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="teacher_email">Email</label>
-                        <input type="text" id="teacher_email" name="teacher_email" class="form-control dt-email"
-                            placeholder="Email" aria-label="Email" />
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="teacher_employee_code">Employee code</label>
-                        <input type="text" class="form-control dt-date" id="teacher_employee_code"
-                            name="teacher_employee_code" placeholder="Employee code" aria-label="Employee code" />
+                        <label class="form-label" for="current_school_name">Current School</label>
+                        <input type="text" class="form-control" id="current_school_name" name="current_school_name"
+                            placeholder="Current School" aria-label="Current School" disabled />
                     </div>
 
-                    <button type="submit" class="btn btn-primary data-submit me-1" id="addTeacherButton">Submit</button>
+                    <div class="mb-1">
+                        <label class="form-label" for="transfer_to_school">Transfer To School</label>
+                        <select class="form-control" name="transfer_to_school" id="transfer_to_school">
+                            <option value="">Select Option</option>
+                        </select>
+
+                    </div>
+                    <div class="mb-1">
+                        <label class="form-label" for="teacher_email">Transfer Date</label>
+                        <input type="date" id="transfer_date" name="transfer_date" class="form-control"
+                            placeholder="Transfer Date" aria-label="Transfer Date" />
+                    </div>
+
+                    <button type="submit" class="btn btn-warning data-submit me-1" id="btnTransfer">Transfer</button>
                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
-
+    <div class="input-group mb-3">
+        <div id="recaptcha-container"></div>
+    </div>
 
 </section>
 
@@ -153,17 +160,85 @@ var datatable = dt_notice_table.DataTable({
         {
             data: 'teacher_employee_code',
             title: 'teacher employee code',
-        }
+        },
+        {
+            data: 'teacher_category_type',
+            title: 'teacher designation',
+        },
+        {
+            data: null,
+            title: 'Teacher Status',
+        },
+        {
+            data: null,
+            title: 'Action',
+        },
     ],
     columnDefs: [{
             // Actions
-            targets: 1,
+            targets: 2,
             title: 'Teacher Name',
             orderable: false,
             render: function(data, type, full, meta) {
 
                 return (
                     '<span>' + data.teacher_first_name + ' ' + data.teacher_last_name + '</span>'
+                );
+            }
+        },
+        {
+            // Actions
+            targets: 7,
+            title: 'Teacher Status',
+            orderable: false,
+            render: function(data, type, full, meta) {
+
+                var strSpan = "";
+
+                if (data.teacher_t_id == null) {
+
+                    if (data.status == 'Working') {
+                        strSpan = '<span class="badge rounded-pill badge-light-success">Working</span>';
+                    } else if (data.status == 'On Leave') {
+                        strSpan = '<span class="badge rounded-pill badge-light-info">On Leave</span>';
+                    } else if (data.status == 'Child Care Leave') {
+                        strSpan =
+                            '<span class="badge rounded-pill badge-light-info">Child Care Leave</span>';
+                    } else if (data.status == 'Maternity Leave') {
+                        strSpan =
+                            '<span class="badge rounded-pill badge-light-info">Maternity Leave</span>';
+                    } else if (data.status == 'Retired') {
+                        strSpan = '<span class="badge rounded-pill badge-light-danger">Retired</span>';
+                    } else if (data.status == 'Expired') {
+                        strSpan = '<span class="badge rounded-pill badge-light-danger">Expired</span>';
+                    } else if (data.status == 'Transferred') {
+                        strSpan =
+                            '<span class="badge rounded-pill badge-light-warning">Transferred</span>';
+                    } else if (data.status == 'Suspension') {
+                        strSpan =
+                            '<span class="badge rounded-pill badge-light-warning">Suspension</span>';
+                    } else if (data.status == 'Attachment') {
+                        strSpan =
+                            '<span class="badge rounded-pill badge-light-warning">Attachment</span>';
+                    }
+
+                } else {
+                    strSpan = '<span class="badge rounded-pill badge-light-danger">Transfered</span>'
+                }
+                return (strSpan);
+            }
+        },
+        {
+            // Actions
+            targets: 8,
+            title: 'Actions',
+            orderable: false,
+            render: function(data, type, full, meta) {
+                
+                return (
+                    '<a class="btn btn-outline-warning text-warning" data-bs-toggle="modal" data-bs-target = "#modals-slide-in" data-id="' +
+                    data.teacher_id +
+                    '" onclick="TransferTeacher(' + data.id + ')" id="btnTransferTeacher">Transfer</a>'
                 );
             }
         }
@@ -179,146 +254,138 @@ var datatable = dt_notice_table.DataTable({
 $('div.head-label').html('<h6 class="mb-0">All Teacher List</h6>');
 
 
-$("tbody").on("click", "#deleteTeacher", function() {
-    console.log("Delete Button Clicked");
-    let id = $(this).attr("data-id");
-    console.log(id);
+function TransferTeacher(id) {
 
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        customClass: {
-            confirmButton: 'btn btn-primary',
-            cancelButton: 'btn btn-outline-danger ms-1'
+    //let applicationId = $('#btnTransferTeacher').attr("data-id");
+    let applicationId = id;
+
+    var url = '{{ route("teacherDataForTransferCHD", ":id") }}';
+    url = url.replace(':id', applicationId);
+
+    var url2 = '{{ route("schoolListOfSameDistrictOfTeacherCHD", ":id") }}';
+    url2 = url2.replace(':id', applicationId);
+
+    $('#btnTransfer').html('Loading');
+    $('#btnTransfer').attr('disabled', true);
+
+    $.ajax({
+        url: url,
+        enctype: 'multipart/form-data',
+        type: "GET",
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function(response) {
+
+            $('#btnTransfer').html('Transfer');
+            $('#btnTransfer').attr('disabled', false);
+
+
+            $('#teacher_name').val(response.teacher_first_name + " " + response.teacher_last_name);
+            $('#teacher_id').val(response.teacher_id);
+            $('#current_school_name').val(response.school_name + ' ( ' + response.udice_code + ' )');
+            $('#school_id').val(response.school_id);
+
         },
-        buttonsStyling: false
-    }).then(function(result) {
-        if (result.value) {
+        error: function(jqXHR, textStatus, errorThrown) {
 
-            mydata = {
-                notice_id: id
-            };
-            mythis = this;
-            debugger;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "{{url('teacher-delete')}}",
-                method: "POST",
-                data: {
-                    notice_id: id
-                },
-                success: function(response) {
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Notice has been deleted.',
-                        timer: 1000,
-                        timerProgressBar: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                            timerInterval = setInterval(() => {
-                                const content = Swal.getHtmlContainer();
-                                if (content) {
-                                    const b = content.querySelector(
-                                        'b');
-                                    if (b) {
-                                        b.textContent = Swal
-                                            .getTimerLeft();
-                                    }
-                                }
-                            }, 100);
-                        },
-                        willClose: () => {
-                            clearInterval(timerInterval);
-                        }
-                    }).then(result => {
-                        /* Read more about handling dismissals below */
-                        if (result.dismiss === Swal.DismissReason.timer) {
-                            location.reload();
-                        }
-                    });
-
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Falied to delete notice. Please try again!',
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-primary'
-                        },
-                        buttonsStyling: false
-                    });
+            $('#btnTransfer').html('Transfer');
+            $('#btnTransfer').attr('disabled', true);
 
 
-                }
-            });
-
+            toastr['error'](
+                'Failed to get School data. Please Try again.',
+                'Error!', {
+                    closeButton: true,
+                    tapToDismiss: false,
+                    rtl: false
+                });
         }
     });
 
-});
+    $.ajax({
+        url: url2,
+        enctype: 'multipart/form-data',
+        type: "GET",
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function(response) {
 
+            $('#btnTransfer').html('Transfer');
+            $('#btnTransfer').attr('disabled', false);
+
+            //$().text(response.teacher.teacher_email);
+
+            $('#transfer_to_school').empty();
+            for (var i = 0; i < response.length; i++) {
+                var opt = new Option(response[i].school_name, response[i].school_id);
+                $('#transfer_to_school').append(opt);
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+            $('#btnTransfer').html('Transfer');
+            $('#btnTransfer').attr('disabled', true);
+
+
+            toastr['error'](
+                'Failed to get School data. Please Try again.',
+                'Error!', {
+                    closeButton: true,
+                    tapToDismiss: false,
+                    rtl: false
+                });
+        }
+    });
+
+}
 </script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
-<script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
 
-if ($("#formAddTeacher").length > 0) {
-    $("#formAddTeacher").validate({
+<script>
+if ($("#formTransfer").length > 0) {
+    $("#formTransfer").validate({
         rules: {
-            teacher_employee_code: {
+            teacher_id: {
                 required: true,
                 maxlength: 100
             },
-            teacher_first_name: {
+            school_id: {
                 required: true,
                 maxlength: 100
             },
-            teacher_last_name: {
+            transfer_to_school: {
                 required: true,
                 maxlength: 100
             },
-            teacher_mobile: {
-                required: true,
-                maxlength: 100
-            },
-            teacher_email: {
+            transfer_date: {
                 required: true,
                 maxlength: 100
             },
         },
         messages: {
-            teacher_employee_code: {
-                required: "Please enter Employee Code",
-                maxlength: "Employee Code maxlength should be 100 characters long."
+            teacher_id: {
+                required: "This field is mendatory",
+                maxlength: "Field should be 100 characters long."
             },
-            teacher_first_name: {
-                required: "Please enter First Name",
-                maxlength: "First Name maxlength should be 100 characters long."
+            school_id: {
+                required: "This field is mendatory",
+                maxlength: "Field should be 100 characters long."
             },
-            teacher_last_name: {
-                required: "Please enter Last Name",
-                maxlength: "Last Name maxlength should be 100 characters long."
+            transfer_to_school: {
+                required: "This field is mendatory",
+                maxlength: "Field should be 100 characters long."
             },
-            teacher_mobile: {
-                required: "Please enter Phone Number",
-                maxlength: "Phone Number maxlength should be 100 characters long."
-            },
-            teacher_email: {
-                required: "Please enter Email",
-                maxlength: "Email maxlength should be 100 characters long."
-            },
+            transfer_date: {
+                required: "This field is mendatory",
+                maxlength: "Field should be 100 characters long."
+            }
         },
         submitHandler: function(form) {
             $.ajaxSetup({
@@ -326,18 +393,14 @@ if ($("#formAddTeacher").length > 0) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#addTeacherButton').html('Please Wait...');
-            $("#addTeacherButton").attr("disabled", true);
-            debugger;
+            $('#btnTransfer').html('Please Wait...');
+            $("#btnTransfer").attr("disabled", true);
 
-            var form = $('#formAddTeacher')[0];
+            var form = $('#formTransfer')[0];
             var data = new FormData(form);
-            //console.log(data);
-            var data2 = $('#formAddTeacher').serialize();
-            console.log(data2);
 
             $.ajax({
-                url: "{{ url('teacher-add') }}",
+                url: "{{ url('chd/teacherTransfer') }}",
                 enctype: 'multipart/form-data',
                 type: "POST",
                 data: data,
@@ -345,8 +408,8 @@ if ($("#formAddTeacher").length > 0) {
                 contentType: false,
                 cache: false,
                 success: function(response) {
-                    $('#addTeacherButton').html('Submit');
-                    $("#addTeacherButton").attr("disabled", false);
+                    $('#btnTransfer').html('Trabsfer');
+                    $("#btnTransfer").attr("disabled", false);
 
                     if (response.status == 200) {
 
@@ -373,8 +436,8 @@ if ($("#formAddTeacher").length > 0) {
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    $('#addTeacherButton').html('Submit');
-                    $("#addTeacherButton").attr("disabled", false);
+                    $('#btnTransfer').html('Trabsfer');
+                    $("#btnTransfer").attr("disabled", false);
 
                     toastr['error'](
                         'Failed to update. Please try again.',
@@ -389,6 +452,7 @@ if ($("#formAddTeacher").length > 0) {
     })
 }
 </script>
+
 
 
 <!-- <script src="{{ asset(mix('js/scripts/pages/dashboard-ecommerce.js')) }}"></script> -->

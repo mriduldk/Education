@@ -46,9 +46,13 @@ use App\Http\Controllers\OfficerAuthController;
 use App\Http\Controllers\ISController;
 use App\Http\Controllers\leaveApplication;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\SchoolResultController;
+use App\Http\Controllers\SchoolStudentDetailsController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherLeaveController;
+use App\Http\Controllers\TeacherTransferController;
 use App\Http\Controllers\UserActivityLogController;
+use App\Models\SchoolStudentDetails;
 
 /*
 |--------------------------------------------------------------------------
@@ -196,6 +200,12 @@ Route::middleware('user-access:deeo')->group(function () {
         /** Teacher */
         Route::get('teacherList', [DEEOController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DEEOController::class, 'AllTeacherData']);
+
+
+        /** Teacher Transfer */
+        Route::get('teacherDataForTransfer/{id}', [TeacherTransferController::class, 'GetTeacherData'])->name('teacherDataForTransfer');
+        Route::get('schoolListOfSameDistrictOfTeacher/{id}', [TeacherTransferController::class, 'GetSchoolListWithSameDistrict'])->name('schoolListOfSameDistrictOfTeacher');
+        Route::post('teacherTransfer', [TeacherTransferController::class, 'TransferTeacher']);
 
 
         /** Approver */
@@ -502,6 +512,12 @@ Route::middleware('user-access:chd')->group(function () {
 
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
+        /** Teacher Transfer */
+        Route::get('teacherDataForTransfer/{id}', [CHDController::class, 'GetTeacherData'])->name('teacherDataForTransferCHD');
+        Route::get('schoolListOfSameDistrictOfTeacher/{id}', [CHDController::class, 'GetSchoolListWithSameDistrict'])->name('schoolListOfSameDistrictOfTeacherCHD');
+        Route::post('teacherTransfer', [CHDController::class, 'TransferTeacher']);
+ 
+
 
         /** IS */
         Route::get('isList', [ISAuthController::class, 'allISList']);
@@ -663,6 +679,19 @@ Route::middleware('user-access:headTeacher')->group(function () {
     Route::get('dataEntry', [HeadTeacherController::class, 'dataEntryOperator']);
     Route::get('addSchool', [HeadTeacherController::class, 'addSchool']);
 
+
+    Route::get('addStudentDetails', [SchoolStudentDetailsController::class, 'AddSchoolStudentDetailsPage']);
+    Route::post('insert-school-student-details', [SchoolStudentDetailsController::class, 'InsertSchoolStudentDetails']);
+    Route::get('editStudentDetails/{id}', [SchoolStudentDetailsController::class, 'EditSchoolStudentDetailsPage'])->name('editStudentDetails');
+    Route::post('update-student-details', [SchoolStudentDetailsController::class, 'UpdateSchoolStudentDetails']);
+
+    Route::get('addResult', [SchoolResultController::class, 'AddSchoolResultPage']);
+    Route::post('insert-school-result', [SchoolResultController::class, 'InsertSchoolResult']);
+    Route::get('editResult/{id}', [SchoolResultController::class, 'EditSchoolResultPage'])->name('editResult');
+    Route::post('update-student-details', [SchoolResultController::class, 'UpdateSchoolResult']);
+
+
+
 });
 
 
@@ -678,6 +707,9 @@ Route::middleware('user-access:teacher')->group(function () {
 
     Route::get('editTeacher', [TeacherController::class, 'editTeacher'])->name('editTeacher');
     Route::post('edit-teacher', [TeacherController::class, 'UpdateTeacher'])->name('editTeacher');
+
+    Route::get('editTeacherStatus', [TeacherController::class, 'editTeacherStatus'])->name('editTeacherStatus');
+    Route::post('edit-teacher-status', [TeacherController::class, 'UpdateTeacherStatus'])->name('editTeacherStatus');
 
 
     Route::get('editEmployeementDetails', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
@@ -704,6 +736,10 @@ Route::middleware('user-access:teacher')->group(function () {
     Route::get('teacher/leaveApplicationList', [TeacherController::class, 'LeaveApplicationList'])->name('LeaveApplicationList');
     Route::get('get-all-leave-application', [TeacherLeaveController::class, 'showOnlyTeachers']);
     Route::get('get-one-leave-application/{id}', [TeacherLeaveController::class, 'GetLeaveApplicationDetails'])->name('GetLeaveApplicationDetails');
+
+
+    Route::get('insertTeacherDocuments', [TeacherController::class, 'InsertTeacherDocuments'])->name('InsertTeacherDocuments');
+    Route::post('insert-teacher-documents', [TeacherController::class, 'AddTeacherDocuments']);
 
 
 

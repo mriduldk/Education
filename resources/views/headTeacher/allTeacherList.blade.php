@@ -32,6 +32,7 @@
                             <th>teacher_email</th>
                             <th>teacher_employee_code</th>
                             <th>teacher designation</th>
+                            <th>teacher Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -164,6 +165,10 @@ var datatable = dt_notice_table.DataTable({
         },
         {
             data: null,
+            title: 'Teacher Status',
+        },
+        {
+            data: null,
             responsivePriority: -1
         },
     ],
@@ -177,6 +182,44 @@ var datatable = dt_notice_table.DataTable({
                 return (
                     '<span>' + data.teacher_first_name + ' ' + data.teacher_last_name + '</span>'
                 );
+            }
+        },
+        {
+            // Actions
+            targets: 7,
+            title: 'Teacher Status',
+            orderable: false,
+            render: function(data, type, full, meta) {
+
+                debugger;
+                var strSpan = "";
+
+                if(data.teacher_t_id == null) {
+
+                    if (data.status == 'Working') {
+                        strSpan = '<span class="badge rounded-pill badge-light-success">Working</span>';
+                    } else if (data.status == 'On Leave') {
+                        strSpan = '<span class="badge rounded-pill badge-light-info">On Leave</span>';
+                    } else if (data.status == 'Child Care Leave') {
+                        strSpan = '<span class="badge rounded-pill badge-light-info">Child Care Leave</span>';
+                    } else if (data.status == 'Maternity Leave') {
+                        strSpan = '<span class="badge rounded-pill badge-light-info">Maternity Leave</span>';
+                    } else if (data.status == 'Retired') {
+                        strSpan = '<span class="badge rounded-pill badge-light-danger">Retired</span>';
+                    } else if (data.status == 'Expired') {
+                        strSpan = '<span class="badge rounded-pill badge-light-danger">Expired</span>';
+                    } else if (data.status == 'Transferred') {
+                        strSpan = '<span class="badge rounded-pill badge-light-warning">Transferred</span>';
+                    } else if (data.status == 'Suspension') {
+                        strSpan = '<span class="badge rounded-pill badge-light-warning">Suspension</span>';
+                    } else if (data.status == 'Attachment') {
+                        strSpan = '<span class="badge rounded-pill badge-light-warning">Attachment</span>';
+                    }
+
+                } else {
+                    strSpan = '<span class="badge rounded-pill badge-light-danger">Transfered</span>'
+                }
+                return (strSpan );
             }
         },
         {

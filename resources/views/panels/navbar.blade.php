@@ -33,6 +33,7 @@
                         data-bs-toggle="dropdown" aria-haspopup="true">
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">
+
                                 @if (Auth::guard('teacher')->check())
                                 {{ Auth::guard('teacher')->user()->teacher_first_name }}
 
