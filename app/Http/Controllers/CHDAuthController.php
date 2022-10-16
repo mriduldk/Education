@@ -31,39 +31,6 @@ class CHDAuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('teacher')->check())
-        { Auth::guard('teacher')->logout(); }
-
-        if (Auth::guard('headTeacher')->check())
-        { Auth::guard('headTeacher')->logout(); }
-
-        if (Auth::guard('admin')->check())
-        { Auth::guard('admin')->logout(); }
-
-        if (Auth::guard('is')->check())
-        { Auth::guard('is')->logout(); }
-
-        if (Auth::guard('dpc')->check())
-        { Auth::guard('dpc')->logout(); }
-
-        if (Auth::guard('dmc')->check())
-        { Auth::guard('dmc')->logout(); }
-
-        if (Auth::guard('deeo')->check())
-        { Auth::guard('deeo')->logout(); }
-
-        if (Auth::guard('di')->check())
-        { Auth::guard('di')->logout(); }
-
-        if (Auth::guard('beeo')->check())
-        { Auth::guard('beeo')->logout(); }
-
-        if (Auth::guard('chd')->check())
-        { Auth::guard('chd')->logout(); }
-        
-        if (Auth::guard('bmc')->check())
-        { Auth::guard('bmc')->logout(); }
-
         $chd = CHD::where('chd_email', $request->email)->where('is_deleted', 0)->first();
 
         if ($chd && Hash::check($request->password, $chd->chd_password)) {

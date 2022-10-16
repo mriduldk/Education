@@ -94,6 +94,11 @@ var datatable = dt_latest_update_table.DataTable({
         },
         {
             data: null,
+            title: 'Document Cover Image',
+            responsivePriority: 1
+        },
+        {
+            data: null,
             title: 'Document file',
             responsivePriority: 1
         },
@@ -105,6 +110,20 @@ var datatable = dt_latest_update_table.DataTable({
     columnDefs: [
         {
             targets: 5,
+            title: 'Event Cover Image',
+            orderable: false,
+            render: function(data, type, full, meta) {
+                return (
+                    "<a href='" + data.doc_cover_image + "' class='btn btn-primary'>" +
+                    feather.icons['download'].toSvg({
+                        class: 'font-small-4 me-50'
+                    }) +
+                    'Download</a>'
+                );
+            }
+        },
+        {
+            targets: 6,
             title: 'Event File',
             orderable: false,
             render: function(data, type, full, meta) {

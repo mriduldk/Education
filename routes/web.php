@@ -40,12 +40,14 @@ use App\Http\Controllers\KnowYourSchoolController;
 use App\Http\Controllers\SchoolDetailsController;
 use App\Http\Middleware\UserAccess;
 use App\Http\Controllers\exampleController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HeadTeacherController;
 use App\Http\Controllers\ISAuthController;
 use App\Http\Controllers\OfficerAuthController;
 use App\Http\Controllers\ISController;
 use App\Http\Controllers\leaveApplication;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SchoolResultController;
 use App\Http\Controllers\SchoolStudentDetailsController;
 use App\Http\Controllers\TeacherController;
@@ -90,6 +92,12 @@ Route::middleware('user-access:is')->group(function () {
 
         Route::get('teacherList', [ISController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [ISController::class, 'AllTeacherData']);
+
+        Route::get('allNotifications', function () {
+            return view('/IS/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
+
 
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
@@ -143,6 +151,11 @@ Route::middleware('user-access:dpc')->group(function () {
         Route::get('teacherList', [DPCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DPCController::class, 'AllTeacherData']);
 
+        Route::get('allNotifications', function () {
+            return view('/DPC/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
+
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
 
@@ -193,6 +206,11 @@ Route::middleware('user-access:deeo')->group(function () {
         Route::get('blockSelect', [DEEOController::class, 'BlockSelect']);
 
         Route::get('schoolList', [DEEOController::class, 'SchoolList']);
+
+        Route::get('allNotifications', function () {
+            return view('/DEEO/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
 
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
@@ -277,6 +295,11 @@ Route::middleware('user-access:dmc')->group(function () {
         Route::get('teacherList', [DMCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DMCController::class, 'AllTeacherData']);
 
+        Route::get('allNotifications', function () {
+            return view('/DMC/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
+
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
 
@@ -339,6 +362,11 @@ Route::middleware('user-access:di')->group(function () {
         Route::get('teacherList', [DIController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [DIController::class, 'AllTeacherData']);
 
+        Route::get('allNotifications', function () {
+            return view('/DI/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
+
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
 
@@ -392,6 +420,11 @@ Route::middleware('user-access:beeo')->group(function () {
 
         Route::get('teacherList', [BEEOController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [BEEOController::class, 'AllTeacherData']);
+
+        Route::get('allNotifications', function () {
+            return view('/BEEO/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
 
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
@@ -449,6 +482,11 @@ Route::middleware('user-access:bmc')->group(function () {
 
         Route::get('teacherList', [BMCController::class, 'allTeacherList']);
         Route::get('all-teachers-data', [BMCController::class, 'AllTeacherData']);
+
+        Route::get('allNotifications', function () {
+            return view('/BMC/notification/allNotifications');
+        });
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationDataOfOfficer']);
 
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
 
@@ -511,6 +549,14 @@ Route::middleware('user-access:chd')->group(function () {
         Route::get('all-teachers-data', [CHDController::class, 'AllTeacherData']);
 
         Route::get('user-activity-data', [UserActivityLogController::class, 'UserActivityData']);
+
+
+        Route::get('noticeChd', [NotificationController::class, 'NoticeChd']);
+        Route::post('notification-insert', [NotificationController::class, 'InsertNotice']);
+        Route::get('allNotifications', [NotificationController::class, 'NotificationList']);
+        Route::get('all-notification-data', [NotificationController::class, 'AllNotificationData']);
+        Route::post('notification-delete', [NotificationController::class, 'NotificationDelete']);
+
 
         /** Teacher Transfer */
         Route::get('teacherDataForTransfer/{id}', [CHDController::class, 'GetTeacherData'])->name('teacherDataForTransferCHD');
@@ -632,6 +678,23 @@ Route::middleware('user-access:admin')->group(function () {
     Route::post('latest-update-update', [LatestUpdateController::class, 'update']);
     Route::post('latest-update-delete', [LatestUpdateController::class, 'destroy']);
     Route::get('latest-update-table-all-data', [LatestUpdateController::class, 'LatestTableAllData'])->name('latest-update.allData');
+
+
+    Route::get('insertImageCategory', [GalleryController::class, 'InsertImageCategoryPage']);
+    Route::post('insert-image-category', [GalleryController::class, 'InsertImageCategory']);
+    Route::get('imageCategories', [GalleryController::class, 'ImageCategoryTable']);
+    Route::get('allImageCategory', [GalleryController::class, 'GetAllImageCategory']);
+    Route::post('category-delete', [GalleryController::class, 'destroyCategory']);
+
+    
+    Route::get('insertImage', [GalleryController::class, 'InsertImagePage']);
+    Route::post('insert-image', [GalleryController::class, 'InsertImage']);
+    Route::get('galleryImages', [GalleryController::class, 'GalleryImages']);
+    Route::get('allImages', [GalleryController::class, 'GetAllGalleryImages']);
+    Route::post('image-delete', [GalleryController::class, 'destroyImage']);
+
+
+
 
     Route::get('adminDashboard', [DashboardController::class, 'adminDashboard'])->name('adminDashboard');
 });

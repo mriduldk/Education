@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\BMC;
 use Carbon\Carbon;
 
@@ -68,7 +69,8 @@ class BMCAuthController extends Controller
 
         $bmc ->save();
 
-        //SendPasswordToEmail::SendPasswordToEmailOfficer($request->bmc_email, 'BMC', $pass);
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->bmc_email, 'BMC', $pass);
+        SendUserCredentials::SendUserCredentials($request->bmc_name, $request->bmc_phone, $request->bmc_email, $pass);
 
         UserActivityLogController::AddUserActivityLogInsert($bmc->created_by, $bmc->bmc_id, $bmc->bmc_name, "BMC Created");
 

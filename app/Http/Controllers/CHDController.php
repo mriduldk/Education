@@ -7,7 +7,7 @@ use App\Models\IS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Http\GenerateID;
+use App\HTTP\GenerateID;
 use App\Models\BEEO;
 use App\Models\CHD;
 use App\Models\DEEO;

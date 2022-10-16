@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" placeholder="Enter Department"
-                                            id="entrusted_dept" name="entrusted_dept">
+                                            id="entrusted_dept" name="entrusted_dept"  value="Education">
                                     </div>
                                 </div>
                             </div>
@@ -84,6 +84,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="doc_cover_image">Document Cover Image</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="col-lg-12 col-md-12 mb-1 mb-sm-0">
+                                            <input class="form-control" type="file" accept="image/*" name="doc_cover_image" id="doc_cover_image" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-12">
                                 <div class="mb-1 row">
                                     <div class="col-sm-3">
@@ -120,7 +133,7 @@ if ($("#latestUpadteForm").length > 0) {
             },
             update_desc: {
                 required: true,
-                maxlength: 300
+                maxlength: 10000
             },
             date: {
                 required: true,
@@ -133,15 +146,18 @@ if ($("#latestUpadteForm").length > 0) {
             doc: {
                 required: true
             },
+            doc_cover_image: {
+                required: true
+            },
         },
         messages: {
             update_title: {
                 required: "Please enter Event Title",
-                maxlength: "Event Title maxlength should be 50 characters long."
+                maxlength: "Event Title maxlength should be 100 characters long."
             },
             update_desc: {
                 required: "Please enter Event Description",
-                maxlength: "Event Description name should less than or equal to 50 characters",
+                maxlength: "Event Description name should less than or equal to 10000 characters",
             },
             date: {
                 required: "Please select Date",
@@ -153,6 +169,9 @@ if ($("#latestUpadteForm").length > 0) {
             },
             doc: {
                 required: "Please Select a file"
+            },
+            doc_cover_image: {
+                required: "Please Select a Image"
             },
         },
         submitHandler: function(form) {

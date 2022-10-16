@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
 <!-- JQuery -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 @endsection
 
 @section('page-style')
@@ -473,7 +473,7 @@
                         <div class="card-header">
                             <h4>Class {{ $schoolStudentDetails->class; }}</h4>
                             <div>
-                                <a onclick="EditSudentDetails('@php echo $schoolStudentDetails->school_sd_id; @endphp')" class="btn btn-warning"><i
+                                <a onclick="EditSudentDetails('@php echo $schoolStudentDetails->school_sd_id; @endphp')" class="btn btn-warning" hidden><i
                                         data-feather='settings'></i> Edit</a>
                                 <a href="{{ url('addStudentDetails') }}" class="btn btn-gradient-danger hidden"><i
                                         data-feather='settings'></i> Delete</a>
@@ -618,11 +618,11 @@ function EditSudentDetails(id) {
 
 function EditResult(id) {
 
-var url = '{{ route("editResult", ":id") }}';
-url = url.replace(':id', id);
-
-debugger;
-window.location.replace(url);
+    var url = '{{ route("editResult", ":id") }}';
+    url = url.replace(':id', id);
+    
+    debugger;
+    window.location.replace(url);
 
 }
 

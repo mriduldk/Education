@@ -2,7 +2,7 @@
   "menu": [
     {
       "name": "Dashboard",
-      "url": "/adminDashboard",
+      "url": "/",
       "icon": "home",
       "slug": "dashboard-ecommerce"
     },
@@ -28,6 +28,18 @@
       "name": "Event",
       "icon": "box",
       "slug": "latest-update-table"
+    },
+    {
+      "url": "imageCategories",
+      "name": "Image Category",
+      "icon": "box",
+      "slug": "insertImageCategory"
+    },
+    {
+      "url": "galleryImages",
+      "name": "Gallery",
+      "icon": "box",
+      "slug": "galleryImages"
     }
 
     

@@ -13,6 +13,7 @@ use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\SchoolResult;
 use App\Models\SchoolStudentDetails;
 use App\Models\TeacherAcademicQualification;
@@ -44,39 +45,6 @@ class HeadTeacherController extends Controller
         //     'password' => Hash::make($request->password),
         //     'type' => 1
         // ]);
-
-        if (Auth::guard('teacher')->check())
-        { Auth::guard('teacher')->logout(); }
-
-        if (Auth::guard('headTeacher')->check())
-        { Auth::guard('headTeacher')->logout(); }
-
-        if (Auth::guard('admin')->check())
-        { Auth::guard('admin')->logout(); }
-
-        if (Auth::guard('is')->check())
-        { Auth::guard('is')->logout(); }
-
-        if (Auth::guard('dpc')->check())
-        { Auth::guard('dpc')->logout(); }
-
-        if (Auth::guard('dmc')->check())
-        { Auth::guard('dmc')->logout(); }
-
-        if (Auth::guard('deeo')->check())
-        { Auth::guard('deeo')->logout(); }
-
-        if (Auth::guard('di')->check())
-        { Auth::guard('di')->logout(); }
-
-        if (Auth::guard('beeo')->check())
-        { Auth::guard('beeo')->logout(); }
-
-        if (Auth::guard('chd')->check())
-        { Auth::guard('chd')->logout(); }
-        
-        if (Auth::guard('bmc')->check())
-        { Auth::guard('bmc')->logout(); }
 
         $teacher = Teacher::where('teacher_email', $request->email)->where('is_deleted', 0)->where('is_head_teacher', 1)->first();
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
@@ -258,7 +226,9 @@ class HeadTeacherController extends Controller
         $teacherStatus->created_on =  Carbon::now()->toDateTimeString();
         $teacherStatus->save();
 
-        //SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
+        SendPasswordToEmail::SendPasswordToEmailTeacher($request->teacher_email, $pass);
+        SendUserCredentials::SendUserCredentials($request->teacher_first_name . " " . $request->teacher_last_name, $request->teacher_mobile, $request->teacher_email, $pass);
+        
         UserActivityLogController::AddUserActivityLogInsert($teacher->created_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Teacher Created");
         
         return response()->success('Teacher added successfully', 'teacher', $teacher);

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\BEEO;
 use Carbon\Carbon;
 
@@ -69,6 +70,7 @@ class BEEOAuthController extends Controller
 
         $beeo ->save();
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->beeo_email, 'BEEO', $pass);
+        SendUserCredentials::SendUserCredentials($request->beeo_name, $request->beeo_phone, $request->beeo_email, $pass);
 
         UserActivityLogController::AddUserActivityLogInsert($beeo->created_by, $beeo->beeo_id, $beeo->beeo_name, "BEEO Created");
 

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\DEEO;
 use Carbon\Carbon;
 
@@ -71,8 +72,9 @@ class DEEOAuthController extends Controller
         UserActivityLogController::AddUserActivityLogInsert($deeo->created_by, $deeo->deeo_id, $deeo->deeo_name, "DEEO Created");
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->deeo_email, 'DEEO', $pass);
+        SendUserCredentials::SendUserCredentials($request->deeo_name, $request->deeo_phone, $request->deeo_email, $pass);
 
-        return response()->success('DEEO inserted successfully', 'deeo', $deeo,);
+        return response()->success('DEEO inserted successfully', 'deeo', $deeo);
 
     }
     public function UpdateDEEO(Request $request)

@@ -48,7 +48,8 @@
 
 </section>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 
@@ -105,7 +106,7 @@ function GetSchoolData(schoolName, udice_code, pin) {
                 title: 'id',
             },
             {
-                data: 'school_name',
+                data: null,
                 title: 'School Name',
             },
             {
@@ -126,6 +127,23 @@ function GetSchoolData(schoolName, udice_code, pin) {
             }
         ],
         columnDefs: [{
+                targets: 1,
+                title: 'School Name',
+                orderable: false,
+                render: function(data, type, full, meta) {
+
+                    var url = '{{ route("searchSchoolDetails", ":id") }}';
+                    url = url.replace(':id', data.school_id);
+
+                    return (
+                        "<a href='" + url + "' class=''>" + data.school_name + " " +
+                        feather.icons['external-link'].toSvg({
+                            class: 'font-small-4 me-50'
+                        }) +
+                        '</a>'
+                    );
+                }
+            },{
                 targets: 3,
                 title: 'Head Teacher Name',
                 orderable: false,

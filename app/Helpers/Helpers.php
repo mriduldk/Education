@@ -16,7 +16,7 @@ class Helpers
         // default data array
         $DefaultData = [
             'mainLayoutType' => 'vertical',
-            'theme' => 'dark',
+            'theme' => 'light',
             'sidebarCollapsed' => false,
             'navbarColor' => '',
             'horizontalMenuType' => 'floating',

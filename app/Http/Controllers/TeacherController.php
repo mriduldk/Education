@@ -44,39 +44,6 @@ class TeacherController extends Controller
         //     'type' => 1
         // ]);
 
-        if (Auth::guard('teacher')->check())
-        { Auth::guard('teacher')->logout(); }
-
-        if (Auth::guard('headTeacher')->check())
-        { Auth::guard('headTeacher')->logout(); }
-
-        if (Auth::guard('admin')->check())
-        { Auth::guard('admin')->logout(); }
-
-        if (Auth::guard('is')->check())
-        { Auth::guard('is')->logout(); }
-
-        if (Auth::guard('dpc')->check())
-        { Auth::guard('dpc')->logout(); }
-
-        if (Auth::guard('dmc')->check())
-        { Auth::guard('dmc')->logout(); }
-
-        if (Auth::guard('deeo')->check())
-        { Auth::guard('deeo')->logout(); }
-
-        if (Auth::guard('di')->check())
-        { Auth::guard('di')->logout(); }
-
-        if (Auth::guard('beeo')->check())
-        { Auth::guard('beeo')->logout(); }
-
-        if (Auth::guard('chd')->check())
-        { Auth::guard('chd')->logout(); }
-        
-        if (Auth::guard('bmc')->check())
-        { Auth::guard('bmc')->logout(); }
-
         $teacher = Teacher::where('teacher_email', $request->email)->where('is_deleted', 0)->first();
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
         {

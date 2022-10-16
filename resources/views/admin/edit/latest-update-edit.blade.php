@@ -92,6 +92,18 @@
                             <div class="col-12">
                                 <div class="mb-1 row">
                                     <div class="col-sm-3">
+                                        <label class="col-form-label" for="doc_cover_image">Document Cover Image</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="col-lg-12 col-md-12 mb-1 mb-sm-0">
+                                            <input class="form-control" type="file" accept="image/*" name="doc_cover_image" id="doc_cover_image" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
                                         <label class="col-form-label" for="doc">Document</label>
                                     </div>
                                     <div class="col-sm-9">

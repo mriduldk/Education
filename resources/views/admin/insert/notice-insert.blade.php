@@ -13,8 +13,9 @@
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/sweetalert2.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
 <!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
 <style>
 .error {
@@ -69,7 +70,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" placeholder="Enter Department"
-                                            id="entrusted_dept" name="entrusted_dept">
+                                            id="entrusted_dept" name="entrusted_dept" value="Education">
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +131,7 @@ if ($("#noticeForm").length > 0) {
             },
             notice_description: {
                 required: true,
-                maxlength: 300
+                maxlength: 1000
             },
             notice_file: {
                 required: true
@@ -151,7 +152,7 @@ if ($("#noticeForm").length > 0) {
             },
             notice_description: {
                 required: "Please enter Notice Description",
-                maxlength: "Your message name maxlength should be 300 characters long."
+                maxlength: "Your message name maxlength should be 1000 characters long."
             },
             notice_file: {
                 required: "Please Select a file"

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\DI;
 use Carbon\Carbon;
 
@@ -69,6 +70,7 @@ class DIAuthController extends Controller
 
         $di ->save();
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->di_email, 'DI', $pass);
+        SendUserCredentials::SendUserCredentials($request->di_name, $request->di_phone, $request->di_email, $pass);
 
         UserActivityLogController::AddUserActivityLogInsert($di->created_by, $di->di_id, $di->di_name, "DI Created");
 

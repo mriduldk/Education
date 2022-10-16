@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\Approver;
 use App\Models\Manager;
 use App\Models\Teacher;
@@ -175,7 +176,8 @@ class BMCController extends Controller
         $teacherStatus->created_on =  Carbon::now()->toDateTimeString();
         $teacherStatus->save();
 
-        //SendPasswordToEmail::SendPasswordToEmailHeadTeacher($request->head_teacher_email, $pass);
+        SendPasswordToEmail::SendPasswordToEmailHeadTeacher($request->head_teacher_email, $pass);
+        SendUserCredentials::SendUserCredentials($request->head_teacher_first_name . " " . $request->head_teacher_last_name, $request->head_teacher_number, $request->head_teacher_email, $pass);
 
         UserActivityLogController::AddUserActivityLogInsert($teacher->created_by, $teacher->teacher_id,  $teacher->teacher_first_name . ' ' . $teacher->teacher_last_name, "Head Teacher Created");
         UserActivityLogController::AddUserActivityLogInsert($school->created_by, $school->school_id,  $school->school_name, "School Created");

@@ -91,7 +91,7 @@ function GetSchoolData(schoolName, udice_code, pin) {
         ajax: {
             url: "{{url('searchedSchoolData')}}",
             data: {
-                'district': 'Kokrajhar',
+                'district': '',
                 'school_name': schoolName,
                 'udice_code': udice_code,
                 'pin': pin

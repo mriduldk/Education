@@ -6,7 +6,7 @@ use App\Models\DEO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use Carbon\Carbon;
 
 class DEOController extends Controller

@@ -7,8 +7,9 @@ use App\Models\IS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\BEEO;
 use App\Models\CHD;
 use App\Models\DEEO;
@@ -79,7 +80,8 @@ class ISAuthController extends Controller
 
         UserActivityLogController::AddUserActivityLogInsert($is->created_by, $is->is_id,  $is->is_name, "IS Created");
 
-        //SendPasswordToEmail::SendPasswordToEmailOfficer($request->is_email, 'IS', $pass);
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->is_email, 'IS', $pass);
+        SendUserCredentials::SendUserCredentials($request->is_name, $request->is_phone, $request->is_email, $pass);
 
         return response()->success('IS inserted successfully', 'is', $is);
 

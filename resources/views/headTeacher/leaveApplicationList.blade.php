@@ -194,7 +194,7 @@ var datatable = dt_notice_table.DataTable({
     searchDelay: 500,
     destroy: true,
     ajax: {
-        url: "{{ url('get-all-leave-application') }}",
+        url: "{{ url('get-all-leave-application-head-teacher') }}",
         type: 'GET',
         dataSrc: ''
     },
@@ -311,20 +311,7 @@ var datatable = dt_notice_table.DataTable({
     ],
     dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
     displayLength: 10,
-    lengthMenu: [10, 25, 50, 75, 100],
-    buttons: [{
-        text: feather.icons['plus'].toSvg({
-            class: 'me-50 font-small-4'
-        }) + 'Add New Record',
-        className: 'create-new btn btn-primary',
-        attr: {
-            'data-bs-toggle': 'modal',
-            'data-bs-target': '#modals-slide-in'
-        },
-        init: function(api, node, config) {
-            $(node).removeClass('btn-secondary');
-        }
-    }],
+    lengthMenu: [10, 25, 50, 75, 100]
 });
 
 $('div.head-label').html('<h6 class="mb-0">Leave Application List</h6>');
@@ -422,7 +409,7 @@ function viewApplicationModal() {
 
     let applicationId = $('#btnViewApplication').attr("data-id");
 
-    var url = '{{ route("GetLeaveApplicationDetails", ":id") }}';
+    var url = '{{ route("GetLeaveApplicationDetailsHeadTeacher", ":id") }}';
     url = url.replace(':id', applicationId);
 
     $('#btnLoading').html('Loading');
@@ -467,8 +454,8 @@ function viewApplicationModal() {
 }
 </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
 <script>
 if ($("#formAddTeacher").length > 0) {

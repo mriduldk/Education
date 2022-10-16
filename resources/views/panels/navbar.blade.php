@@ -33,7 +33,6 @@
                         data-bs-toggle="dropdown" aria-haspopup="true">
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder">
-
                                 @if (Auth::guard('teacher')->check())
                                 {{ Auth::guard('teacher')->user()->teacher_first_name }}
 
@@ -75,12 +74,20 @@
                                 Admin
                             </span> -->
                         </div>
-                        <span class="avatar">
-                            <img class="round"
-                                src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('images/portrait/small/avatar-s-11.jpg') }}"
-                                alt="avatar" height="40" width="40">
-                            <span class="avatar-status-online"></span>
-                        </span>
+                        <!--<span class="avatar">-->
+                            <!--<img class="round"-->
+                            <!--    src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('images/portrait/small/avatar-s-11.jpg') }}"-->
+                            <!--    alt="avatar" height="40" width="40">-->
+                            <!--<img class="round"-->
+                            <!--    src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('images/portrait/small/avatar-s-11.jpg') }}"-->
+                            <!--    alt="avatar" height="40" width="40">-->
+                            <!--<span class="avatar-status-online"></span>-->
+                        <!--</span>-->
+                        <div class="avatar bg-light-warning p-50">
+                            <span class="avatar-content">                          
+                                <i data-feather='user' class="font-medium-4"></i>
+                            </span>
+                        </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         

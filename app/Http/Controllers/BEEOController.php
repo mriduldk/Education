@@ -6,7 +6,7 @@ use App\Models\BEEO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Models\Approver;
 use App\Models\Manager;
 use App\Models\Teacher;

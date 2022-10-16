@@ -6,7 +6,7 @@ use App\Models\DEEO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Http\GenerateID;
+use App\HTTP\GenerateID;
 use App\Models\Approver;
 use App\Models\Manager;
 use App\Models\Teacher;

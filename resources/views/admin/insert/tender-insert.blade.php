@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" placeholder="Enter Department"
-                                            id="department" name="department">
+                                            id="department" name="department"  value="Education">
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@ if ($("#tenderForm").length > 0) {
             },
             tender_description: {
                 required: true,
-                maxlength: 50
+                maxlength: 5000
             },
             published_date: {
                 required: true,
@@ -157,7 +157,7 @@ if ($("#tenderForm").length > 0) {
             },
             tender_description: {
                 required: "Please enter Tender Description",
-                maxlength: "Tender Description name should less than or equal to 50 characters",
+                maxlength: "Tender Description name should less than or equal to 5000 characters",
             },
             published_date: {
                 required: "Please select Publish Date",

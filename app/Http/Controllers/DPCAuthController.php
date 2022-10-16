@@ -7,8 +7,9 @@ use App\Models\IS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\BEEO;
 use App\Models\CHD;
 use App\Models\DEEO;
@@ -79,6 +80,7 @@ class DPCAuthController extends Controller
         UserActivityLogController::AddUserActivityLogInsert($dpc->created_by, $dpc->dpc_id, $dpc->dpc_name, "DPC Created");
 
         SendPasswordToEmail::SendPasswordToEmailOfficer($request->dpc_email, 'DPC', $pass);
+        SendUserCredentials::SendUserCredentials($request->dpc_name, $request->dpc_phone, $request->dpc_email, $pass);
 
         return response()->success('DPC inserted successfully', 'dpc', $dpc);
 

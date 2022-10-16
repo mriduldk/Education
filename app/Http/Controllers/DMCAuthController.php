@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\HTTP\GenerateID;
+use App\Http\GenerateID;
 use App\Http\SendPasswordToEmail;
+use App\Http\SendUserCredentials;
 use App\Models\DMC;
 use Carbon\Carbon;
 
@@ -47,7 +48,7 @@ class DMCAuthController extends Controller
             $fileName = time().'.'.$request->dmc_image_url->extension();  
             $request->dmc_image_url->move(public_path('files/profile/dmc'), $fileName);
     
-            $path = 'https://dashboard.edu.bodoland.gov.in/public/files/profile/dmc' . $fileName;
+            $path = 'https://education.bodoland.gov.in/public/files/profile/dmc' . $fileName;
     
             $dmc->dmc_image_url = $path;
         }
@@ -71,7 +72,8 @@ class DMCAuthController extends Controller
         $dmc ->save();
         UserActivityLogController::AddUserActivityLogInsert($dmc->created_by, $dmc->dmc_id, $dmc->dmc_name, "DMC Created");
 
-        //SendPasswordToEmail::SendPasswordToEmailOfficer($request->dmc_email, 'DMC', $pass);
+        SendPasswordToEmail::SendPasswordToEmailOfficer($request->dmc_email, 'DMC', $pass);
+        SendUserCredentials::SendUserCredentials($request->dmc_name, $request->dmc_phone, $request->dmc_email, $pass);
 
         return response()->success('DMC inserted successfully', 'dmc', $dmc);
 
