@@ -44,6 +44,39 @@ class TeacherController extends Controller
         //     'type' => 1
         // ]);
 
+        if (Auth::guard('teacher')->check())
+        { Auth::guard('teacher')->logout(); }
+
+        if (Auth::guard('headTeacher')->check())
+        { Auth::guard('headTeacher')->logout(); }
+
+        if (Auth::guard('admin')->check())
+        { Auth::guard('admin')->logout(); }
+
+        if (Auth::guard('is')->check())
+        { Auth::guard('is')->logout(); }
+
+        if (Auth::guard('dpc')->check())
+        { Auth::guard('dpc')->logout(); }
+
+        if (Auth::guard('dmc')->check())
+        { Auth::guard('dmc')->logout(); }
+
+        if (Auth::guard('deeo')->check())
+        { Auth::guard('deeo')->logout(); }
+
+        if (Auth::guard('di')->check())
+        { Auth::guard('di')->logout(); }
+
+        if (Auth::guard('beeo')->check())
+        { Auth::guard('beeo')->logout(); }
+
+        if (Auth::guard('chd')->check())
+        { Auth::guard('chd')->logout(); }
+        
+        if (Auth::guard('bmc')->check())
+        { Auth::guard('bmc')->logout(); }
+
         $teacher = Teacher::where('teacher_email', $request->email)->where('is_deleted', 0)->first();
         if ($teacher && Hash::check($request->password, $teacher->teacher_password)) 
         {
@@ -89,17 +122,25 @@ class TeacherController extends Controller
 
         $school = School::where('is_deleted', 0)->where('school_id', $teacher->fk_school_id)->first();
 
-        $teacher['teacherAcademicQualification'] = $teacherAcademicQualification;
-        $teacher['teacherDependentFamily'] = $teacherDependentFamily;
-        $teacher['teacherProfessionalQualification'] = $teacherProfessionalQualification;
-        $teacher['teacherSalaryAccountDetails'] = $teacherSalaryAccountDetails;
-        $teacher['teacherServiceDetails'] = $teacherServiceDetails;
-        $teacher['school'] = $school;
-        $teacher['teacherLeaves'] = $teacherLeave;
-        $teacher['teacherStatus'] = $teacherStatus;
+        if($teacherAcademicQualification->is_submited != 2 || $teacherProfessionalQualification->is_submited != 2 || $teacherSalaryAccountDetails->is_submited != 2 || $teacher->is_submited != 2 || $teacherServiceDetails->is_submited != 2 || $teacher->teacher_image_url == null || $teacher->teacher_image_url == "" )
+        {
+            return view('teacher/insert/insertTeacher')->with('teacher', $teacher)->with('teacherServiceDetails', $teacherServiceDetails)->with('teacherSalaryAccountDetails', $teacherSalaryAccountDetails)->with('teacherAcademicQualification', $teacherAcademicQualification)->with('teacherProfessionalQualification', $teacherProfessionalQualification);
+        } 
+        else 
+        {
+            $teacher['teacherAcademicQualification'] = $teacherAcademicQualification;
+            $teacher['teacherDependentFamily'] = $teacherDependentFamily;
+            $teacher['teacherProfessionalQualification'] = $teacherProfessionalQualification;
+            $teacher['teacherSalaryAccountDetails'] = $teacherSalaryAccountDetails;
+            $teacher['teacherServiceDetails'] = $teacherServiceDetails;
+            $teacher['school'] = $school;
+            $teacher['teacherLeaves'] = $teacherLeave;
+            $teacher['teacherStatus'] = $teacherStatus;
+    
+            return view('/teacher/teacherDashboard')->with('teacher', $teacher);
 
-        //dd($teacherLeave);
-        return view('/teacher/teacherDashboard')->with('teacher', $teacher);
+        }
+
     }
 
 
@@ -108,6 +149,60 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::where('is_deleted', 0)->where('teacher_id', Auth::guard('teacher')->user()->teacher_id)->first();
         return view('teacher/editTeacher')->with('teacher', $teacher);
+    }
+    public function InsertTeacher(Request $request)
+    {
+        $teacher = $request->session()->get('teacher');
+
+        $teacher['teacherPersonalDetails'] = new Teacher();
+
+        return view('teacher/insert/insertTeacher', compact('teacher'));
+    }
+    public function StoreTeacher(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'teacher_employee_code'  => 'required',
+            'teacher_first_name'  => 'required',
+            'teacher_last_name'  => 'required',
+            'teacher_gender'  => 'required',
+            'teacher_dob'  => 'required',
+            'teacher_caste'  => 'required',
+            'teacher_religion'  => 'required',
+            'teacher_nationality'  => 'required',
+            'teacher_present_address'  => 'required',
+            'teacher_parmanent_address'  => 'required',
+            'teacher_aadhaar_no'  => 'required',
+            'teacher_mobile'  => 'required',
+            'teacher_email'  => 'required',
+            'teacher_mother_name'  => 'required',
+            'teacher_father_name'  => 'required',
+            'teacher_identification_mark'  => 'required',
+            'teacher_blood_group'  => 'required',
+            'teacher_differntly_abled'  => 'required',
+            'teacher_maritial_status'  => 'required',
+            'teacher_spouse_name'  => 'required',
+            'teacher_spouse_working_under_govt_serveice'  => 'required',
+            'teacher_language'  => 'required',
+            'teacher_tet_category'  => 'required',
+            'teacher_category_type'  => 'required'
+        ]);
+
+
+        if(empty($request->session()->get('teacherPersonalDetails'))){
+            $teacherServiceDetails = new Teacher();
+            $teacherServiceDetails->fill($validatedData);
+            $request->session()->put('teacherPersonalDetails', $teacherServiceDetails);
+        }else{
+            $teacherServiceDetails = $request->session()->get('teacherPersonalDetails');            
+            $teacherServiceDetails->fill($validatedData);
+            $request->session()->put('teacherPersonalDetails', $teacherServiceDetails);
+        }
+        
+        //return redirect()->route('InsertEmployeementDetails');
+        //return redirect('insertSalaryAccount');
+
+        return response()->success('Teacehr Details Saved', 'teacherPersonalDetails', null);
     }
     public function editTeacherStatus()
     {
@@ -430,8 +525,9 @@ class TeacherController extends Controller
         $teacher_id = Auth::guard('teacher')->user()->teacher_id;
 
         $request->validate([
-            'employeement_type' => 'required'
+            'post_name' => 'required'
           ]);
+
 
         $teacherServiceDetails = TeacherServiceDetails::where('is_deleted', 0)->where('fk_teacher_id', $teacher_id)->first();
 
@@ -480,12 +576,27 @@ class TeacherController extends Controller
     }
     public function StoreEmployeementDetails(Request $request)
     {
+
         $validatedData = $request->validate([
-            'employeement_type' => 'required'
-          ]);
+            'post_name' => 'required',
+            'medium_of_school' => 'required',
+            'subjects' => 'required',
+            'category_of_post' => 'required',
+            'pay_scale' => 'required',
+            'grade_pay' => 'required',
+            'appointment_latter_no' => 'required',
+            'appointment_date' => 'required',
+            'post_creation_no' => 'required',
+            'post_creation_date' => 'required',
+            'date_of_effect_of_service_provincialisation' => 'required',
+            'date_of_joining_in_service' => 'required',
+            'date_of_joining_in_present_post' => 'required',
+            'date_of_retirement' => 'required',
+            'period_spent_on_non_teaching_assignment' => 'required'
+        ]);
 
 
-          if(empty($request->session()->get('teacherServiceDetails'))){
+        if(empty($request->session()->get('teacherServiceDetails'))){
             $teacherServiceDetails = new TeacherServiceDetails();
             $teacherServiceDetails->fill($validatedData);
             $request->session()->put('teacherServiceDetails', $teacherServiceDetails);

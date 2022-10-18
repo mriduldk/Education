@@ -1,4 +1,4 @@
-@extends('layouts/contentLayoutMaster')
+@extends('layouts/contentLayoutMasterWithoutSideBar')
 
 @section('title', 'Add Salary Account')
 
@@ -31,132 +31,286 @@
 
 @section('content')
 <section id="basic-vertical-layouts">
+
+
     <div class="row">
-        <div class="col-md-12 col-12">
-            <form class="form form-vertical" id="formSalary">
-                <div class="card">
-
-                    <div class="card-header">
-                        <h4 class="card-title">Salary Account and Other Official Account</h4>
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="pan_no">Permanent Account (PAN)
-                                        No</label>
-                                    <input type="text" id="pan_no" class="form-control" name="pan_no"
-                                        id="pan_no" placeholder="Enter PAN No" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="account_no">Account No (Salary
-                                        Account)</label>
-                                    <input type="text" id="account_no" class="form-control" name="account_no"
-                                        id="account_no" placeholder="Enter Account No (Salary Account)" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="account_name">Account Name (Salary
-                                        Account)</label>
-                                    <input type="text" class="form-control" name="account_name"
-                                        id="account_name" placeholder="Enter Account Name (Salary Account)" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="bank_name">Bank Name</label>
-                                    <input type="text" class="form-control" name="bank_name"
-                                        id="bank_name" placeholder="Enter Bank Name" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="branch_name">Branch Name (Salary
-                                        Account)</label>
-                                    <input type="text" class="form-control" name="branch_name"
-                                        id="branch_name" placeholder="Enter Branch Name (Salary Account)" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="ifsc">IFSC</label>
-                                    <input type="text" class="form-control" name="ifsc"
-                                        id="ifsc" placeholder="Enter IFSC code" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="district_name_of_active_salary_account_no">Name of the district where your
-                                        salary account no is active</label>
-                                    <input type="text" class="form-control"
-                                        name="district_name_of_active_salary_account_no"
-                                        id="district_name_of_active_salary_account_no"
-                                        placeholder="Name of the district where your salary account no is active" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="state_name_of_active_salary_account_no">Name of the state where your
-                                        salary account no is active</label>
-                                    <input type="text" class="form-control"
-                                        name="state_name_of_active_salary_account_no"
-                                        id="state_name_of_active_salary_account_no"
-                                        placeholder="Enter Name of the state where your salary account no is active" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="salary_payment_mode">Salary Payment Mode</label>
-                                    <input type="text" class="form-control"
-                                        name="salary_payment_mode" id="salary_payment_mode"
-                                        placeholder="Enter Salary Payment Mode" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="gross_provoded_fund">Gross Provident Fund (GPF)
-                                        No</label>
-                                    <input type="text" class="form-control"
-                                        name="gross_provoded_fund" id="gross_provoded_fund"
-                                        placeholder="Enter Gross Provident Fund (GPF) No" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="group_insurance_scheme">Group Insurance Scheme (GIS)
-                                        No.</label>
-                                    <input type="text" class="form-control"
-                                        name="group_insurance_scheme" id="group_insurance_scheme"
-                                        placeholder="Enter GIS" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-md-6 text-left">
-                                <a href="{{ url('insertEmployeementDetails') }}"
-                                    class="btn btn-danger pull-right">Previous</a>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <button type="submit" class="btn btn-primary">Next</button>
-                            </div>
-                        </div>
-                    </div>
-
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-1">Timeline</h4>
+                    <span class="timeline-event-time">Complete your profile details to access Teacher Dashboard</span>
                 </div>
+                <div class="card-body">
+                    <ul class="timeline">
+                        <li class="timeline-item">
+                            @php
+                            if($teacher->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacher->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertTeacher') }}">
+                                        <h6>Personal Information</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherServiceDetails->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherServiceDetails->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertEmployeementDetails') }}">
+                                        <h6>Employeement Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherSalaryAccountDetails->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherSalaryAccountDetails->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertSalaryAccount') }}">
+                                        <h6>Salary Account Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherAcademicQualification->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherAcademicQualification->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertTeacherQualification') }}">
+                                        <h6>Qualification Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacher->teacher_image_url == null){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else {
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between align-items-center mb-50">
+                                    <a href="{{ url('insertTeacherDocuments') }}">
+                                        <h6>Documents</h6>
+                                    </a>
+                                    <!-- <div>
+                                        <span class="badge rounded-pill badge-light-primary">Design</span>
+                                    </div> -->
+                                </div>
 
-
-            </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        <div class="col-lg-9">
+
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <form class="form form-vertical" id="formSalary">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h4 class="card-title">Salary Account and Other Official Account</h4>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Permanent Account (PAN)
+                                                No</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="pan_no" id="pan_no" placeholder="Enter PAN No"
+                                                value="@php echo $teacherSalaryAccountDetails->pan_no; @endphp" />
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="teacher_id" id="teacher_id" placeholder="Enter PAN No"
+                                                value="@php echo $teacherSalaryAccountDetails->fk_teacher_id; @endphp"
+                                                hidden />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="email-id-vertical">Account No (Salary
+                                                Account)</label>
+                                            <input type="text" id="email-id-vertical" class="form-control"
+                                                name="account_no" id="account_no"
+                                                placeholder="Enter Account No (Salary Account)"
+                                                value="{{ $teacherSalaryAccountDetails->account_no }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="password-vertical">Account Name (Salary
+                                                Account)</label>
+                                            <input type="text" id="password-vertical" class="form-control"
+                                                name="account_name" id="account_name"
+                                                placeholder="Enter Account Name (Salary Account)"
+                                                value="{{ $teacherSalaryAccountDetails->account_name }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Bank Name</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="bank_name" id="bank_name" placeholder="Enter Bank Name"
+                                                value="{{ $teacherSalaryAccountDetails->bank_name }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Branch Name (Salary
+                                                Account)</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="branch_name" id="branch_name"
+                                                placeholder="Enter Branch Name (Salary Account)"
+                                                value="{{ $teacherSalaryAccountDetails->branch_name }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">IFSC</label>
+                                            <input type="text" id="first-name-vertical" class="form-control" name="ifsc"
+                                                id="ifsc" placeholder="Enter IFSC code"
+                                                value="{{ $teacherSalaryAccountDetails->ifsc }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Name of the district
+                                                where your
+                                                salary account no is active</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="district_name_of_active_salary_account_no"
+                                                id="district_name_of_active_salary_account_no"
+                                                placeholder="Name of the district where your salary account no is active"
+                                                value="{{ $teacherSalaryAccountDetails->district_name_of_active_salary_account_no }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Name of the state where
+                                                your
+                                                salary account no is active</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="state_name_of_active_salary_account_no"
+                                                id="state_name_of_active_salary_account_no"
+                                                placeholder="Enter Name of the state where your salary account no is active"
+                                                value="{{ $teacherSalaryAccountDetails->state_name_of_active_salary_account_no }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Salary Payment
+                                                Mode</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="salary_payment_mode" id="salary_payment_mode"
+                                                placeholder="Enter Salary Payment Mode"
+                                                value="{{ $teacherSalaryAccountDetails->salary_payment_mode }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Gross Provident Fund
+                                                (GPF)
+                                                No</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="gross_provoded_fund" id="gross_provoded_fund"
+                                                placeholder="Enter Gross Provident Fund (GPF) No"
+                                                value="{{ $teacherSalaryAccountDetails->gross_provoded_fund }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="first-name-vertical">Group Insurance Scheme
+                                                (GIS)
+                                                No.</label>
+                                            <input type="text" id="first-name-vertical" class="form-control"
+                                                name="group_insurance_scheme" id="group_insurance_scheme"
+                                                placeholder="Enter GIS"
+                                                value="{{ $teacherSalaryAccountDetails->group_insurance_scheme }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <a href="{{ url('insertEmployeementDetails') }}"
+                                            class="btn btn-danger pull-right">Previous</a>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button type="submit" class="btn btn-primary">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
     </div>
+
 </section>
 
 <script>
@@ -281,7 +435,7 @@ if ($("#formSalary").length > 0) {
                 contentType: false,
                 cache: false,
                 success: function(response) {
-                    $('#btnSubmit').html('Submit');
+                    $('#btnSubmit').html('Next');
                     $("#btnSubmit").attr("disabled", false);
 
                     if (response.status == 200) {
@@ -308,7 +462,7 @@ if ($("#formSalary").length > 0) {
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    $('#btnSubmit').html('Submit');
+                    $('#btnSubmit').html('Next');
                     $("#btnSubmit").attr("disabled", false);
 
                     toastr['error'](

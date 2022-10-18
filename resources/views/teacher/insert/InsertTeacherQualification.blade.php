@@ -1,4 +1,4 @@
-@extends('layouts/contentLayoutMaster')
+@extends('layouts/contentLayoutMasterWithoutSideBar')
 
 @section('title', 'Add Qualification')
 
@@ -31,172 +31,330 @@
 
 @section('content')
 <section id="basic-vertical-layouts">
+
     <div class="row">
-        <div class="col-md-12 col-12">
-            <form class="form form-vertical" id="qualificationForm">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Academic Qualifications</h4>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="qualification">Qualification</label>
-                                    <!-- <input type="text" id="testtest" class="form-control" name="fname"
-                                        placeholder="Enter Qualification" /> -->
-                                    <select name="qualification" id="qualification" class="form-control">
-                                        <option value="">Select Qualification</option>
-                                        <option value="hslc">HSLC</option>
-                                        <option value="hs">HS</option>
-                                        <option value="graduate">Graduate</option>
-                                        <option value="pg">PG</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="stream_displine">Stream/Discipline)</label>
-                                    <input type="text" id="stream_displine" class="form-control" name="stream_displine"
-                                        placeholder="Enter Stream/Discipline)" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="subjects_studied">Bubjects Studied</label>
-                                    <input type="text" id="subjects_studied" class="form-control" name="subjects_studied"
-                                        placeholder="Enter Bubjects Studied" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="board_university">Board / University</label>
-                                    <input type="text" id="board_university" class="form-control" name="board_university"
-                                        placeholder="Enter Board / University" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="school_college">School / College</label>
-                                    <input type="text" id="school_college" class="form-control" name="school_college"
-                                        placeholder="Enter School / College" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="passing_year">Passing Year</label>
-                                    <input type="text" id="passing_year" class="form-control" name="passing_year"
-                                        placeholder="Enter Passing Year" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="roll_no">Roll No</label>
-                                    <input type="text" id="roll_no" class="form-control" name="roll_no"
-                                        placeholder="Roll No" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="marks_obtained">Marks Obtained</label>
-                                    <input type="text" id="marks_obtained" class="form-control" name="marks_obtained"
-                                        placeholder="Marks Obtained" />
-                                </div>
-                            </div>
-
-                            <div class="card-header">
-                                <h4 class="card-title">Professional Qualifications</h4>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="qualification_p">Qualification</label>
-                                    <input type="text" id="qualification_p" class="form-control" name="qualification_p"
-                                        placeholder="Enter Qualification" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="mode_p">Mode</label>
-                                    <input type="text" id="mode_p" class="form-control" name="mode_p"
-                                        placeholder="Enter Mode" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="status_p">Status</label>
-                                    <input type="text" id="status_p" class="form-control" name="status_p"
-                                        placeholder="Enter Status" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="subjects_studied_p">Subject Studied</label>
-                                    <input type="text" id="subjects_studied_p" class="form-control" name="subjects_studied_p"
-                                        placeholder="Enter Subject Studied" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="board_university_p">Board / University</label>
-                                    <input type="text" id="board_university_p" class="form-control" name="board_university_p"
-                                        placeholder="Enter Board / University" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="school_college_p">School / College</label>
-                                    <input type="text" id="school_college_p" class="form-control" name="school_college_p"
-                                        placeholder="Enter School / College" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="passing_year_p">Passing Year</label>
-                                    <input type="text" id="passing_year_p" class="form-control" name="passing_year_p"
-                                        placeholder="Enter Passing Year" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="roll_no_p">Roll No</label>
-                                    <input type="text" id="roll_no_p" class="form-control" name="roll_no_p"
-                                        placeholder="Enter Roll No" />
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-1">
-                                    <label class="form-label" for="marks_obtained_p">Marks Obtained</label>
-                                    <input type="text" id="marks_obtained_p" class="form-control" name="marks_obtained_p"
-                                        placeholder="Enter Marks Obtained" />
-                                </div>
-                            </div>
-
-
-
-
-
-
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-md-6 text-left">
-                                <a href="{{ url('insertSalaryAccount') }}"
-                                    class="btn btn-danger pull-right">Previous</a>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-1">Timeline</h4>
+                    <span class="timeline-event-time">Complete your profile details to access Teacher Dashboard</span>
                 </div>
+                <div class="card-body">
+                    <ul class="timeline">
+                        <li class="timeline-item">
+                            @php
+                            if($teacher->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacher->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertTeacher') }}">
+                                        <h6>Personal Information</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherServiceDetails->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherServiceDetails->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertEmployeementDetails') }}">
+                                        <h6>Employeement Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherSalaryAccountDetails->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherSalaryAccountDetails->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertSalaryAccount') }}">
+                                        <h6>Salary Account Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherAcademicQualification->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherAcademicQualification->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertTeacherQualification') }}">
+                                        <h6>Qualification Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacher->teacher_image_url == null){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else {
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between align-items-center mb-50">
+                                    <a href="{{ url('insertTeacherDocuments') }}">
+                                        <h6>Documents</h6>
+                                    </a>
+                                    <!-- <div>
+                                        <span class="badge rounded-pill badge-light-primary">Design</span>
+                                    </div> -->
+                                </div>
 
-
-            </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        <div class="col-lg-9">
+
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <form class="form form-vertical" id="qualificationForm">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Academic Qualifications</h4>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="rtteaetqaeaatat">Qualification</label>
+                                            <!-- <input type="text" id="rtteaetqaeaatat" class="form-control" name="rtteaetqaeaatat"
+                                        placeholder="Enter Qualification" /> -->
+                                            <select name="qualification" id="qualification" class="form-control">
+                                                <option value="">Select Option</option>
+                                                <option value="HSLC" @php if($teacherAcademicQualification->
+                                                    qualification ==
+                                                    "HSLC" ) {
+                                                    @endphp selected="selected" @php } @endphp >HSLC</option>
+                                                <option value="HS" @php if($teacherAcademicQualification->qualification
+                                                    == 'HS'
+                                                    ) { @endphp
+                                                    selected="selected" @php } @endphp>HS</option>
+                                                <option value="Graduate" @php if($teacherAcademicQualification->
+                                                    qualification ==
+                                                    'Graduate' ) { @endphp
+                                                    selected="selected" @php } @endphp>Graduate</option>
+                                                <option value="PG" @php if($teacherAcademicQualification->qualification
+                                                    == 'PG'
+                                                    ) { @endphp
+                                                    selected="selected" @php } @endphp>PG</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="stream_displine">Stream/Discipline)</label>
+                                            <input type="text" id="stream_displine" class="form-control"
+                                                name="stream_displine" placeholder="Enter Stream/Discipline)"
+                                                value="{{ $teacherAcademicQualification->stream_displine }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="subjects_studied">Bubjects Studied</label>
+                                            <input type="text" id="subjects_studied" class="form-control"
+                                                name="subjects_studied" placeholder="Enter Bubjects Studied"
+                                                value="{{ $teacherAcademicQualification->subjects_studied }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="board_university">Board / University</label>
+                                            <input type="text" id="board_university" class="form-control"
+                                                name="board_university" placeholder="Enter Board / University"
+                                                value="{{ $teacherAcademicQualification->board_university }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="school_college">School / College</label>
+                                            <input type="text" id="school_college" class="form-control"
+                                                name="school_college" placeholder="Enter School / College"
+                                                value="{{ $teacherAcademicQualification->school_college }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="passing_year">Passing Year</label>
+                                            <input type="text" id="passing_year" class="form-control"
+                                                name="passing_year" placeholder="Enter Passing Year"
+                                                value="{{ $teacherAcademicQualification->passing_year }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="roll_no">Roll No</label>
+                                            <input type="text" id="roll_no" class="form-control" name="roll_no"
+                                                placeholder="Roll No"
+                                                value="{{ $teacherAcademicQualification->roll_no }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="marks_obtained">Marks Obtained</label>
+                                            <input type="text" id="marks_obtained" class="form-control"
+                                                name="marks_obtained" placeholder="Marks Obtained"
+                                                value="{{ $teacherAcademicQualification->marks_obtained }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="card-header">
+                                        <h4 class="card-title">Professional Qualifications</h4>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="qualification_p">Qualification</label>
+                                            <input type="text" id="qualification_p" class="form-control"
+                                                name="qualification_p" placeholder="Enter Qualification"
+                                                value="{{ $teacherProfessionalQualification->qualification }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="mode_p">Mode</label>
+                                            <input type="text" id="mode_p" class="form-control" name="mode_p"
+                                                placeholder="Enter Mode"
+                                                value="{{ $teacherProfessionalQualification->mode }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="status_p">Status</label>
+                                            <input type="text" id="status_p" class="form-control" name="status_p"
+                                                placeholder="Enter Status"
+                                                value="{{ $teacherProfessionalQualification->status }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="subjects_studied_p">Subject Studied</label>
+                                            <input type="text" id="subjects_studied_p" class="form-control"
+                                                name="subjects_studied_p" placeholder="Enter Subject Studied"
+                                                value="{{ $teacherProfessionalQualification->subjects_studied }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="board_university_p">Board /
+                                                University</label>
+                                            <input type="text" id="board_university_p" class="form-control"
+                                                name="board_university_p" placeholder="Enter Board / University"
+                                                value="{{ $teacherProfessionalQualification->board_university }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="school_college_p">School / College</label>
+                                            <input type="text" id="school_college_p" class="form-control"
+                                                name="school_college_p" placeholder="Enter School / College"
+                                                value="{{ $teacherProfessionalQualification->school_college }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="passing_year_p">Passing Year</label>
+                                            <input type="text" id="passing_year_p" class="form-control"
+                                                name="passing_year_p" placeholder="Enter Passing Year"
+                                                value="{{ $teacherProfessionalQualification->passing_year }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="roll_no_p">Roll No</label>
+                                            <input type="text" id="roll_no_p" class="form-control" name="roll_no_p"
+                                                placeholder="Enter Roll No"
+                                                value="{{ $teacherProfessionalQualification->roll_no }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-1">
+                                            <label class="form-label" for="marks_obtained_p">Marks Obtained</label>
+                                            <input type="text" id="marks_obtained_p" class="form-control"
+                                                name="marks_obtained_p" placeholder="Enter Marks Obtained"
+                                                value="{{ $teacherProfessionalQualification->marks_obtained }}" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <a href="{{ url('insertSalaryAccount') }}"
+                                            class="btn btn-danger pull-right">Previous</a>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button type="submit" class="btn btn-primary" id="btnSubmit">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
+
+
 </section>
 
 <script>
@@ -206,10 +364,6 @@ if ($("#qualificationForm").length > 0) {
     $("#qualificationForm").validate({
         rules: {
             qualification: {
-                required: true,
-                maxlength: 100
-            },
-            stream_displine: {
                 required: true,
                 maxlength: 100
             },
@@ -242,10 +396,6 @@ if ($("#qualificationForm").length > 0) {
             qualification: {
                 required: "Please enter Qualificatiom",
                 maxlength: "Qualificatiom maxlength should be 100 characters long."
-            },
-            stream_displine: {
-                required: "Please enter Stram",
-                maxlength: "Stram should less than or equal to 100 characters",
             },
             subjects_studied: {
                 required: "Please enter Subjects",
@@ -297,7 +447,7 @@ if ($("#qualificationForm").length > 0) {
                 contentType: false,
                 cache: false,
                 success: function(response) {
-                    $('#btnSubmit').html('Submit');
+                    $('#btnSubmit').html('Next');
                     $("#btnSubmit").attr("disabled", false);
 
                     if (response.status == 200) {
@@ -310,7 +460,7 @@ if ($("#qualificationForm").length > 0) {
                                 rtl: false
                             });
 
-                        window.location.replace("{{ url('reviewTeacherDetails') }}");
+                        window.location.replace("{{ url('insertTeacherDocuments') }}");
 
                     } else {
 
@@ -325,7 +475,7 @@ if ($("#qualificationForm").length > 0) {
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    $('#btnSubmit').html('Submit');
+                    $('#btnSubmit').html('Next');
                     $("#btnSubmit").attr("disabled", false);
 
                     toastr['error'](

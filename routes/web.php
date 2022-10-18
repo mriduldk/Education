@@ -51,6 +51,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SchoolResultController;
 use App\Http\Controllers\SchoolStudentDetailsController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherInformationStoreController;
 use App\Http\Controllers\TeacherLeaveController;
 use App\Http\Controllers\TeacherTransferController;
 use App\Http\Controllers\UserActivityLogController;
@@ -768,30 +769,35 @@ Route::middleware('user-access:teacher')->group(function () {
 
     Route::get('teacherDashboard', [TeacherController::class, 'teacherDashboard'])->name('teacherDashboard');
 
+    // Insert Teacher Details
+    Route::get('insertTeacher', [TeacherInformationStoreController::class, 'InsertTeacher'])->name('InsertTeacher');;
+    Route::post('insert-teacher', [TeacherInformationStoreController::class, 'StoreTeacher']);
+    Route::get('insertEmployeementDetails', [TeacherInformationStoreController::class, 'InsertEmployeementDetails'])->name('InsertEmployeementDetails');;
+    Route::post('insert-employeement-details', [TeacherInformationStoreController::class, 'StoreEmployeementDetails']);
+    Route::get('insertSalaryAccount', [TeacherInformationStoreController::class, 'InsertSalaryAccount'])->name('InsertSalaryAccount');
+    Route::post('insert-salary-account', [TeacherInformationStoreController::class, 'StoreSalaryAccount']);
+    Route::get('insertTeacherQualification', [TeacherInformationStoreController::class, 'InsertTeacherQualification']);
+    Route::post('insert-teacher-qualification', [TeacherInformationStoreController::class, 'StoreTeacherQualification']);
+    Route::get('insertTeacherDocuments', [TeacherInformationStoreController::class, 'InsertTeacherDocuments'])->name('InsertTeacherDocuments');
+    Route::post('insert-teacher-documents', [TeacherInformationStoreController::class, 'AddTeacherDocuments']);
+
+
+    // Edit Teacher Details
     Route::get('editTeacher', [TeacherController::class, 'editTeacher'])->name('editTeacher');
     Route::post('edit-teacher', [TeacherController::class, 'UpdateTeacher'])->name('editTeacher');
-
     Route::get('editTeacherStatus', [TeacherController::class, 'editTeacherStatus'])->name('editTeacherStatus');
     Route::post('edit-teacher-status', [TeacherController::class, 'UpdateTeacherStatus'])->name('editTeacherStatus');
-
-
     Route::get('editEmployeementDetails', [TeacherController::class, 'EditEmployeementDetails'])->name('EditEmployeementDetails');
     Route::post('update-employeement-details', [TeacherController::class, 'UpdateEmployeementDetails']);
-    Route::get('insertEmployeementDetails', [TeacherController::class, 'InsertEmployeementDetails'])->name('InsertEmployeementDetails');;
-    Route::post('insert-employeement-details', [TeacherController::class, 'StoreEmployeementDetails']);
-        
     Route::get('editSalaryAccount', [TeacherController::class, 'EditSalaryAccount']);
     Route::post('update-salary-account', [TeacherController::class, 'UpdateTeacherSalaryAccount']);
-    Route::get('insertSalaryAccount', [TeacherController::class, 'InsertSalaryAccount'])->name('InsertSalaryAccount');
-    Route::post('insert-salary-account', [TeacherController::class, 'StoreSalaryAccount']);
-
     Route::get('editTeacherQualification', [TeacherController::class, 'EditTeacherQualification']);
     Route::post('update-teacher-qualification', [TeacherController::class, 'UpdateTeacherQualification']);
-    Route::get('insertTeacherQualification', [TeacherController::class, 'InsertTeacherQualification']);
-    Route::post('insert-teacher-qualification', [TeacherController::class, 'StoreTeacherQualification']);
 
-    Route::get('reviewTeacherDetails', [TeacherController::class, 'ReviewTeacherDetails']);
-    Route::post('store-teacher-details', [TeacherController::class, 'StoreTeacherDetails']);
+
+    Route::get('reviewTeacherDetails', [TeacherInformationStoreController::class, 'ReviewTeacherDetails']);
+    Route::post('store-teacher-details', [TeacherInformationStoreController::class, 'StoreTeacherDetails']);
+
 
     Route::get('leaveApplication', [TeacherLeaveController::class, 'index']);
     Route::post('leave-insert', [TeacherLeaveController::class, 'store']);
@@ -801,8 +807,6 @@ Route::middleware('user-access:teacher')->group(function () {
     Route::get('get-one-leave-application/{id}', [TeacherLeaveController::class, 'GetLeaveApplicationDetails'])->name('GetLeaveApplicationDetails');
 
 
-    Route::get('insertTeacherDocuments', [TeacherController::class, 'InsertTeacherDocuments'])->name('InsertTeacherDocuments');
-    Route::post('insert-teacher-documents', [TeacherController::class, 'AddTeacherDocuments']);
 
 
 

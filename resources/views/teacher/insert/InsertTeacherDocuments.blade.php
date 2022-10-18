@@ -1,4 +1,4 @@
-@extends('layouts/contentLayoutMaster')
+@extends('layouts/contentLayoutMasterWithoutSideBar')
 
 @section('title', 'Add Teacher Documents')
 
@@ -32,123 +32,272 @@
 
 @section('content')
 <section id="basic-vertical-layouts">
+
     <div class="row">
-        <div class="col-md-12 col-12">
-            <form class="form form-vertical" id="formDocument">
-                <div class="card">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-1">Timeline</h4>
+                    <span class="timeline-event-time">Complete your profile details to access Teacher Dashboard</span>
+                </div>
+                <div class="card-body">
+                    <ul class="timeline">
+                        <li class="timeline-item">
+                            @php
+                            if($teacher->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacher->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertTeacher') }}">
+                                        <h6>Personal Information</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherServiceDetails->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherServiceDetails->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertEmployeementDetails') }}">
+                                        <h6>Employeement Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherSalaryAccountDetails->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherSalaryAccountDetails->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertSalaryAccount') }}">
+                                        <h6>Salary Account Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacherAcademicQualification->is_submited == 0){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else if($teacherAcademicQualification->is_submited == 1){
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <a href="{{ url('insertTeacherQualification') }}">
+                                        <h6>Qualification Details</h6>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            @php
+                            if($teacher->teacher_image_url == null){
+                            @endphp
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            @php
+                            }
+                            else {
+                            @endphp
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            @php
+                            }
+                            @endphp
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between align-items-center mb-50">
+                                    <a href="{{ url('insertTeacherDocuments') }}">
+                                        <h6>Documents</h6>
+                                    </a>
+                                    <!-- <div>
+                                        <span class="badge rounded-pill badge-light-primary">Design</span>
+                                    </div> -->
+                                </div>
 
-                    <div class="card-header">
-                        <h4 class="card-title">Teacher Documents</h4>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
 
-                    <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <form class="form form-vertical" id="formDocument">
+                        <div class="card">
 
-                        <div class="row align-items-center">
+                            <div class="card-header">
+                                <h4 class="card-title">Teacher Documents</h4>
+                            </div>
 
-                            <div class="col-8">
-                                <div class="align-self-center">
-                                    <div class="mb-1">
-                                        <label for="formFile" class="form-label">Teacher Photo</label>
-                                        <input class="form-control" type="file" id="teacherPhoto" name="teacherPhoto"
-                                            accept=".jpg,.jpeg,.png" onchange="validateFileTeacherPhoto(event)" />
-                                        <div>
-                                            <span class="text-danger">Image size must be less than 250 KB and image
-                                                format should be jpg, png or jpeg</span>
+                            <div class="card-body">
+
+                                <div class="row align-items-center">
+
+                                    <div class="col-8">
+                                        <div class="align-self-center">
+                                            <div class="mb-1">
+                                                <label for="formFile" class="form-label">Teacher Photo</label>
+                                                <input class="form-control" type="file" id="teacherPhoto"
+                                                    name="teacherPhoto" accept=".jpg,.jpeg,.png"
+                                                    onchange="validateFileTeacherPhoto(event)" />
+                                                <div>
+                                                    <span class="text-danger">Image size must be less than 250 KB and
+                                                        image
+                                                        format should be jpg, png or jpeg</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-4 text-center">
-                                <div class="mb-1">
-                                    <div>
-                                        <img class="square" src="" alt="Teacher Photo" height="120" width="120"
-                                            id="imageTeacherPhoto">
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-8">
-                                <div class="align-self-center">
-                                    <div class="mb-1">
-                                        <label for="formFile" class="form-label">Teacher Signature</label>
-                                        <input class="form-control" type="file" id="teacherSignature"
-                                            name="teacherSignature" accept=".jpg,.jpeg,.png"
-                                            onchange="validateFileTeacherSignature(event)" />
-                                        <div>
-                                            <span class="text-danger">Image size must be less than 250 KB and image
-                                                format should be jpg, png or jpeg</span>
+                                    <div class="col-4 text-center">
+                                        <div class="mb-1">
+                                            <div>
+                                                <img class="square" src="" alt="Teacher Photo" height="120" width="120"
+                                                    id="imageTeacherPhoto">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-4 text-center">
-                                <div class="mb-1">
-                                    <div>
-                                        <img class="square" src="" alt="Teacher Signature" height="80" width="200"
-                                            id="imageTeacherSignature">
-                                    </div>
-                                </div>
-                            </div>
 
-
-                            <div class="col-8">
-                                <div class="align-self-center">
-                                    <div class="mb-1">
-                                        <label for="formFile" class="form-label">Teacher PAN Card</label>
-                                        <input class="form-control" type="file" id="panCard" name="panCard"
-                                            accept=".jpg,.jpeg,.png" onchange="validateFilePAN(event)" />
-                                        <div>
-                                            <span class="text-danger">Image size must be less than 250 KB and image
-                                                format should be jpg, png or jpeg</span>
+                                    <div class="col-8">
+                                        <div class="align-self-center">
+                                            <div class="mb-1">
+                                                <label for="formFile" class="form-label">Teacher Signature</label>
+                                                <input class="form-control" type="file" id="teacherSignature"
+                                                    name="teacherSignature" accept=".jpg,.jpeg,.png"
+                                                    onchange="validateFileTeacherSignature(event)" />
+                                                <div>
+                                                    <span class="text-danger">Image size must be less than 250 KB and
+                                                        image
+                                                        format should be jpg, png or jpeg</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-4 text-center">
-                                <div class="mb-1">
-                                    <div>
-                                        <img class="square" src="" alt="PAN" height="120" width="200" id="imagePANCard">
+                                    <div class="col-4 text-center">
+                                        <div class="mb-1">
+                                            <div>
+                                                <img class="square" src="" alt="Teacher Signature" height="80"
+                                                    width="200" id="imageTeacherSignature">
+                                            </div>
+                                        </div>
                                     </div>
+
+
+                                    <div class="col-8">
+                                        <div class="align-self-center">
+                                            <div class="mb-1">
+                                                <label for="formFile" class="form-label">Teacher PAN Card</label>
+                                                <input class="form-control" type="file" id="panCard" name="panCard"
+                                                    accept=".jpg,.jpeg,.png" onchange="validateFilePAN(event)" />
+                                                <div>
+                                                    <span class="text-danger">Image size must be less than 250 KB and
+                                                        image
+                                                        format should be jpg, png or jpeg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="mb-1">
+                                            <div>
+                                                <img class="square" src="" alt="PAN" height="120" width="200"
+                                                    id="imagePANCard">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-8">
+                                        <div class="align-self-center">
+                                            <div class="mb-1">
+                                                <label for="formFile" class="form-label">Teacher Aadhaar Card
+                                                    (Optional)</label>
+                                                <input class="form-control" type="file" id="aadhaarCard"
+                                                    name="aadhaarCard" accept=".jpg,.jpeg,.png"
+                                                    onchange="validateFileAadhaar(event)" />
+                                                <div>
+                                                    <span class="text-danger">Image size must be less than 250 KB and
+                                                        image
+                                                        format should be jpg, png or jpeg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="mb-1">
+                                            <div>
+                                                <img class="square" src="" alt="Aadhaar" height="150" width="150"
+                                                    id="imageAadhaarCard">
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
-                            <div class="col-8">
-                                <div class="align-self-center">
-                                    <div class="mb-1">
-                                        <label for="formFile" class="form-label">Teacher Aadhaar Card (Optional)</label>
-                                        <input class="form-control" type="file" id="aadhaarCard" name="aadhaarCard"
-                                            accept=".jpg,.jpeg,.png" onchange="validateFileAadhaar(event)" />
-                                        <div>
-                                            <span class="text-danger">Image size must be less than 250 KB and image
-                                                format should be jpg, png or jpeg</span>
-                                        </div>
+
+                           
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <a href="{{ url('insertTeacherQualification') }}"
+                                            class="btn btn-danger pull-right">Previous</a>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-4 text-center">
-                                <div class="mb-1">
-                                    <div>
-                                        <img class="square" src="" alt="Aadhaar" height="150" width="150"
-                                            id="imageAadhaarCard">
+                                    <div class="col-md-6 text-right">
+                                        <button type="submit" class="btn btn-primary" id="btnSubmit">Submit &
+                                            Review</button>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
 
 
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                    </div>
-
+                    </form>
                 </div>
+            </div>
 
-
-            </form>
         </div>
+
+
     </div>
+
 </section>
 
 
@@ -219,7 +368,7 @@ if ($("#formDocument").length > 0) {
                 contentType: false,
                 cache: false,
                 success: function(response) {
-                    $('#btnSubmit').html('Submit');
+                    $('#btnSubmit').html('Submit & Review');
                     $("#btnSubmit").attr("disabled", false);
 
                     if (response.status == 200) {
@@ -232,7 +381,7 @@ if ($("#formDocument").length > 0) {
                                 rtl: false
                             });
 
-                        window.location.replace("{{ url('teacherDashboard') }}");
+                        window.location.replace("{{ url('reviewTeacherDetails') }}");
 
                     } else {
 
@@ -246,7 +395,7 @@ if ($("#formDocument").length > 0) {
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    $('#btnSubmit').html('Submit');
+                    $('#btnSubmit').html('Submit & Review');
                     $("#btnSubmit").attr("disabled", false);
 
                     toastr['error'](
